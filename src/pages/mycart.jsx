@@ -1,3 +1,7 @@
+import Footer from "../components/Footer"
+import Navbar from "../components/Navbar"
+
+
 export default function Mycart(){
     const items = [
         {
@@ -12,6 +16,8 @@ export default function Mycart(){
         },
     ]
     return(
+        <>
+        <Navbar/>
         <div className="section lg:flex md:flex:none md:block">
             <div className="itemList bg-blue-400 min-h-[80vh] min-w-[40vw]">
                 <h1>My Cart</h1>
@@ -40,8 +46,14 @@ export default function Mycart(){
             </div>
             <div className="summary bg-red-400 min-h-[80vh] min-w-[40vw]">
                 <h1>Summary</h1>
+                {items.length >0 ? 
+                    items.map( 
+                        item => <div>{item.name}</div>
+                        ) :<div></div>
+                    }
             </div>
-            
         </div>
+        <Footer/>
+        </>
     )
 }
