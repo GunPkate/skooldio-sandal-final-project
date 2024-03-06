@@ -45,7 +45,7 @@ function App() {
             id:2,
             name: "item 1",
             price: 2000,
-            qty: 1,
+            qty: 3,
             image: "https://picsum.photos/200/300",
         },
     ]
