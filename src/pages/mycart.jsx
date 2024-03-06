@@ -101,19 +101,19 @@ export default function Mycart(){
                             }
         
                             <h1>Subtotal 
-                                {userPurhcase.length > 0 ? 
+                                {userPurhcase.length > 1 ? 
                                 userPurhcase.reduce((u,v)=>{
                                     return u.qty*u.price + v.qty*v.price
                                   })
-                                : 0}
+                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 }
                             </h1>
                             <h1>Shipping fee</h1>
                             <h1>Total 
-                                {userPurhcase.length > 0 ? 
+                                {userPurhcase.length > 1 ? 
                                     userPurhcase.reduce((u,v)=>{
                                         return u.qty*u.price + v.qty*v.price
                                     })
-                                : 0}
+                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 }
 
                             </h1>
                             <button className="button">Check Out</button>
