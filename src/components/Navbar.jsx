@@ -6,7 +6,16 @@ import { useContext } from "react"
 
 export default function Navbar() {
     // console.log(userData)
-    const userInfo = useContext(UserContext)
+    const {userInfo,setUserInfo} = useContext(UserContext)
+    const logIn = () =>{
+        setUserInfo({user:"Gun P"})
+    }
+    const logOut = () => {
+        setUserInfo({user:""})   
+    }
+    
+    const {userPurhcase,setuserPurhcase} = useContext(UserContext)
+
 
     const navItemStyle = "text-white ml-2"
     return (
@@ -30,7 +39,18 @@ export default function Navbar() {
             </Link>
         </div>
 
-        <div className="text-white bg-blue-400">Hello {userInfo.user}</div>
+        <div className="text-white bg-blue-400">
+            {userInfo.user === "" || userInfo.user === null ?
+                <button onClick={logIn}>   Log in          </button>:
+                <button onClick={logOut}>   Log out          </button>
+            }
+            <span>
+                Hello {userInfo.user}
+            </span>
+            <div className="bg-red-300 text-2xl">
+                {userPurhcase.length}
+            </div>
+        </div>
     </div>
     )
 }

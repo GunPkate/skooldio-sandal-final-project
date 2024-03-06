@@ -12,6 +12,7 @@ import { createBrowserRouter, Link, RouterProvider, BrowserRouter } from "react-
 
 export const UserContext = createContext();
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,10 +33,26 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-
-  const userData = {user: "Gun P"}
+    const items = [
+        {
+            id:1,
+            name: "item 1",
+            price: 2000,
+            qty: 1,
+            image: "https://picsum.photos/200/300",
+          },
+          {
+            id:2,
+            name: "item 1",
+            price: 2000,
+            qty: 1,
+            image: "https://picsum.photos/200/300",
+        },
+    ]
+  const [userInfo,setUserInfo] = useState({user:""});
+  const [userPurhcase,setuserPurhcase] = useState(items);
   return (
-    <UserContext.Provider value={userData}>
+    <UserContext.Provider value={{userInfo,setUserInfo,userPurhcase,setuserPurhcase}}>
       <RouterProvider router={router}/>
     </UserContext.Provider>
   );
