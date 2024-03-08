@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import Footer from "../components/Footer"
-import Navbar from "../components/Navbar"
+import Navbar from "../components/Navbar/Navbar";
 import { UserContext } from "../App"
 
 
@@ -15,19 +15,19 @@ export default function Mycart(){
 
     } 
 
+
     return(
         <>
         <Navbar/>
-            <div className="min-w=[100vw]">
-                <h1>My Cart</h1>
+            <div className="min-w=[100vw] my-[40px] mx-[max(160px,16px)]">
+                <h1 className="m-[24px] text-2xl font-bold">My Cart</h1>
             </div>
-            <div className="section lg:flex md:flex:none md:block">
-                <div className="itemList bg-blue-400 min-h-[80vh] min-w-[40vw]">
-                    <h1>Items</h1>
-                    {userPurhcase.length >0 ? userPurhcase.map( item =>                
-                        <>
-                            <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src={item.image} alt=""/>
+            <div className="section section-mycart lg:flex md:flex:none md:block">
+                <div className="itemList bg-blue-400 min-h-[80vh] min-w-[944px] mx-[max(160px,16px)] mr-[20px]">
+                    <h5 className="m-[24px] text-2xl font-bold tracking-tight text-gray-900 dark:text-white"> Summary</h5>
+                    {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
+                            <div key={id} className="flex flex-col items-center bg-white border border-gray-200  shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                <img className="object-cover w-full rounded-t-lg h-[209px] md:h-auto lg:w-[209px] md:w-48 md:rounded-none md:rounded-s-lg" src={item.image} alt=""/>
                                 <div className="flex flex-col justify-between p-4 leading-normal">
 
                                     <div className="flex justify-between">
@@ -65,7 +65,6 @@ export default function Mycart(){
                                     </div>
                                 </div>
                             </div>
-                        </>
                     )
                     :<>
                     <div>
@@ -74,20 +73,14 @@ export default function Mycart(){
                     </div>
                     </>}
                 </div>
-                <div className="summary bg-red-400 min-h-[80vh] min-w-[40vw]">
-                    
-
-
-
-
-
+                <div className="summary bg-red-400 min-h-[80vh] min-w-[500px] mx-[max(160px,16px)] ml-[20px]">                  
+                    <h5 className="m-[24px] text-2xl font-bold tracking-tight text-gray-900 dark:text-white"> Summary</h5>
                     <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
 
                         <div className="flex flex-col justify-between p-4 leading-normal">
 
                             <div className="flex justify-between">
 
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"> Summary</h5>
 
                             </div>
 
