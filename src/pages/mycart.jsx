@@ -86,19 +86,22 @@ export default function Mycart(){
                 </CardTemplate>
 
                 <CardTemplate title={"Summary"} width={"min-w-[32.08%]"} height={" max-h-[500px] "} mr={"  "}  ml={" lg:ml-[20px] "} >
-                    <div className="m-[24px] flex flex-col items-center ">
+                    <div className="mx-[24px] flex flex-col items-center ">
 
-                            <table style={{width:"100%"}} className="font-normal text-gray-700 dark:text-gray-400 block">
+                            <table 
+                                style={{width:"100%"}} 
+                                // style={{width:"100%",borderCollapse:"separate" ,borderSpacing: "0 1em" }} 
+                            className="font-normal text-gray-700 dark:text-gray-400 block">
                                 <tbody>
                                     {userPurhcase.length >0 ? 
                                         userPurhcase.map(  item => 
-                                            
-                                            <tr  key={item.id}>
-                                                <td className="mb-[16px]" style={{width:"100%"}}>    
-                                                    {item.name}
+
+                                            <tr height="36px" key={item.id} >
+                                                <td style={{width:"100%" }}>    
+                                                    <h1>{item.name}</h1>
                                                 </td>
                                                 <td>    
-                                                    {item.qty * item.price}
+                                                    <h1>{item.qty * item.price}</h1>
                                                 </td>
                                             </tr> 
                                                 
@@ -112,10 +115,9 @@ export default function Mycart(){
                                         </tr> 
                                     }
                 
-                                    <tr style={{ borderTop:"1pt solid black", }}>
-                                        <td style={{width:"100%"}}>    
+                                    <tr height="36px" style={{ borderTop:"1pt solid black", }}>
+                                        <td >    
                                             <h1>Subtotal</h1>
-                                            
                                         </td>
                                         <td>
                                             {userPurhcase.length > 1 ? 
@@ -127,7 +129,7 @@ export default function Mycart(){
                                         </td>
                                     </tr>
 
-                                    <tr style={{borderBottom:"1pt solid black" }}>
+                                    <tr height="36px" style={{borderBottom:"1pt solid black" }}>
                                         <td>
                                             <h1>Shipping fee</h1>
                                         </td>
@@ -135,7 +137,7 @@ export default function Mycart(){
                                             <h1>Free</h1>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr height="36px">
                                         <td>
                                             <h1>Total</h1>
                                         </td>
