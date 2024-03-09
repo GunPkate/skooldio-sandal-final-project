@@ -37,8 +37,10 @@ export default function Mycart(){
                 <CardTemplate title={"Items"} width={"min-w-[49.16%]"} height={"  "}  ml = {" mx-[max(16px,16px)] lg:ml-[max(8.34%,16px)] "} mr = {" mr-[20px] "}>
 
                     {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
-                        <div key={id} className="flex inline-block">
-                            <img className={"px-[24px] pb-[24px] " + "object-cover rounded-t-lg h-[209px] md:h-auto lg:w-[209px] md:w-48 "} src={item.image} alt=""/>
+                        <div key={id} className="lg:flex lg:inline-block md:block">
+                            <div className="flex justify-center">
+                                <img className={"lg:px-[24px] pb-[24px] " + "object-cover  h-[209px] w-[209px] "} src={item.image} alt=""/>
+                            </div>
                             <div style={{width: "100%"}} className={"pb-[24px] pl-[16px] pr-[24px] " + "flex flex-col justify-between leading-normal mx-auto"}>
 
                                 <div className="flex justify-between">
@@ -48,24 +50,24 @@ export default function Mycart(){
 
                                 <div className="font-normal text-gray-700 dark:text-gray-400 flex justify-between">
                                    
-                                    <div className="flex">
+                                    <div className="lg:flex sm:block">
                                         <div className="mr-[16px]">
                                             <h1>Colors</h1>
-                                            <select style={{height: "54px", width: "139px" }}>
+                                            <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
                                                 <option>Colors</option>
                                             </select>
                                         </div>
 
                                         <div className="mr-[16px]">
                                             <h1>Size</h1>
-                                            <select style={{height: "54px", width: "139px" }}>
+                                            <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
                                                 <option>Size</option>
                                             </select>
                                         </div>
 
                                         <div className="mr-[16px]">
                                             <h1>Qty</h1>
-                                            <select style={{height: "54px", width: "139px" }}>
+                                            <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
                                                 <option>Qty</option>
                                             </select>
                                         </div>
