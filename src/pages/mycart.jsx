@@ -34,7 +34,7 @@ export default function Mycart(){
             </div>
             <div className="section section-mycart lg:flex md:flex:none md:block">
 
-                <CardTemplate title={"Items"} width={"min-w-[49.16%]"} height={"  "}  ml = {" mx-[max(16px,16px)] lg:ml-[max(8.34%,16px)] "} mr = {" mr-[20px] "}>
+                <CardTemplate title={"Items"} width={"min-w-[49.16%]"} height={"  "}  ml = {" mx-[max(16px,16px)] lg:ml-[max(8.34%,16px)] "} mr = {" mr-[20px] mb-[40px] "}>
 
                     {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
                         <div key={id} className="lg:flex lg:inline-block md:block">
@@ -51,32 +51,32 @@ export default function Mycart(){
                                 <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex justify-between w-ful">
                                    
                                     <div className="lg:flex sm:block w-ful">
-                                        <div className="mr-[16px]">
+                                        <div className="lg:mr-[16px]">
                                             <h1>Colors</h1>
-                                            <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
+                                            <select className="lg:w-[7.24vw] sm:w-[88vw] h-[54px]">
                                                 <option>Colors</option>
                                             </select>
                                         </div>
-                                            <div className="flex">
+                                            <div className="flex justify-between w-full">
                                             <div className="mr-[16px]">
                                                 <h1>Size</h1>
-                                                <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
+                                                <select className="lg:w-[7.24vw] sm:w-[43vw] h-[54px]">
                                                     <option>Size</option>
                                                 </select>
                                             </div>
 
                                             <div className="mr-[16px]">
                                                 <h1>Qty</h1>
-                                                <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
+                                                <select className="lg:w-[7.24vw] sm:w-[43vw] h-[54px]">
                                                     <option>Qty</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
 
-
-                                    <div className={ "inline-block align-baseline " + "mt-auto text-2xl font-bold tracking-tight text-gray-900 dark:text-white"} >
-                                        <h5> {item.price * item.qty} THB </h5>
+                                    
+                                    <div style={{width: "100%"}} className={ "align-baseline " + "mt-auto text-2xl font-bold  text-gray-900 dark:text-white flex w-ful"} >
+                                        <h5 className="ml-auto"> {item.price * item.qty} THB </h5>
                                     </div>
 
                                 </div>
