@@ -15,10 +15,10 @@ export default function Mycart(){
 
     }
 
-    const marginLgStyle = " lg: m-[24px] "
-    const marginStyle = " m-[16px] "
-    const CardTemplate = ({ title, width, children, ml, mr}) => (<>
-        <div className={"itemList bg-blue-400 min-h-[80vh] "+ width + ml + mr}>
+    const marginLgStyle = " lg: p-[24px] "
+    const marginStyle = " p-[16px] "
+    const CardTemplate = ({ title, width, height, children, ml, mr}) => (<>
+        <div className={"itemList bg-white min-h-[80vh] "+ width + height + ml + mr}>
             <h5 className={marginLgStyle+ " text-2xl font-bold tracking-tight text-gray-900 dark:text-white"}> {title} </h5>
                 {children}
         </div>
@@ -28,13 +28,13 @@ export default function Mycart(){
     return(
         <>
         <Navbar/>
-            <div className="lg:mx-auto"> 
-            <div className="min-w=[100vw] my-[40px] lg:mx-[max(8.34%,16px)]">
+            <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
+            <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
             </div>
             <div className="section section-mycart lg:flex md:flex:none md:block">
 
-                <CardTemplate title={"Items"} width={"min-w-[49.16%]"} ml = {" mx-[max(16px,16px)] lg:ml-[max(8.34%,16px)] "} mr = {" mr-[20px] "}>
+                <CardTemplate title={"Items"} width={"min-w-[49.16%]"} height={"  "}  ml = {" mx-[max(16px,16px)] lg:ml-[max(8.34%,16px)] "} mr = {" mr-[20px] "}>
 
                     {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
                         <div key={id} className="flex inline-block">
@@ -85,16 +85,16 @@ export default function Mycart(){
                         </>}
                 </CardTemplate>
 
-                <CardTemplate title={"Summary"} width={"min-w-[32.08%]"} mr={"  "}  ml={" lg:ml-[20px] "} >
-                    <div className="m-[24px] flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <CardTemplate title={"Summary"} width={"min-w-[32.08%]"} height={" max-h-[500px] "} mr={"  "}  ml={" lg:ml-[20px] "} >
+                    <div className="m-[24px] flex flex-col items-center ">
 
-                            <table style={{width:"100%"}} className="mb-3 font-normal text-gray-700 dark:text-gray-400 block">
+                            <table style={{width:"100%"}} className="font-normal text-gray-700 dark:text-gray-400 block">
                                 <tbody>
                                     {userPurhcase.length >0 ? 
                                         userPurhcase.map(  item => 
                                             
-                                            <tr key={item.id}>
-                                                <td style={{width:"100%"}}>    
+                                            <tr  key={item.id}>
+                                                <td className="mb-[16px]" style={{width:"100%"}}>    
                                                     {item.name}
                                                 </td>
                                                 <td>    
@@ -103,11 +103,17 @@ export default function Mycart(){
                                             </tr> 
                                                 
                                         ) 
-                                        :<div></div>
+                                        :                              
+                                        <tr>
+                                            <td style={{width:"100%"}}>    
+                                                No Item
+                                            </td>
+        
+                                        </tr> 
                                     }
                 
-                                    <tr>
-                                    <td style={{width:"100%"}}>    
+                                    <tr style={{ borderTop:"1pt solid black", }}>
+                                        <td style={{width:"100%"}}>    
                                             <h1>Subtotal</h1>
                                             
                                         </td>
@@ -121,14 +127,13 @@ export default function Mycart(){
                                         </td>
                                     </tr>
 
-                                    <tr>
+                                    <tr style={{borderBottom:"1pt solid black" }}>
                                         <td>
                                             <h1>Shipping fee</h1>
                                         </td>
                                         <td>
                                             <h1>Free</h1>
                                         </td>
-
                                     </tr>
                                     <tr>
                                         <td>
@@ -141,21 +146,12 @@ export default function Mycart(){
                                                 )
                                                 : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 
                                             }
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <button className="button">Check Out</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <button className="button">Continue Shooping</button>
-                                        </td>
-                                    </tr>
-          
-                                </tbody>
-                            </table>
+                                            </td>
+                                        </tr>         
+                                    </tbody>
+                                </table>
+                                <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]">Check Out</button>
+                                <button style={{width:"100%", border: "1pt solid black"}}  className="button h-[54px]">Continue Shooping</button>
 
                     </div>
                     </CardTemplate>
