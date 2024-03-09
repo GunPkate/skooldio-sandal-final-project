@@ -46,34 +46,38 @@ export default function Mycart(){
                                 <button className="bg-red-300" onClick={(e)=>{handleDelete(item)}}> delete </button>
                                 </div>
 
-                                <div className="mb-3 font-normal text-gray-700 dark:text-gray-400 flex justify-between">
-                                    <div className="ml-2">
-                                        <option>QTY</option>
+                                <div className="font-normal text-gray-700 dark:text-gray-400 flex justify-between">
+                                   
+                                    <div className="flex">
+                                        <div className="mr-[16px]">
+                                            <h1>Colors</h1>
+                                            <select style={{height: "54px", width: "139px" }}>
+                                                <option>Colors</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="mr-[16px]">
+                                            <h1>Size</h1>
+                                            <select style={{height: "54px", width: "139px" }}>
+                                                <option>Size</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="mr-[16px]">
+                                            <h1>Qty</h1>
+                                            <select style={{height: "54px", width: "139px" }}>
+                                                <option>Qty</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div className="ml-2">
-                                        <option>Size</option>
+
+
+                                    <div className={ "inline-block align-baseline " + "mt-auto text-2xl font-bold tracking-tight text-gray-900 dark:text-white"} >
+                                        <h5> {item.price * item.qty} THB </h5>
                                     </div>
-                                    <div className="ml-2">
-                                        <option>Colors</option>
-                                    </div>
-                                    <h1 style={{opacity: 0.0}}>
-                                        {item.price}
-                                    </h1>
+
                                 </div>
-                                <div className="mb-3 font-normal text-gray-700 dark:text-gray-400 flex justify-between">
-                                    <select className="ml-2">
-                                        <option>QTY</option>
-                                    </select>
-                                    <select className="ml-2">
-                                        <option>Size</option>
-                                    </select>
-                                    <select className="ml-2">
-                                        <option>Colors</option>
-                                    </select>
-                                    <h1>
-                                        {item.price * item.qty}
-                                    </h1>
-                                </div>
+ 
                             </div>
                         </div>)
 
