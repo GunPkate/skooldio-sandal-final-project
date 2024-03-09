@@ -35,18 +35,25 @@ const router = createBrowserRouter([
 function App() {
     const items = [
         {
-            id:1,
-            name: "item 1",
-            price: 2000,
-            qty: 1,
-            image: "https://picsum.photos/200/300",
-          },
-          {
-            id:2,
-            name: "item 1",
-            price: 2000,
-            qty: 3,
-            image: "https://picsum.photos/200/300",
+          id:1,
+          name: "Reyon Long Sleeve Shirt",
+          price: 2000,
+          qty: 2,
+          image: "https://picsum.photos/200/300",
+        },
+        {
+          id:2,
+          name: "Flexi Move Sneaker",
+          price: 1700,
+          qty: 1,
+          image: "https://picsum.photos/200/300",
+        },
+        {
+          id:3,
+          name: "Flexi Move Sneaker",
+          price: 1700,
+          qty: 1,
+          image: "https://picsum.photos/200/300",
         },
     ]
   const [userInfo,setUserInfo] = useState({user:""});

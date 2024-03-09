@@ -15,10 +15,11 @@ export default function Mycart(){
 
     }
 
-    const marginStyle = " lg: m-[24px] "
+    const marginLgStyle = " lg: m-[24px] "
+    const marginStyle = " m-[16px] "
     const CardTemplate = ({ title, width, children, ml, mr}) => (<>
         <div className={"itemList bg-blue-400 min-h-[80vh] "+ width + ml + mr}>
-            <h5 className={marginStyle+ " text-2xl font-bold tracking-tight text-gray-900 dark:text-white"}> {title} </h5>
+            <h5 className={marginLgStyle+ " text-2xl font-bold tracking-tight text-gray-900 dark:text-white"}> {title} </h5>
                 {children}
         </div>
     </>)
@@ -27,9 +28,9 @@ export default function Mycart(){
     return(
         <>
         <Navbar/>
-            <div className="mx-auto"> 
-            <div className="min-w=[100vw] my-[40px] mx-[max(8.34%,16px)]">
-                <h1 className={marginStyle+ " text-2xl font-bold"}>My Cart</h1>
+            <div className="lg:mx-auto"> 
+            <div className="min-w=[100vw] my-[40px] lg:mx-[max(8.34%,16px)]">
+                <h1 className={marginStyle + marginLgStyle + " text-2xl font-bold"}>My Cart</h1>
             </div>
             <div className="section section-mycart lg:flex md:flex:none md:block">
 
@@ -37,7 +38,7 @@ export default function Mycart(){
 
                     {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
                         <div key={id} className="flex inline-block">
-                            <img className={marginStyle+ "object-cover rounded-t-lg h-[209px] md:h-auto lg:w-[209px] md:w-48 md:rounded-none md:rounded-s-lg"} src={item.image} alt=""/>
+                            <img className={marginLgStyle+ "object-cover rounded-t-lg h-[209px] md:h-auto lg:w-[209px] md:w-48 md:rounded-none md:rounded-s-lg"} src={item.image} alt=""/>
                             <div className="flex flex-col justify-between p-4 leading-normal mx-auto">
 
                                 <div className="flex justify-between">
@@ -85,41 +86,77 @@ export default function Mycart(){
                 </CardTemplate>
 
                 <CardTemplate title={"Summary"} width={"min-w-[32.08%]"} mr={"  "}  ml={" lg:ml-[20px] "} >
-                    <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <div className="m-[24px] flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
 
-                        <div className="flex flex-col justify-between p-4 leading-normal">
+                            <table style={{width:"100%"}} className="mb-3 font-normal text-gray-700 dark:text-gray-400 block">
+                                <tbody>
+                                    {userPurhcase.length >0 ? 
+                                        userPurhcase.map(  item => 
+                                            
+                                            <tr key={item.id}>
+                                                <td style={{width:"100%"}}>    
+                                                    {item.name}
+                                                </td>
+                                                <td>    
+                                                    {item.qty * item.price}
+                                                </td>
+                                            </tr> 
+                                                
+                                        ) 
+                                        :<div></div>
+                                    }
+                
+                                    <tr>
+                                    <td style={{width:"100%"}}>    
+                                            <h1>Subtotal</h1>
+                                            
+                                        </td>
+                                        <td>
+                                            {userPurhcase.length > 1 ? 
+                                                userPurhcase.reduce((accumulator, currentValue) => 
+                                                    accumulator + ( currentValue.price * currentValue.qty ), 0, 
+                                                )
+                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 
+                                            }
+                                        </td>
+                                    </tr>
 
-                            <div className="mb-3 font-normal text-gray-700 dark:text-gray-400 block">
-                                {userPurhcase.length >0 ? 
-                                    userPurhcase.map(  item => 
-                                        <div key={item.id}>{item.name} {item.qty * item.price}</div>     
-                                    ) 
-                                    :<div></div>
-                                }
-            
-                                <h1>Subtotal 
-                                    {userPurhcase.length > 1 ? 
-                                    userPurhcase.reduce((u,v)=>{
-                                        return u.qty*u.price + v.qty*v.price
-                                    })
-                                    : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 }
-                                </h1>
-                                <h1>Shipping fee</h1>
-                                <h1>Total 
-                                    {userPurhcase.length > 1 ? 
-                                        userPurhcase.reduce((u,v)=>{
-                                            return u.qty*u.price + v.qty*v.price
-                                        })
-                                    : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 }
+                                    <tr>
+                                        <td>
+                                            <h1>Shipping fee</h1>
+                                        </td>
+                                        <td>
+                                            <h1>Free</h1>
+                                        </td>
 
-                                </h1>
-                                <button className="button">Check Out</button>
-                                <button className="button">Continue Shooping</button>
-                                <h1>
-                                    {/* {item.price} */}
-                                </h1>
-                            </div>
-                        </div>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h1>Total</h1>
+                                        </td>
+                                        <td>
+                                            {userPurhcase.length > 1 ? 
+                                                userPurhcase.reduce((accumulator, currentValue) => 
+                                                    accumulator + ( currentValue.price * currentValue.qty ), 0, 
+                                                )
+                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button className="button">Check Out</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button className="button">Continue Shooping</button>
+                                        </td>
+                                    </tr>
+          
+                                </tbody>
+                            </table>
+
                     </div>
                     </CardTemplate>
 
