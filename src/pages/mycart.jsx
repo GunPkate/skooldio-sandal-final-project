@@ -38,8 +38,8 @@ export default function Mycart(){
 
                     {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
                         <div key={id} className="flex inline-block">
-                            <img className={marginLgStyle+ "object-cover rounded-t-lg h-[209px] md:h-auto lg:w-[209px] md:w-48 md:rounded-none md:rounded-s-lg"} src={item.image} alt=""/>
-                            <div className="flex flex-col justify-between p-4 leading-normal mx-auto">
+                            <img className={"px-[24px] pb-[24px] " + "object-cover rounded-t-lg h-[209px] md:h-auto lg:w-[209px] md:w-48 "} src={item.image} alt=""/>
+                            <div style={{width: "100%"}} className={"pb-[24px] pl-[16px] pr-[24px] " + "flex flex-col justify-between leading-normal mx-auto"}>
 
                                 <div className="flex justify-between">
                                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.name}</h5>
