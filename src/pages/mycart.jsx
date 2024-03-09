@@ -48,28 +48,29 @@ export default function Mycart(){
                                 <button className="bg-red-300" onClick={(e)=>{handleDelete(item)}}> delete </button>
                                 </div>
 
-                                <div className="font-normal text-gray-700 dark:text-gray-400 flex justify-between">
+                                <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex justify-between w-ful">
                                    
-                                    <div className="lg:flex sm:block">
+                                    <div className="lg:flex sm:block w-ful">
                                         <div className="mr-[16px]">
                                             <h1>Colors</h1>
                                             <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
                                                 <option>Colors</option>
                                             </select>
                                         </div>
+                                            <div className="flex">
+                                            <div className="mr-[16px]">
+                                                <h1>Size</h1>
+                                                <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
+                                                    <option>Size</option>
+                                                </select>
+                                            </div>
 
-                                        <div className="mr-[16px]">
-                                            <h1>Size</h1>
-                                            <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
-                                                <option>Size</option>
-                                            </select>
-                                        </div>
-
-                                        <div className="mr-[16px]">
-                                            <h1>Qty</h1>
-                                            <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
-                                                <option>Qty</option>
-                                            </select>
+                                            <div className="mr-[16px]">
+                                                <h1>Qty</h1>
+                                                <select className="lg:w-[7.24vw] sm:w-[14.48vw] h-[54px]">
+                                                    <option>Qty</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
 
