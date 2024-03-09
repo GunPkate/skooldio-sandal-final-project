@@ -30,7 +30,7 @@ export default function Mycart(){
         <Navbar/>
             <div className="lg:mx-auto"> 
             <div className="min-w=[100vw] my-[40px] lg:mx-[max(8.34%,16px)]">
-                <h1 className={marginStyle + marginLgStyle + " text-2xl font-bold"}>My Cart</h1>
+                <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
             </div>
             <div className="section section-mycart lg:flex md:flex:none md:block">
 
