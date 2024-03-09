@@ -24,6 +24,7 @@ export default function Mycart(){
         </div>
     </>)
 
+    const noItemImg = "https://picsum.photos/200/300"
 
     return(
         <>
@@ -85,9 +86,12 @@ export default function Mycart(){
                         </div>)
 
                         :<>
-                            <div>
-                                <h1>Your cart is empty</h1>
-                                <button className="button">Continue Shooping</button>
+                            <div className="flex  justify-center">
+                                <div>
+                                    <img className={"lg:px-[24px] pb-[24px] " + "object-cover  h-[209px] w-[209px] "} src={noItemImg} alt=""/>
+                                    <h1 className="text-2xl font-bold mx-auto">Your cart is empty</h1>
+                                    <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]">Continue Shooping</button>
+                                </div>
                             </div>
                         </>}
                 </CardTemplate>
