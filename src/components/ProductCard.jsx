@@ -28,6 +28,10 @@ const ProductsDetail = [
   },
 ];
 
+const createStars = (amount) => {
+  return amount ? [...Array(amount)].map(() => <span>⭐</span>) : null;
+};
+
 function ProductCard() {
   return ProductsDetail.map((item) => {
     return (
@@ -44,7 +48,7 @@ function ProductCard() {
           <p className="font-light text-secondary-700 text-base">
             {item.description}
           </p>
-          <span>⭐️⭐️⭐️⭐️⭐️</span>
+          <div className="flex gap-[10px]">{createStars(item.rating)}</div>
           <div>
             {item.discount ? (
               <div className="flex items-center gap-4 justify-end">
