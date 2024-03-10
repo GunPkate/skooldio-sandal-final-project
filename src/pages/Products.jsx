@@ -24,7 +24,7 @@ import ProductCard from "../components/ProductCard";
 function Products() {
   return (
     <>
-      <div className="flex flex-col items-center w-full px-[18px]">
+      <div className="font-poppins flex flex-col items-center w-full px-[18px]">
         <header className="my-6 w-[340px]">
           <h1 className="font-bold w-full text-center">Woman's Cloth</h1>
           <div className="flex w-full justify-end">

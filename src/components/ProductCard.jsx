@@ -1,6 +1,6 @@
 const ProductsDetail = [
   {
-    name: "Item1",
+    name: "Reyon Long Sleeve Shirt",
     image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
     description: "Product description",
     rating: 3,
@@ -9,7 +9,7 @@ const ProductsDetail = [
     price: 1000,
   },
   {
-    name: "Item2",
+    name: "Boxy Tailored Jacket",
     image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
     description: "Product description",
     rating: 4,
@@ -17,20 +17,31 @@ const ProductsDetail = [
     originalPrice: 2000,
     price: 2000,
   },
+  {
+    name: "Premium Linen Long Sleeve",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    description: "Product description",
+    rating: 3,
+    discount: true,
+    originalPrice: 2000,
+    price: 1000,
+  },
 ];
 
 function ProductCard() {
   return ProductsDetail.map((item) => {
     return (
-      <div className="mb-10">
+      <div className="mb-10" key={item.name}>
         <img
           src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
           className="h-[370px] sm:min-w-[340px] 2xl:min-w-[370px] object-cover mb-6"
-          alt={`Product ${item.name}`}
+          alt={`${item.name}`}
         />
-        <div className="grid grid-cols-1 gap-2">
-          <h2 className="font-bold text-2xl">{item.name}</h2>
-          <p className="font-thin text-secondary-700 text-base">
+        <div className="grid grid-cols-1 gap-2 sm:w-[340px] md:w-[370px]">
+          <h2 className="font-bold text-2xl text-secondary whitespace-nowrap text-ellipsis overflow-hidden">
+            {item.name}
+          </h2>
+          <p className="font-light text-secondary-700 text-base">
             {item.description}
           </p>
           <span>⭐️⭐️⭐️⭐️⭐️</span>
@@ -44,7 +55,9 @@ function ProductCard() {
               </div>
             ) : (
               <div className="flex items-center gap-4 justify-end">
-                <p className="font-bold text-2xl">Discount Price</p>
+                <p className="font-bold text-2xl text-secondary">
+                  Discount Price
+                </p>
               </div>
             )}
           </div>
