@@ -34,13 +34,19 @@ function ProductCard() {
             {item.description}
           </p>
           <span>⭐️⭐️⭐️⭐️⭐️</span>
-          <div className="flex items-center gap-4 justify-end">
-            {item.discount && (
-              <p className="font-semibold text-sm line-through text-secondary-700">
-                OG price
-              </p>
+          <div>
+            {item.discount ? (
+              <div className="flex items-center gap-4 justify-end">
+                <p className="font-semibold text-sm line-through text-secondary-700">
+                  OG price
+                </p>
+                <p className="font-bold text-2xl text-danger">Discount Price</p>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4 justify-end">
+                <p className="font-bold text-2xl">Discount Price</p>
+              </div>
             )}
-            <p className="font-bold text-2xl text-danger">Discount Price</p>
           </div>
         </div>
       </div>
