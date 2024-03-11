@@ -1,15 +1,18 @@
+import ProductCard from "../components/ProductCard";
+
 function Homepage() {
   return (
     <>
       <div className="mb-16">
         <img
-          className="h-96 w-full"
+          className="h-[420px] w-full object-cover"
           src="./src/assets/img1.jpg"
           alt="wallpaper"
         />
       </div>
-      <div className="flex justify-around gap-8">
-        <div className="flex flex-col w-72 h-96">
+
+      <div className="flex justify-center gap-10 mx-auto h-fit">
+        <div className="flex flex-col w-[363px] h-96">
           <p className="font-bold text-8xl">2024</p>
           <p className="font-bold text-5xl">Collection</p>
           <p className="text-base">
@@ -23,20 +26,43 @@ function Homepage() {
             wardrobe that seamlessly combines coziness with chic aesthetics.
           </p>
         </div>
-        <div>
-          <img className="size-96" src="./src/assets/img2.jpg"></img>
-          <p className="font-bold text-2xl">Cozy Breeze</p>
-          <p className="font-normal text-base">
-            Embrace the season with our carefully curated selection of garments,
-            each piece thoughtfully designed to blend fashion and functionality.
-            From cozy knits to elegant outerwear, our collection invites you to
-            indulge in the allure of winter fashion.
-          </p>
-          <button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
-            View more
-          </button>
+        <div className="relative">
+          <img
+            className="w-[575px] h-[500px] object-cover bg-gradient-to-t from-slate-900 to-transparent "
+            src="./src/assets/img2.jpg"
+          ></img>
+          <div className="absolute bottom-4 px-4 flex flex-col items-center text-white ">
+            <p className="font-bold text-2xl">Cozy Breeze</p>
+            <p className="font-normal text-base">
+              Embrace the season with our carefully curated selection of
+              garments, each piece thoughtfully designed to blend fashion and
+              functionality. From cozy knits to elegant outerwear, our
+              collection invites you to indulge in the allure of winter fashion.
+            </p>
+            <button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
+              View more
+            </button>
+          </div>
         </div>
-        <div>
+        <div className="relative">
+          <img
+            className="min-w-[575px] h-[500px] object-cover bg-gradient-to-t from-slate-900 to-transparent "
+            src="./src/assets/img2.jpg"
+          ></img>
+          <div className="absolute bottom-4 px-4 flex flex-col items-center text-white ">
+            <p className="font-bold text-2xl">Cozy Breeze</p>
+            <p className="font-normal text-base">
+              Embrace the season with our carefully curated selection of
+              garments, each piece thoughtfully designed to blend fashion and
+              functionality. From cozy knits to elegant outerwear, our
+              collection invites you to indulge in the allure of winter fashion.
+            </p>
+            <button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
+              View more
+            </button>
+          </div>
+        </div>
+        {/* <div>
           <img className="size-96" src="./src/assets/img3.jpg"></img>
           <p className="font-bold text-2xl">Flexi Move</p>
           <p className="font-normal text-base">
@@ -48,6 +74,13 @@ function Homepage() {
           <button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
             View more
           </button>
+        </div> */}
+      </div>
+
+      <div>
+        Feature
+        <div className="grid grid-cols-4 gap-10 mx-auto w-fit">
+          <ProductCard />
         </div>
       </div>
     </>
