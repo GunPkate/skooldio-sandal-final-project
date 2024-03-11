@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { UserContext } from "../../App"
 import { useContext } from "react"
+import  "./navbar.css"
 
 
 
@@ -24,6 +25,7 @@ export default function Navbar() {
         {value:"Shoes"},
         {value:"Accessories"},
     ]
+    const navHomeStyle = "text-white text-base my-auto "
     const navItemStyle = "text-white ml-6 text-base my-auto "
     const contentStyle = "flex items-center text-white "
     const cart = `
@@ -37,9 +39,9 @@ export default function Navbar() {
     }}>x</span>`
 
     return (
-    <div className={"bg-fixed bg-black lg:h-[60px] h-[56px]  w-full "+contentStyle}>
-        <div className="container ">
-            <Link className={navItemStyle} to={"/"}>
+    <div className={"bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] "+contentStyle}>
+        <div className="container">
+            <Link className={navHomeStyle} to={"/"}>
                 Home
             </Link>
             {categories? categories.map((item,id) => 
