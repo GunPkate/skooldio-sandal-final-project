@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import Products from "./pages/Products";
@@ -6,7 +6,9 @@ import Homepage from "./pages/Homepage";
 import Mycart from "./pages/Mycart";
 import ProductDetail from "./pages/ProductDetail";
 
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import UserContext from "./components/UserContext";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserContext>
+      <RouterProvider router={router} />
+    </UserContext>
+
   </React.StrictMode>
 );
