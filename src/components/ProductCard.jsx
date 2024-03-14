@@ -3,7 +3,17 @@ function numberWithCommas(number) {
 }
 
 const createStars = (amount) => {
-  return amount ? [...Array(amount)].map(() => <span>⭐</span>) : null;
+  if (amount) {
+    const fill = [...Array(amount)].map(() => (
+      <img src="src/assets/star-fill.svg" />
+    ));
+    const unstar = [...Array(5 - amount)].map(() => (
+      <img src="src/assets/star-grey.svg" />
+    ));
+    return [...fill, ...unstar];
+  } else {
+    return null;
+  }
 };
 
 function ProductCard({
