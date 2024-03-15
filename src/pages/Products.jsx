@@ -31,29 +31,21 @@ function Products() {
           </h1>
           <div className="relative flex w-auto justify-end items-center">
             <p className="font-semibold mr-2">Sort by</p>
-            <button onClick={() => setFilterOpen(true)}>
-              {filterOpen ? (
-                <>
-                  <img src="src/assets/Filter.svg" />
-                  <div className="absolute top-0 right-0 z-10 w-fit h-fit py-2 px-4 bg-white">
-                    <ul className="gap-2">
-                      <li className="my-2 mx-4">
-                        <a href="#" onClick={() => setFilterOpen(false)}>
-                          Filter 1
-                        </a>
-                      </li>
-                      <li className="my-2">Filter 2</li>
-                      <li className="my-2">Filter 3</li>
-                      <li className="my-2">Filter 4</li>
-                      <li className="my-2">Filter 5</li>
-                    </ul>
-                  </div>
-                </>
-              ) : (
-                <img src="src/assets/Filter.svg" />
-              )}
+            <button onClick={() => setFilterOpen(!filterOpen)}>
+              <img src="src/assets/Filter.svg" />
             </button>
           </div>
+          {filterOpen ? (
+            <div className="w-full py-2 px-4 bg-white">
+              <ul className="flex flex-col w-full gap-2 text-center">
+                {[...Array(5)].map((value, index) => (
+                  <li className="py-2 px-4 w-full hover:bg-primary-300 rounded-md">
+                    <a href="#">Filter {index + 1}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </header>
         {products.length > 0 ? (
           <section className="2xl:grid grid-cols-3 gap-x-10 gap-y-[60px] mb-40">
