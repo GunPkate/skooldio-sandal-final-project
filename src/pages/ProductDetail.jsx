@@ -1,10 +1,13 @@
-function ProductDetail() {
-    return (
-      <>
-        <h1>Hello</h1>
-      </>
-    );
-  }
-  
-  export default ProductDetail;
-  
+import Footer from "../components/Footer"
+import Navbar from "../components/Navbar/Navbar";
+
+
+export default function ProductDetail(){
+    return(
+        <div className="section">
+            <Navbar/>
+            <h1>Product Detail</h1>
+            <Footer/>
+        </div>
+    )
+}
