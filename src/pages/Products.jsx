@@ -1,66 +1,18 @@
-const ProductsDetail = [
-  {
-    name: "Item1",
-    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-    description: "Product description",
-    rating: 3,
-    discount: true,
-    originalPrice: 2000,
-    price: 1000,
-  },
-  {
-    name: "Item2",
-    image:
-      "https://fastly.picsum.photos/id/910/300/375.jpg?hmac=LoJqI1ntYFLS1kJGMkzHTTMcyKyR_z8FM-9JDahwjcQ",
-    description: "Product description",
-    rating: 4,
-    discount: false,
-    originalPrice: 2000,
-    price: 2000,
-  },
-  {
-    name: "Item3",
-    image:
-      "https://fastly.picsum.photos/id/878/200/300.jpg?hmac=nSy0W5kdisSxfmRdWV95EFyG0HgfqQzD9D2IkWG76ho",
-    description: "Product description",
-    rating: 5,
-    discount: true,
-    originalPrice: 3000,
-    price: 2000,
-  },
-  {
-    name: "Item4",
-    image:
-      "https://fastly.picsum.photos/id/6/200/300.jpg?hmac=a4Gfsl7hyAvOnmQtzoEkQmbiLJFl7otISIdoYQWqJCo",
-    description: "Product description",
-    rating: 2,
-    discount: true,
-    originalPrice: 2000,
-    price: 2000,
-  },
-];
-
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+
+import ProductsDetail from "../hooks/ProductDetailMock";
 
 function Products() {
   const [products, setProducts] = useState({});
   const [loading, setLoading] = useState(false);
-
-  const BASE_URL = "api.storefront.wdb.skooldio.dev/products";
+  const [filterOpen, setFilterOpen] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    fetch(BASE_URL)
-      .then((resp) => resp.json())
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
-      });
+    setProducts(ProductsDetail);
     setLoading(false);
   }, []);
-
-  console.log(products);
 
   return !loading ? (
     <div className="2xl:flex 2xl:h-fit 2xl:max-w-[1600px] justify-between mx-auto pt-24">
@@ -73,18 +25,39 @@ function Products() {
         <p>Catagory</p>
       </div>
       <div className="font-poppins flex flex-col items-center w-full 2xl:w-fit px-[18px]">
-        <header className="my-6 w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
-          <h1 className="font-bold w-full text-center 2xl:w-auto 2xl:my-0 2xl:text-4xl">
+        <header className="my-6 mb-[22px] w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
+          <h1 className="text-[32px] font-bold w-full text-center mb-10 2xl:w-auto 2xl:my-0 2xl:text-4xl">
             Woman's Cloth
           </h1>
-          <div className="flex w-auto justify-end">
-            <p className="font-semibold">Sort by</p>
-            <span>icon</span>
+          <div className="relative flex w-auto justify-end items-center">
+            <p className="font-semibold mr-2">Sort by</p>
+            <button onClick={() => setFilterOpen(true)}>
+              {filterOpen ? (
+                <>
+                  <img src="src/assets/Filter.svg" />
+                  <div className="absolute top-0 right-0 z-10 w-fit h-fit py-2 px-4 bg-white">
+                    <ul className="gap-2">
+                      <li className="my-2 mx-4">
+                        <a href="#" onClick={() => setFilterOpen(false)}>
+                          Filter 1
+                        </a>
+                      </li>
+                      <li className="my-2">Filter 2</li>
+                      <li className="my-2">Filter 3</li>
+                      <li className="my-2">Filter 4</li>
+                      <li className="my-2">Filter 5</li>
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <img src="src/assets/Filter.svg" />
+              )}
+            </button>
           </div>
         </header>
-        {ProductsDetail.length > 0 ? (
+        {products.length > 0 ? (
           <section className="2xl:grid grid-cols-3 gap-x-10 gap-y-[60px] mb-40">
-            {ProductsDetail.map((item, index) => (
+            {products.map((item, index) => (
               <ProductCard key={index} {...item} />
             ))}
           </section>
