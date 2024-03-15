@@ -49,16 +49,16 @@ function ProductCard({
           {discount ? (
             <div className="flex items-center gap-4 justify-end">
               <p className="font-semibold text-sm line-through text-secondary-700">
-                {numberWithCommas(originalPrice)}
+                {/* {numberWithCommas(originalPrice)} */}
               </p>
               <p className="font-bold text-2xl text-danger">
-                THB {numberWithCommas(price)}
+                {/* THB {numberWithCommas(price)} */}
               </p>
             </div>
           ) : (
             <div className="flex items-center gap-4 justify-end">
               <p className="font-bold text-2xl text-secondary">
-                THB {numberWithCommas(price)}
+                {/* THB {numberWithCommas(price)} */}
               </p>
             </div>
           )}
