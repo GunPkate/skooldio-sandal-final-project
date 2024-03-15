@@ -1,8 +1,10 @@
 import ProductCard from "../components/ProductCard";
+import Navbar from "../components/Navbar/Navbar";
 
 function Homepage() {
   return (
     <>
+      <Navbar />
       <div className="mb-16">
         <img
           className="h-[420px] w-full object-cover"
