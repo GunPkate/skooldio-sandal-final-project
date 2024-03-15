@@ -49,26 +49,26 @@ export default function Mycart(){
                                 <button className="bg-red-300" onClick={(e)=>{handleDelete(item)}}> delete </button>
                                 </div>
 
-                                <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex justify-between w-ful">
+                                <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex  w-ful">
                                    
                                     <div className="lg:flex sm:block w-ful">
                                         <div className="lg:mr-[16px]">
                                             <h1>Colors</h1>
-                                            <select className="lg:w-[7.24vw] sm:w-[88vw] h-[54px]">
+                                            <select className="lg:w-[7.24vw] w-full h-[54px]">
                                                 <option>Colors</option>
                                             </select>
                                         </div>
-                                            <div className="flex justify-between w-full">
+                                        <div className="flex justify-between w-full">
                                             <div className="mr-[16px]">
                                                 <h1>Size</h1>
-                                                <select className="lg:w-[7.24vw] sm:w-[43vw] h-[54px]">
+                                                <select className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]">
                                                     <option>Size</option>
                                                 </select>
                                             </div>
 
-                                            <div className="mr-[16px]">
+                                            <div >
                                                 <h1>Qty</h1>
-                                                <select className="lg:w-[7.24vw] sm:w-[43vw] h-[54px]">
+                                                <select className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]">
                                                     <option>Qty</option>
                                                 </select>
                                             </div>
@@ -90,7 +90,7 @@ export default function Mycart(){
                                 <div>
                                     <img className={"lg:px-[24px] pb-[24px] " + "object-cover  h-[209px] w-[209px] "} src={noItemImg} alt=""/>
                                     <h1 className="text-2xl font-bold mx-auto">Your cart is empty</h1>
-                                    <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]">Continue Shooping</button>
+                                    <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]">Continue Shoping</button>
                                 </div>
                             </div>
                         </>}
@@ -164,7 +164,7 @@ export default function Mycart(){
                                     </tbody>
                                 </table>
                                 <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]">Check Out</button>
-                                <button style={{width:"100%", border: "1pt solid black"}}  className="button h-[54px]">Continue Shooping</button>
+                                <button style={{width:"100%", border: "1pt solid black"}}  className="button h-[54px]">Continue Shoping</button>
 
                     </div>
                     </CardTemplate>
