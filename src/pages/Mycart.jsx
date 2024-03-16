@@ -25,24 +25,18 @@ export default function Mycart(){
     </>)
 
     const printInvoice = (e) => {
-        console.log(e)
         printdiv(e)
     }
 
     const printdiv = (elem) => {
-        // var header_str = '<html><head><title>' + document.title  + '</title></head><body>';
-        // var footer_str = '</body></html>';
-
         var invoice = document.getElementById(elem).innerHTML;
-
         
         invoice = invoice.replace(/(<button.*.\"\>)(.*)(<\/button>)/gi,"Thank You For your support")
         invoice = invoice.replace(/(h1)/gi,"h3")
         invoice = invoice.replace(/(h5)/gi,'h1 class="center"')
+        //Logo
         invoice = invoice.replace(/(<div class)/gi,'<img class="center" src="https://picsum.photos/100/100" alt=""/> <div class')
         invoice = invoice.replace(/(td style="width: 100%;)/gi,`td style="width: 80%;`)
-        console.log(invoice)
-
 
         var WinPrint = window.open('', '', 'left=0,top=0,toolbar=0,scrollbars=0,status=0');
         WinPrint.document.write(`
@@ -65,11 +59,6 @@ export default function Mycart(){
         WinPrint.focus();
         WinPrint.print();
         WinPrint.close();
-
-        
-        //reset browser
-        // document.body.innerHTML = old_str;
-
     }
 
     const noItemImg = "https://picsum.photos/200/300"
@@ -215,8 +204,16 @@ export default function Mycart(){
                                         </tr>         
                                     </tbody>
                                 </table>
-                                <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
-                                <button style={{width:"100%", border: "1pt solid black"}}  className="button h-[54px]">Continue Shoping</button>
+                                {userPurhcase.length ==0 ?
+                                <>
+                                    <button disabled={userPurhcase.length ==0} style={{width:"100%"}} className="button h-[54px] bg-[#E1E1E1] text-[#9F9F9F] mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
+                                    <button disabled={userPurhcase.length ==0} style={{width:"100%", border: "1pt solid #9F9F9F"}}  className="button h-[54px] text-[#9F9F9F]">Continue Shoping</button>
+                                </>
+                                :<>
+                                    <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
+                                    <button style={{width:"100%", border: "1pt solid black"}}  className="button h-[54px]">Continue Shoping</button>
+                                </>
+                                } 
 
                     </div>
                     </CardTemplate>
