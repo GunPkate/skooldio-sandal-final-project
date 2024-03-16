@@ -33,18 +33,42 @@ export default function Mycart(){
         // var header_str = '<html><head><title>' + document.title  + '</title></head><body>';
         // var footer_str = '</body></html>';
 
-        var new_str = document.getElementById(elem).innerHTML;
-        var old_str = document.body.innerHTML;
-        
-        new_str = new_str.replace(/(<button.*.\"\>)(.*)(<\/button>)/gi,"Thank You For your support")
-        console.log(new_str)
+        var invoice = document.getElementById(elem).innerHTML;
 
-        // document.body.innerHTML = header_str + new_str + footer_str;
-        document.body.innerHTML = new_str;
-        window.print();
+        
+        invoice = invoice.replace(/(<button.*.\"\>)(.*)(<\/button>)/gi,"Thank You For your support")
+        invoice = invoice.replace(/(h1)/gi,"h3")
+        invoice = invoice.replace(/(h5)/gi,'h1 class="center"')
+        invoice = invoice.replace(/(<div class)/gi,'<img class="center" src="https://picsum.photos/100/100" alt=""/> <div class')
+        invoice = invoice.replace(/(td style="width: 100%;)/gi,`td style="width: 80%;`)
+        console.log(invoice)
+
+
+        var WinPrint = window.open('', '', 'left=0,top=0,toolbar=0,scrollbars=0,status=0');
+        WinPrint.document.write(`
+        <style>
+            body {            
+                font-family: "Times New Roman"
+            }
+            h1 {align-self: center;}
+            .center {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .items-center {margin-left: 10%;}
+        </style>
+        `);
+        
+        WinPrint.document.write(invoice);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+
         
         //reset browser
-        document.body.innerHTML = old_str;
+        // document.body.innerHTML = old_str;
 
     }
 
@@ -155,12 +179,14 @@ export default function Mycart(){
                                             <h1>Subtotal</h1>
                                         </td>
                                         <td>
+                                            <h1>
                                             {userPurhcase.length > 1 ? 
                                                 userPurhcase.reduce((accumulator, currentValue) => 
                                                     accumulator + ( currentValue.price * currentValue.qty ), 0, 
                                                 )
                                                 : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 
                                             }
+                                            </h1>
                                         </td>
                                     </tr>
 
@@ -177,12 +203,14 @@ export default function Mycart(){
                                             <h1>Total</h1>
                                         </td>
                                         <td>
+                                            <h1>
                                             {userPurhcase.length > 1 ? 
                                                 userPurhcase.reduce((accumulator, currentValue) => 
-                                                    accumulator + ( currentValue.price * currentValue.qty ), 0, 
+                                                accumulator + ( currentValue.price * currentValue.qty ), 0, 
                                                 )
                                                 : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 
                                             }
+                                            </h1>
                                             </td>
                                         </tr>         
                                     </tbody>
