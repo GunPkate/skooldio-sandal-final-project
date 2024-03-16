@@ -67,23 +67,25 @@ export default function Navbar() {
             {/* <span>
                 Hello {userInfo.user}
             </span> */}
-            <span >
-                {userPurhcase.length}
-            </span>
+
             <Link className={navItemStyle} to={"/Mycart"}>
                 <div className="flex">
-                    <span dangerouslySetInnerHTML={{__html: `${cart}`}}></span>
-                    {userPurhcase.length>0?
-                    <span style={{
-                        height: "15px",
-                        width: "15px",
-                        background: "red",
-                        borderRadius: "50%",
-                        display: "inlineBlock",
-                        color:"red",
-                        overflow: "hidden"
-                    }}>x</span>
-                    :<></>}
+                    <div className="relative">
+                        <span className="absolute m-auto left-0 top-0.25 right-0 text-pink-600 text-xl text-center font-bold">
+                            {userPurhcase.length}
+                        </span>
+                        <span  dangerouslySetInnerHTML={{__html: `${cart}`}}></span>
+                    </div>
+                <span style={{
+                    height: "15px",
+                    width: "15px",
+                    background: "red",
+                    borderRadius: "50%",
+                    display: "inlineBlock",
+                    color:"red",
+                    opacity: `${userPurhcase.length>0?1 : 0.1 }`,
+                    overflow: "hidden"
+                }}>x</span>
                 </div>
             </Link>
         </div>
