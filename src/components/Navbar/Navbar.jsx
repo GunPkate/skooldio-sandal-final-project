@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom"
 import { UserContext } from "../../App"
-import { useContext } from "react"
+import { useContext,useEffect, useState } from "react"
 import  "./navbar.css"
-
-
-
+import axios from "axios"
 
 export default function Navbar() {
     // console.log(userData)
@@ -15,16 +13,27 @@ export default function Navbar() {
     // const logOut = () => {
     //     setUserInfo({user:""})   
     // }
+    useEffect(()=>{getCategories()},[])
     
+    const getCategories = async () => {
+        await axios.get("https://api.storefront.wdb.skooldio.dev/categories").then(res=>{
+            let data = res.data
+            // let data = res.data.map(item=>item.name)
+            console.log(data)
+            setCategories(data)
+        }).catch(err)
+    }
+
+    const [categories,setCategories] = useState([])
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
 
-    const categories = [
-        {value:"Men"},
-        {value:"Women"},
-        {value:"Kids"},
-        {value:"Shoes"},
-        {value:"Accessories"},
-    ]
+    // const categories = [
+    //     {value:"Men"},
+    //     {value:"Women"},
+    //     {value:"Kids"},
+    //     {value:"Shoes"},
+    //     {value:"Accessories"},
+    // ]
     const navHomeStyle = "text-white text-base my-auto "
     const navItemStyle = "text-white ml-6 text-base my-auto "
     const contentStyle = "flex items-center text-white "
@@ -45,9 +54,9 @@ export default function Navbar() {
                 Home
             </Link>
             {categories? categories.map((item,id) => 
-                    <Link key={id+1} to={`/Products/?=${item.value}`} className={navItemStyle}>
+                    <Link key={id+1} to={`/Products/?=${item.name}`} className={navItemStyle}>
                         <span>                        
-                            {item.value}
+                            {item.name}
                         </span>
                     </Link>
 
