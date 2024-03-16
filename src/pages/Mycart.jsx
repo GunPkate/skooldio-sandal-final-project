@@ -18,11 +18,35 @@ export default function Mycart(){
     const marginLgStyle = " lg: p-[24px] "
     const marginStyle = " p-[16px] "
     const CardTemplate = ({ title, width, height, children, ml, mr}) => (<>
-        <div className={"itemList bg-white min-h-[80vh] "+ width + height + ml + mr}>
+        <div id={title} className={"itemList bg-white min-h-[80vh] "+ width + height + ml + mr}>
             <h5 className={marginLgStyle+ " text-2xl font-bold tracking-tight text-gray-900 dark:text-white"}> {title} </h5>
                 {children}
         </div>
     </>)
+
+    const printInvoice = (e) => {
+        console.log(e)
+        printdiv(e)
+    }
+
+    const printdiv = (elem) => {
+        // var header_str = '<html><head><title>' + document.title  + '</title></head><body>';
+        // var footer_str = '</body></html>';
+
+        var new_str = document.getElementById(elem).innerHTML;
+        var old_str = document.body.innerHTML;
+        
+        new_str = new_str.replace(/(<button.*.\"\>)(.*)(<\/button>)/gi,"Thank You For your support")
+        console.log(new_str)
+
+        // document.body.innerHTML = header_str + new_str + footer_str;
+        document.body.innerHTML = new_str;
+        window.print();
+        
+        //reset browser
+        document.body.innerHTML = old_str;
+
+    }
 
     const noItemImg = "https://picsum.photos/200/300"
 
@@ -163,7 +187,7 @@ export default function Mycart(){
                                         </tr>         
                                     </tbody>
                                 </table>
-                                <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]">Check Out</button>
+                                <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
                                 <button style={{width:"100%", border: "1pt solid black"}}  className="button h-[54px]">Continue Shoping</button>
 
                     </div>
