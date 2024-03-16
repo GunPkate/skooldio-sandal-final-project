@@ -56,10 +56,11 @@ function App() {
           image: "https://picsum.photos/200/300",
         },
     ]
-  const [userInfo,setUserInfo] = useState({user:""});
+  // const [userInfo,setUserInfo] = useState({user:""});
   const [userPurhcase,setuserPurhcase] = useState(items);
   return (
-    <UserContext.Provider value={{userInfo,setUserInfo,userPurhcase,setuserPurhcase}}>
+    <UserContext.Provider value={{userPurhcase,setuserPurhcase}}>
+    {/* <UserContext.Provider value={{userInfo,setUserInfo,userPurhcase,setuserPurhcase}}> */}
       <RouterProvider router={router}/>
     </UserContext.Provider>
   );

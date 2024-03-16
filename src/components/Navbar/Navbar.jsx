@@ -8,13 +8,13 @@ import  "./navbar.css"
 
 export default function Navbar() {
     // console.log(userData)
-    const {userInfo,setUserInfo} = useContext(UserContext)
-    const logIn = () =>{
-        setUserInfo({user:"Gun P"})
-    }
-    const logOut = () => {
-        setUserInfo({user:""})   
-    }
+    // const {userInfo,setUserInfo} = useContext(UserContext)
+    // const logIn = () =>{
+    //     setUserInfo({user:"Gun P"})
+    // }
+    // const logOut = () => {
+    //     setUserInfo({user:""})   
+    // }
     
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
 
@@ -60,13 +60,13 @@ export default function Navbar() {
         </div>
 
         <div className={contentStyle}>
-            {userInfo.user === "" || userInfo.user === null ?
+            {/* {userInfo.user === "" || userInfo.user === null ?
                 <button onClick={logIn}>   Log in          </button>:
                 <button onClick={logOut}>   Log out          </button>
-            }
-            <span>
+            } */}
+            {/* <span>
                 Hello {userInfo.user}
-            </span>
+            </span> */}
             <span >
                 {userPurhcase.length}
             </span>
