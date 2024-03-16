@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
 import { UserContext } from "../../App"
-import { useContext,useEffect, useState } from "react"
+import { useContext} from "react"
 import  "./navbar.css"
-import axios from "axios"
+
 
 export default function Navbar() {
     // console.log(userData)
@@ -13,19 +13,10 @@ export default function Navbar() {
     // const logOut = () => {
     //     setUserInfo({user:""})   
     // }
-    useEffect(()=>{getCategories()},[])
-    
-    const getCategories = async () => {
-        await axios.get("https://api.storefront.wdb.skooldio.dev/categories").then(res=>{
-            let data = res.data
-            // let data = res.data.map(item=>item.name)
-            console.log(data)
-            setCategories(data)
-        }).catch(err)
-    }
-
-    const [categories,setCategories] = useState([])
-    const {userPurhcase,setuserPurhcase} = useContext(UserContext)
+    const {
+        userPurhcase,setuserPurhcase,
+        categories,setCategories
+    } = useContext(UserContext)
 
     // const categories = [
     //     {value:"Men"},

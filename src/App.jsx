@@ -1,6 +1,4 @@
-import { createContext, useContext, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { createContext, useState, useEffect } from "react";
 import "./App.css";
 
 import Homepage from "./pages/Homepage";
@@ -9,6 +7,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Mycart from "./pages/Mycart";
 
 import { createBrowserRouter, Link, RouterProvider, BrowserRouter } from "react-router-dom";
+import axios from "axios";
 
 export const UserContext = createContext();
 
@@ -58,8 +57,29 @@ function App() {
     ]
   // const [userInfo,setUserInfo] = useState({user:""});
   const [userPurhcase,setuserPurhcase] = useState(items);
+  const [categories,setCategories] = useState([]);
+
+  useEffect(()=>{getCategories()},[])
+    
+  const getCategories = async () => {
+      try {
+          await axios.get("https://api.storefront.wdb.skooldio.dev/categories").then(res=>{
+              let data = res.data
+              // let data = res.data.map(item=>item.name)
+              // console.log(data)
+              setCategories(data)
+          })
+      } catch (error) {
+          console.log(error)
+      }
+
+  }
+
   return (
-    <UserContext.Provider value={{userPurhcase,setuserPurhcase}}>
+    <UserContext.Provider value={{
+      userPurhcase,setuserPurhcase,
+      categories,setCategories
+    }}>
     {/* <UserContext.Provider value={{userInfo,setUserInfo,userPurhcase,setuserPurhcase}}> */}
       <RouterProvider router={router}/>
     </UserContext.Provider>
