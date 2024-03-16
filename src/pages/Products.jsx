@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 
-import ProductsDetail from "../hooks/ProductDetailMock";
-
 function Products() {
   const [products, setProducts] = useState({});
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
 
+  const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
+
   useEffect(() => {
     setLoading(true);
-    setProducts(ProductsDetail);
-    setLoading(false);
+    fetch(`${BASE_URL}products`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.data);
+        setLoading(false);
+      });
   }, []);
+
+  console.log(products);
 
   return !loading ? (
     <div className="2xl:flex 2xl:h-fit 2xl:max-w-[1600px] justify-between mx-auto pt-24">
