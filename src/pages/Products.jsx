@@ -53,19 +53,21 @@ function Products() {
         <p>Catagory</p>
       </div>
       <div className="font-poppins flex flex-col items-center w-full 2xl:w-fit px-[18px]">
-        <header className="my-6 mb-[22px] w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
-          <h1 className="text-[32px] font-bold w-full text-center mb-10 2xl:w-auto 2xl:my-0 2xl:text-4xl">
-            Woman's Cloth
-          </h1>
-          <div className="relative flex w-auto justify-end items-center">
-            <p className="font-semibold mr-2">Sort by</p>
-            <button onClick={() => setFilterOpen(!filterOpen)}>
-              <img src="src/assets/Filter.svg" />
-            </button>
+        <header>
+          <div className="my-6 mb-[22px] w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
+            <h1 className="text-[32px] font-bold w-full text-center mb-10 2xl:w-auto 2xl:my-0 2xl:text-4xl">
+              Woman's Cloth
+            </h1>
+            <div className="relative flex w-auto justify-end items-center">
+              <p className="font-semibold mr-2">Sort by</p>
+              <button onClick={() => setFilterOpen(!filterOpen)}>
+                <img src="src/assets/Filter.svg" />
+              </button>
+            </div>
           </div>
           {filterOpen ? (
             <div className="w-full py-2 px-4 bg-white">
-              <ul className="flex flex-col w-full gap-2 text-center">
+              <ul className="flex flex-col w-full gap-2 text-center 2xl:grid 2xl:grid-cols-3 2xl:gap-x-auto gap-y-4">
                 {[...Array(5)].map((value, index) => (
                   <li className="py-2 px-4 w-full hover:bg-primary-300 rounded-md">
                     <a href="#">Filter {index + 1}</a>
