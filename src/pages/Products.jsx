@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 
 function Products() {
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
 
@@ -18,19 +18,21 @@ function Products() {
       });
   }, []);
 
-  console.log(products);
-
   const catagoriesInclude = ["all-ladies"];
-  const categoriesExclude = ["ladies-shoes"];
+  const categoriesExclude = ["ladies-shoes", "ladies-accessories"];
 
-  const item = products
-    .filter((item) => {
-      return catagoriesInclude.some((r) => item.categories.includes(r));
-    })
-    .filter((item) => {
-      return !categoriesExclude.some((r) => item.categories.includes(r));
-    })
-    .map((item, index) => <ProductCard key={index} {...item} />);
+  let item = [];
+
+  if (products) {
+    item = products
+      .filter((item) => {
+        return catagoriesInclude.some((r) => item.categories.includes(r));
+      })
+      .filter((item) => {
+        return !categoriesExclude.some((r) => item.categories.includes(r));
+      })
+      .map((item, index) => <ProductCard key={index} {...item} />);
+  }
 
   return !loading ? (
     <div className="2xl:flex 2xl:h-fit 2xl:max-w-[1600px] justify-between mx-auto pt-24">
