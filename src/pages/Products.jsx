@@ -20,6 +20,18 @@ function Products() {
 
   console.log(products);
 
+  const catagoriesInclude = ["all-ladies"];
+  const categoriesExclude = ["ladies-shoes"];
+
+  const item = products
+    .filter((item) => {
+      return catagoriesInclude.some((r) => item.categories.includes(r));
+    })
+    .filter((item) => {
+      return !categoriesExclude.some((r) => item.categories.includes(r));
+    })
+    .map((item, index) => <ProductCard key={index} {...item} />);
+
   return !loading ? (
     <div className="2xl:flex 2xl:h-fit 2xl:max-w-[1600px] justify-between mx-auto pt-24">
       <div className="hidden 2xl:flex 2xl:flex-col 2xl:w-[280px] 2xl:min-h-max text-secondary font-semibold px-4 gap-4">
@@ -53,11 +65,12 @@ function Products() {
             </div>
           ) : null}
         </header>
-        {products.length > 0 ? (
+        <div className="flex w-[370px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
+          <h2>Found {item.length}</h2>
+        </div>
+        {item.length > 0 ? (
           <section className="2xl:grid grid-cols-3 gap-x-10 gap-y-[60px] mb-40">
-            {products.map((item, index) => (
-              <ProductCard key={index} {...item} />
-            ))}
+            {item}
           </section>
         ) : (
           <div className="flex w-full h-[800px] py-auto justify-center items-center">
