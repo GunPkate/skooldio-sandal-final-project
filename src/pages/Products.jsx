@@ -67,10 +67,19 @@ function Products() {
           </div>
           {filterOpen ? (
             <div className="w-full py-2 px-4 bg-white">
-              <ul className="flex flex-col w-full gap-2 text-center 2xl:grid 2xl:grid-cols-3 2xl:gap-x-auto gap-y-4">
+              <ul class="grid w-full gap-6 lg:grid-cols-3 lg:gap-y-2">
                 {[...Array(5)].map((value, index) => (
-                  <li className="py-2 px-4 w-full hover:bg-primary-300 rounded-md">
-                    <a href="#">Filter {index + 1}</a>
+                  <li className="py-3 px-6 w-full hover:bg-primary-300 rounded-md text-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id={`filter${index}`}
+                      value=""
+                      className="hidden"
+                      required=""
+                    />
+                    <label for={`filter${index}`} className="font-semibold">
+                      Filter {index + 1}
+                    </label>
                   </li>
                 ))}
               </ul>
