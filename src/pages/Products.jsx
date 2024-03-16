@@ -5,6 +5,8 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [catagoriesInclude, setCatagoriesInclude] = useState([]);
+  const [categoriesExclude, setCategoriesExclude] = useState([]);
 
   const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
 
@@ -18,18 +20,24 @@ function Products() {
       });
   }, []);
 
-  const catagoriesInclude = ["all-ladies"];
-  const categoriesExclude = ["ladies-shoes", "ladies-accessories"];
+  useEffect(() => {
+    setCatagoriesInclude(["all-ladies"]);
+    setCategoriesExclude(["ladies-shoes", "ladies-accessories"]);
+  }, []);
 
   let item = [];
 
   if (products) {
     item = products
       .filter((item) => {
-        return catagoriesInclude.some((r) => item.categories.includes(r));
+        return catagoriesInclude.some((category) =>
+          item.categories.includes(category)
+        );
       })
       .filter((item) => {
-        return !categoriesExclude.some((r) => item.categories.includes(r));
+        return !categoriesExclude.some((category) =>
+          item.categories.includes(category)
+        );
       })
       .map((item, index) => <ProductCard key={index} {...item} />);
   }
