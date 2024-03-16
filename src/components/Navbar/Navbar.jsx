@@ -45,12 +45,11 @@ export default function Navbar() {
                 Home
             </Link>
             {categories? categories.map((item,id) => 
+                <span className="flex md:inline-flex"> 
                     <Link key={id+1} to={`/Products/?=${item.name}`} className={navItemStyle}>
-                        <span>                        
-                            {item.name}
-                        </span>
+                        {item.name}
                     </Link>
-
+                </span>
                 ): <></>}
            {/* 
             <Link className={navItemStyle} to={"/Productdetail"}>
