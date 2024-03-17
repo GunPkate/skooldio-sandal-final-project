@@ -66,7 +66,7 @@ function Products() {
             <div className="relative flex w-auto justify-end items-center">
               <p className="font-semibold mr-2">Sort by</p>
               <button onClick={() => setFilterOpen(!filterOpen)}>
-                <img src="src/assets/Filter.svg" />
+                <img src="../src/assets/Filter.svg" />
               </button>
             </div>
           </div>
