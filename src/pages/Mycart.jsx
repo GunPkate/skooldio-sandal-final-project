@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar/Navbar";
 import { UserContext } from "../App"
+import axios from "axios";
 
 
 export default function Mycart(){
@@ -13,20 +14,39 @@ export default function Mycart(){
         // console.log(e)
         setuserPurhcase(tempData)
         localStorage.setItem('myCart',JSON.stringify(userPurhcase))
+        // axios.delete('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemId',)
     }
 
     localStorage.setItem('id',1234)
     const handleUpdateCart = (item, name,value) => {
         let tempData = userPurhcase
-        console.log("item",item)
-        console.log(name)
-        console.log("value",value)
+        // console.log("item",item)
+        // console.log(name)
+        // console.log("value",value)
         tempData[item.id-1][`${name}`] = value 
 
         console.log(JSON.stringify(tempData[item.id-1]))
+        const qtyData = { quantity: tempData[item.id-1][`${name}`], skuCode: "123" }
 
+        console.log(qtyData)
         setuserPurhcase(tempData)
         localStorage.setItem('myCart',JSON.stringify(userPurhcase))
+
+        switch (name){
+            case 'quantity': 
+                // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
+                console.log('qty')
+                break;
+            case 'colors': 
+                // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
+                console.log('colors here')
+                break;
+            case 'size': 
+                // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
+                console.log('size 3')
+                break;
+        }
+        // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData)
     }
 
     const marginLgStyle = " lg: p-[24px] "
