@@ -82,7 +82,7 @@ function Homepage() {
       <div>
         Feature
         <div className="grid grid-cols-4 gap-10 mx-auto w-fit">
-          <ProductCard />
+          {/* <ProductCard /> */}
         </div>
       </div>
     </>
