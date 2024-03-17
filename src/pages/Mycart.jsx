@@ -9,10 +9,24 @@ export default function Mycart(){
 
     const handleDelete = (e) => {
         let tempData = userPurhcase.filter(data=>data !== e)
-        console.log(tempData)
-        console.log(e)
+        // console.log(tempData)
+        // console.log(e)
         setuserPurhcase(tempData)
+        localStorage.setItem('myCart',JSON.stringify(userPurhcase))
+    }
 
+    localStorage.setItem('id',1234)
+    const handleUpdateCart = (item, name,value) => {
+        let tempData = userPurhcase
+        console.log("item",item)
+        console.log(name)
+        console.log("value",value)
+        tempData[item.id-1][`${name}`] = value 
+
+        console.log(JSON.stringify(tempData[item.id-1]))
+
+        setuserPurhcase(tempData)
+        localStorage.setItem('myCart',JSON.stringify(userPurhcase))
     }
 
     const marginLgStyle = " lg: p-[24px] "
@@ -91,22 +105,31 @@ export default function Mycart(){
                                     <div className="lg:flex sm:block w-ful">
                                         <div className="lg:mr-[16px]">
                                             <h1>Colors</h1>
-                                            <select className="lg:w-[7.24vw] w-full h-[54px]">
-                                                <option>Colors</option>
+                                            <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'colors', e.target.value)}}>
+                                                <option disabled>Colors</option>
+                                                <option>Blue</option>
+                                                <option>Green</option>
+
                                             </select>
                                         </div>
                                         <div className="flex justify-between w-full">
                                             <div className="mr-[16px]">
                                                 <h1>Size</h1>
-                                                <select className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]">
-                                                    <option>Size</option>
+                                                <select name="size" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'size', e.target.value)}}>
+                                                    <option disabled>Size</option>
+                                                    <option>S</option>
+                                                    <option>M</option>
+                                                    <option>L</option>
                                                 </select>
                                             </div>
 
                                             <div >
                                                 <h1>Qty</h1>
-                                                <select className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]">
+                                                <select name="quantity" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'quantity', e.target.value)}}>
                                                     <option>Qty</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -114,7 +137,7 @@ export default function Mycart(){
 
                                     
                                     <div style={{width: "100%"}} className={ "align-baseline " + "mt-auto text-2xl font-bold  text-gray-900 dark:text-white flex w-ful"} >
-                                        <h5 className="ml-auto"> {item.price * item.qty} THB </h5>
+                                        <h5 className="ml-auto"> {item.price * item.quantity} THB </h5>
                                     </div>
 
                                 </div>
@@ -149,7 +172,7 @@ export default function Mycart(){
                                                     <h1>{item.name}</h1>
                                                 </td>
                                                 <td>    
-                                                    <h1>{item.qty * item.price}</h1>
+                                                    <h1>{item.quantity * item.price}</h1>
                                                 </td>
                                             </tr> 
                                                 
@@ -157,7 +180,7 @@ export default function Mycart(){
                                         :                              
                                         <tr>
                                             <td style={{width:"100%"}}>    
-                                                No Item
+                                                <h1>No Item</h1>
                                             </td>
         
                                         </tr> 
@@ -171,9 +194,9 @@ export default function Mycart(){
                                             <h1>
                                             {userPurhcase.length > 1 ? 
                                                 userPurhcase.reduce((accumulator, currentValue) => 
-                                                    accumulator + ( currentValue.price * currentValue.qty ), 0, 
+                                                    accumulator + ( currentValue.price * currentValue.quantity ), 0, 
                                                 )
-                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 
+                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].quantity :0 
                                             }
                                             </h1>
                                         </td>
@@ -195,9 +218,9 @@ export default function Mycart(){
                                             <h1>
                                             {userPurhcase.length > 1 ? 
                                                 userPurhcase.reduce((accumulator, currentValue) => 
-                                                accumulator + ( currentValue.price * currentValue.qty ), 0, 
+                                                accumulator + ( currentValue.price * currentValue.quantity ), 0, 
                                                 )
-                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].qty :0 
+                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].quantity :0 
                                             }
                                             </h1>
                                             </td>

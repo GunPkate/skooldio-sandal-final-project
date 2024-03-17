@@ -18,13 +18,6 @@ export default function Navbar() {
         categories,setCategories
     } = useContext(UserContext)
 
-    // const categories = [
-    //     {value:"Men"},
-    //     {value:"Women"},
-    //     {value:"Kids"},
-    //     {value:"Shoes"},
-    //     {value:"Accessories"},
-    // ]
     const navHomeStyle = "text-white text-base my-auto "
     const navItemStyle = "text-white ml-6 text-base my-auto "
     const contentStyle = "flex items-center text-white "
