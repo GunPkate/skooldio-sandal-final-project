@@ -45,8 +45,9 @@ function Products() {
       .map((item, index) => <ProductCard key={index} {...item} />);
   }
 
-  return !loading ? (<>
+  return <>
     <Navbar/>
+    {!loading ? (<>
     <div className="2xl:flex 2xl:h-fit 2xl:max-w-[1600px] justify-between mx-auto pt-24">
       <div className="hidden 2xl:flex 2xl:flex-col 2xl:w-[280px] 2xl:min-h-max text-secondary font-semibold px-4 gap-4">
         <h1 className="font-bold">Tops</h1>
@@ -106,7 +107,9 @@ function Products() {
     </div>
   </>) : (
     <>Loading</>
-  );
+  )
+  }
+  </>
 }
 
 export default Products;
