@@ -6,10 +6,10 @@ const createStars = (rating) => {
   const amount = Math.floor(rating);
   if (amount) {
     const fill = [...Array(amount)].map(() => (
-      <img src="src/assets/star-fill.svg" key={Math.random()} />
+      <img src="../src/assets/star-fill.svg" key={Math.random()} />
     ));
     const unstar = [...Array(5 - amount)].map(() => (
-      <img src="src/assets/star-grey.svg" key={Math.random()} />
+      <img src="../src/assets/star-grey.svg" key={Math.random()} />
     ));
     return [...fill, ...unstar];
   } else {
@@ -28,16 +28,20 @@ function ProductCard({
 }) {
   const discount = promotionalPrice < price ? true : false;
   return (
-    <div className="mb-10 2xl:mb-0" key={id}>
+    <a
+      href={`/productDetail/${id}`}
+      className="mb-10 p-2 transition-all 2xl:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg"
+      key={id}
+    >
       <div className="relative">
         {discount && (
-          <p className="font-light text-white py-1 px-[10px] bg-danger w-fit absolute top-6 right-0">
+          <p className="font-light text-white py-1 px-[10px] bg-danger w-fit absolute top-6 right-[-8px]">
             -{Math.round(((price - promotionalPrice) / price) * 100)}%
           </p>
         )}
         <img
           src={imageUrls[0]}
-          className="h-[370px] min-w-[340px] 2xl:min-w-[370px] object-cover mb-6"
+          className="h-[370px] mx-[-8px] min-w-[340px] 2xl:min-w-[386px] object-cover mb-6 hover:rounded-t-xl"
           alt={`${name}`}
         />
       </div>
@@ -51,7 +55,7 @@ function ProductCard({
         <div className="flex gap-[10px]">{createStars(ratings)}</div>
         <div>
           {discount ? (
-            <div className="flex items-center gap-4 justify-end">
+            <div className="flex items-center gap-4 justify-end mb-2">
               <p className="font-semibold text-sm line-through text-secondary-700">
                 {numberWithCommas(price)}
               </p>
@@ -68,7 +72,7 @@ function ProductCard({
           )}
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 

@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.section {
+    min-height: 80vh;
+    background-color: azure;
+}

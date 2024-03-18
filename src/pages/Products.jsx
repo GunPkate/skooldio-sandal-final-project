@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 
+// import ProductsDetail from "../hooks/ProductDetailMock";
+import Navbar from "../components/Navbar/Navbar";
+
 function Products() {
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [catagoriesInclude, setCatagoriesInclude] = useState([]);
+  const [categoriesExclude, setCategoriesExclude] = useState([]);
 
   const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
 
@@ -18,21 +23,31 @@ function Products() {
       });
   }, []);
 
-  console.log(products);
+  useEffect(() => {
+    setCatagoriesInclude(["all-ladies"]);
+    setCategoriesExclude(["ladies-shoes", "ladies-accessories"]);
+  }, []);
 
-  const catagoriesInclude = ["all-ladies"];
-  const categoriesExclude = ["ladies-shoes"];
+  let item = [];
 
-  const item = products
-    .filter((item) => {
-      return catagoriesInclude.some((r) => item.categories.includes(r));
-    })
-    .filter((item) => {
-      return !categoriesExclude.some((r) => item.categories.includes(r));
-    })
-    .map((item, index) => <ProductCard key={index} {...item} />);
+  if (products) {
+    item = products
+      .filter((item) => {
+        return catagoriesInclude.some((category) =>
+          item.categories.includes(category)
+        );
+      })
+      .filter((item) => {
+        return !categoriesExclude.some((category) =>
+          item.categories.includes(category)
+        );
+      })
+      .map((item, index) => <ProductCard key={index} {...item} />);
+  }
 
-  return !loading ? (
+  return <>
+    <Navbar/>
+    {!loading ? (<>
     <div className="2xl:flex 2xl:h-fit 2xl:max-w-[1600px] justify-between mx-auto pt-24">
       <div className="hidden 2xl:flex 2xl:flex-col 2xl:w-[280px] 2xl:min-h-max text-secondary font-semibold px-4 gap-4">
         <h1 className="font-bold">Tops</h1>
@@ -43,22 +58,33 @@ function Products() {
         <p>Catagory</p>
       </div>
       <div className="font-poppins flex flex-col items-center w-full 2xl:w-fit px-[18px]">
-        <header className="my-6 mb-[22px] w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
-          <h1 className="text-[32px] font-bold w-full text-center mb-10 2xl:w-auto 2xl:my-0 2xl:text-4xl">
-            Woman's Cloth
-          </h1>
-          <div className="relative flex w-auto justify-end items-center">
-            <p className="font-semibold mr-2">Sort by</p>
-            <button onClick={() => setFilterOpen(!filterOpen)}>
-              <img src="src/assets/Filter.svg" />
-            </button>
+        <header>
+          <div className="my-6 mb-[22px] w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
+            <h1 className="text-[32px] font-bold w-full text-center mb-10 2xl:w-auto 2xl:my-0 2xl:text-4xl">
+              Woman's Cloth
+            </h1>
+            <div className="relative flex w-auto justify-end items-center">
+              <p className="font-semibold mr-2">Sort by</p>
+              <button onClick={() => setFilterOpen(!filterOpen)}>
+                <img src="../src/assets/Filter.svg" />
+              </button>
+            </div>
           </div>
           {filterOpen ? (
             <div className="w-full py-2 px-4 bg-white">
-              <ul className="flex flex-col w-full gap-2 text-center">
+              <ul class="grid w-full gap-6 lg:grid-cols-3 lg:gap-y-2">
                 {[...Array(5)].map((value, index) => (
-                  <li className="py-2 px-4 w-full hover:bg-primary-300 rounded-md">
-                    <a href="#">Filter {index + 1}</a>
+                  <li className="py-3 px-6 w-full hover:bg-primary-300 rounded-md text-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id={`filter${index}`}
+                      value=""
+                      className="hidden"
+                      required=""
+                    />
+                    <label for={`filter${index}`} className="font-semibold">
+                      Filter {index + 1}
+                    </label>
                   </li>
                 ))}
               </ul>
@@ -79,9 +105,11 @@ function Products() {
         )}
       </div>
     </div>
-  ) : (
+  </>) : (
     <>Loading</>
-  );
+  )
+  }
+  </>
 }
 
 export default Products;
