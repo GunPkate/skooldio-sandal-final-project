@@ -13,12 +13,6 @@ import ProductsByCategories from "./pages/ProductsByCategories";
 
 export const UserContext = createContext();
 
-function getCat() {
-  // const {Categories} = useParams();
-  let Categories = ""
-  return Categories;
-}
-
 const router = createBrowserRouter([
   {
     path: "/",
