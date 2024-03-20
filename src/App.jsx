@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     element: <Products/>,
     children: [
       {
-        path: "/Products/:Name/:Categories",
+        path: "/Products/:Categories",
         // element: <ProductsByCategories cat={getCat()}/>
         element: <ProductsByCategories/>
       }
