@@ -53,9 +53,9 @@ function Products() {
     <>
       <Navbar />
       {!loading ? (
-        <>
-          <div className="2xl:flex 2xl:h-fit 2xl:max-w-[1600px] justify-between mx-auto pt-24">
-            <div className="hidden 2xl:flex 2xl:flex-col 2xl:w-[280px] 2xl:min-h-max text-secondary font-semibold px-4 gap-4">
+        <div className="flex justify-center">
+          <div className="lg:flex lg:h-fit lg:max-w-[1600px] 2xl:justify-between px-auto pt-24">
+            <div className="hidden 2xl:flex lg:flex-col lg:w-[280px] lg:min-h-max text-secondary font-semibold px-4 gap-4">
               <h1 className="font-bold">Tops</h1>
               <p className="text-primary">Catagory</p>
               <p>Catagory</p>
@@ -63,10 +63,10 @@ function Products() {
               <p>Catagory</p>
               <p>Catagory</p>
             </div>
-            <div className="font-poppins flex flex-col items-center w-full 2xl:w-fit px-[18px]">
-              <header>
-                <div className="my-6 mb-[22px] w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
-                  <h1 className="text-[32px] font-bold w-full text-center mb-10 2xl:w-auto 2xl:my-0 2xl:text-4xl">
+            <div className="font-poppins flex flex-col items-center w-full lg:w-fit px-[18px]">
+              <header className="lg:w-full">
+                <div className="my-6 mb-[22px] w-[340px] lg:flex lg:items-center lg:justify-between lg:mb-16 lg:w-full ">
+                  <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
                     Woman's Cloth
                   </h1>
                   <div className="relative flex w-auto justify-end items-center">
@@ -79,20 +79,24 @@ function Products() {
                 {filterOpen ? (
                   <div className="w-full py-2 px-4 bg-white">
                     <ul class="grid w-full gap-6 lg:grid-cols-3 lg:gap-y-2">
-                      {[...Array(5)].map((value, index) => (
-                        <li className="py-3 px-6 w-full hover:bg-primary-300 rounded-md text-center cursor-pointer">
+                      {[
+                        "Price - Low to high",
+                        "Price - High to low",
+                        "Rating",
+                      ].map((value, index) => (
+                        <li
+                          className="py-3 px-6 w-full hover:bg-primary-300 rounded-md text-center cursor-pointer"
+                          key={index}
+                        >
                           <input
                             type="checkbox"
-                            id={`filter${index}`}
+                            id={value}
                             value=""
                             className="hidden"
                             required=""
                           />
-                          <label
-                            for={`filter${index}`}
-                            className="font-semibold"
-                          >
-                            Filter {index + 1}
+                          <label for={value} className="font-semibold">
+                            {value}
                           </label>
                         </li>
                       ))}
@@ -100,11 +104,11 @@ function Products() {
                   </div>
                 ) : null}
               </header>
-              <div className="flex w-[370px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
+              <div className="flex w-[340px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
                 <h2>Found {item.length}</h2>
               </div>
               {item.length > 0 ? (
-                <section className="2xl:grid grid-cols-3 gap-x-10 gap-y-[60px] mb-40">
+                <section className="lg:grid lg:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-[60px] mb-40">
                   {item}
                 </section>
               ) : (
@@ -114,7 +118,7 @@ function Products() {
               )}
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <>Loading</>
       )}
