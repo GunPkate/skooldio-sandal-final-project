@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 // import ProductsDetail from "../hooks/ProductDetailMock";
 import Navbar from "../components/Navbar/Navbar";
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -63,6 +63,7 @@ function Products() {
         <p>Catagory</p>
       </div>
       <div className="font-poppins flex flex-col items-center w-full 2xl:w-fit px-[18px]">
+        <Outlet/>
         <header>
           <div className="my-6 mb-[22px] w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
             <h1 className="text-[32px] font-bold w-full text-center mb-10 2xl:w-auto 2xl:my-0 2xl:text-4xl">
@@ -115,6 +116,8 @@ function Products() {
   )
   }
   </>
+
+
 }
 
 export default Products;

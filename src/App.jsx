@@ -8,9 +8,10 @@ import Mycart from "./pages/Mycart";
 
 import { createBrowserRouter, Link, RouterProvider, BrowserRouter } from "react-router-dom";
 import axios from "axios";
+import ProductCard from "./components/ProductCard";
+import ProductsByCategories from "./pages/ProductsByCategories";
 
 export const UserContext = createContext();
-
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/Products",
-    element: <Products/>
+    element: <Products/>,
+    children: [
+      {
+        path: "/Products/Categories",
+        element: <ProductsByCategories/>
+      }
+    ]
   },
   {
     path: "/Mycart",
