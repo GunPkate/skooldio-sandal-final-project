@@ -59,14 +59,14 @@ function App() {
 
   const [userPurhcase,setuserPurhcase] = useState(items);
   const [categories,setCategories] = useState([
-    {name:"Men"},
-    {name:"Women"},
-    {name:"Kids"},
-    {name:"Shoes"},
-    {name:"Accessories"},
+    // {name:"Men"},
+    // {name:"Women"},
+    // {name:"Kids"},
+    // {name:"Shoes"},
+    // {name:"Accessories"},
   ]);
 
-  // useEffect(()=>{getCategories()},[])
+  useEffect(()=>{getCategories()},[])
     
   const getCategories = async () => {
       try {

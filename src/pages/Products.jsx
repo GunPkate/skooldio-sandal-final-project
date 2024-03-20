@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-
 // import ProductsDetail from "../hooks/ProductDetailMock";
 import Navbar from "../components/Navbar/Navbar";
+import { useParams } from "react-router-dom";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -11,7 +11,11 @@ function Products() {
   const [catagoriesInclude, setCatagoriesInclude] = useState([]);
   const [categoriesExclude, setCategoriesExclude] = useState([]);
 
-  const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
+  const url =window.location.href;
+  const catLink = url.split("=")[2];
+  console.log(catLink)
+  const BASE_URL = "https://api.storefront.wdb.skooldio.dev/products?categories="+catLink;
+  console.log("base",BASE_URL)
 
   useEffect(() => {
     setLoading(true);
