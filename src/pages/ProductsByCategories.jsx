@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
+
 
 const ProductsByCategories = () => {
-    const {Categories} = useParams();
+    const { Categories, Name } = useParams();
     const [filterOpen, setFilterOpen] = useState(false);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -53,7 +55,7 @@ const ProductsByCategories = () => {
                 <header>
                     <div className="my-6 mb-[22px] w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
                         <h1 className="text-[32px] font-bold w-full text-center mb-10 2xl:w-auto 2xl:my-0 2xl:text-4xl">
-                        {Categories}
+                        {Name}
                         </h1>
                         <div className="relative flex w-auto justify-end items-center">
                         <p className="font-semibold mr-2">Sort by</p>
