@@ -77,7 +77,7 @@ function Products() {
           </div>
           {filterOpen ? (
             <div className="w-full py-2 px-4 bg-white">
-              <ul class="grid w-full gap-6 lg:grid-cols-3 lg:gap-y-2">
+              <ul className="grid w-full gap-6 lg:grid-cols-3 lg:gap-y-2">
                 {[...Array(5)].map((value, index) => (
                   <li className="py-3 px-6 w-full hover:bg-primary-300 rounded-md text-center cursor-pointer">
                     <input
