@@ -29,29 +29,29 @@ const Carousel = () => {
   );
 
   return (
-    <div className="flex flex-col gap-4 items-center justify-center mb-10">
-      <div className="relative w-80 h-80">
+    <div className="flex flex-col items-center">
+      <div className="relative w-[780px] h-[780px]">
         <img
           src={images[currentImageIndex]}
           alt="Product"
-          className="w-full h-full object-cover "
+          className="w-full h-full object-cover"
         />
         <button
           onClick={prevImage}
-          className="absolute left-[16px] top-1/2 transform -translate-y-1/2 rounded-full w-8 h-8 bg-slate-50/50 text-black"
+          className="absolute left-[16px] top-1/2 transform -translate-y-1/2 rounded-full w-[70px] h-[70px] bg-slate-50/50 text-black"
         >
           <img src={chevron_left} alt="" />
         </button>
         <button
           onClick={nextImage}
-          className="absolute right-[16px] top-1/2 transform -translate-y-1/2 rounded-full w-8 h-8 bg-slate-50/50 text-black"
+          className="absolute right-[16px] top-1/2 transform -translate-y-1/2 rounded-full w-[70px] h-[70px] bg-slate-50/50 text-black"
         >
           <img src={chevron_right} alt="" />
         </button>
       </div>
-      <div className=" grid grid-cols-4 gap-2">
+      <div className="mt-[31px] grid grid-cols-4 gap-[30.79px] w-[780px]">
         {thumbnailImages.map((image, index) => (
-          <div key={index} className="w-20 h-20">
+          <div key={index} className="w-[172.21px] h-[172.21px]">
             <img
               src={image}
               alt={`Thumbnail ${index}`}

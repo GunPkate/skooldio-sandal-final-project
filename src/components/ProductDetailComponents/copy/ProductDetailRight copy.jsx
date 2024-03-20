@@ -11,15 +11,15 @@ const ProductDetailRight = () => {
   };
 
   return (
-    <div className="w-80 font-poppins">
+    <div className="w-[780px] ml-10">
       <div>
-        <div className="text-lg font-semibold mb-1">ID: 104860</div>
-        <div className="text-5xl font-bold mb-1">Reyon Long Sleeve Shirt</div>
+        <div className="text-3xl font-bold mb-4">ID: 104860</div>
+        <div className="text-6xl font-bold mb-4">Reyon Long Sleeve Shirt</div>
         <div className="text-lg font-semibold mb-6">
           Soft and smooth feel. Wrinkle-resistant for easy care after washing.
         </div>
         <div className="flex flex-col align-center">
-          <div className="text-3xl font-bold mb-7">THB 1,000.00</div>
+          <div className="text-5xl font-bold mb-[24px]">THB 1,000.00</div>
           {/* star from the */}
           <div className="flex-none w-[180px] h-[40px] mb-[72px]">
             <div className="flex ">
@@ -50,9 +50,9 @@ const ProductDetailRight = () => {
         <div className="font-normal text-base mb-2">Color</div>
         <div className="flex gap-6 mb-6">
           {/* Color options */}
-          <div className="w-14 h-14 bg-black rounded-md"></div>
-          <div className="w-14 h-14 bg-primary rounded-md"></div>
-          <div className="w-14 h-14 bg-secondary rounded-md"></div>
+          <div className="w-14 h-14 bg-navy rounded-md"></div>
+          <div className="w-14 h-14 bg-orange rounded-md"></div>
+          <div className="w-14 h-14 bg-green rounded-md"></div>
         </div>
         <div className="font-normal text-base mb-2">Size</div>
         <div className="flex gap-2 mb-6">
@@ -60,7 +60,7 @@ const ProductDetailRight = () => {
           {["XS", "S", "M", "L", "XL"].map((size) => (
             <button
               key={size}
-              className={`w-16 h-14 border border-gray-300  ${
+              className={`w-[149px] h-[54px] border border-gray-300 rounded-md ${
                 selectedSize === size ? "bg-yellow-300" : ""
               }`}
               onClick={() => handleSizeSelection(size)}
@@ -74,7 +74,7 @@ const ProductDetailRight = () => {
           type="number"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
-          className="w-full h-14 px-2"
+          className="w-[139px] h-[54px] border border-gray-300 rounded-md mb-6 text-center"
           min="1"
         />
       </div>
