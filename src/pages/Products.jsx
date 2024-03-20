@@ -13,15 +13,16 @@ function Products() {
 
   const url =window.location.href;
   const catLink = url.split("=")[2];
-  console.log(catLink)
+  // console.log(catLink)
   const BASE_URL = "https://api.storefront.wdb.skooldio.dev/products?categories="+catLink;
-  console.log("base",BASE_URL)
+  // console.log("base",BASE_URL)
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${BASE_URL}products`)
+    fetch(`${BASE_URL}`)
       .then((res) => res.json())
       .then((data) => {
+        // console.log("data",data.data)
         setProducts(data.data);
         setLoading(false);
       });
