@@ -14,8 +14,8 @@ export default function Navbar() {
     //     setUserInfo({user:""})   
     // }
     const {
-        userPurhcase,setuserPurhcase,
-        categories,setCategories
+        userPurhcase,
+        categories
     } = useContext(UserContext)
 
     const navHomeStyle = "text-white text-base my-auto "
@@ -44,22 +44,10 @@ export default function Navbar() {
                     </Link>
                 </span>
                 ): <></>}
-           {/* 
-            <Link className={navItemStyle} to={"/Productdetail"}>
-                Product Detail
-            </Link> */}
 
         </div>
 
         <div className={contentStyle}>
-            {/* {userInfo.user === "" || userInfo.user === null ?
-                <button onClick={logIn}>   Log in          </button>:
-                <button onClick={logOut}>   Log out          </button>
-            } */}
-            {/* <span>
-                Hello {userInfo.user}
-            </span> */}
-
             <Link className={navItemStyle} to={"/Mycart"}>
                 <div className="flex">
                     <div className="relative">
