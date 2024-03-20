@@ -85,18 +85,18 @@ const ProductsByCategories = () => {
                         </div>
                     ) : null}
                 </header>
-                {/* <div className="flex w-[370px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
+                <div className="flex w-[370px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
                 <h2>Found {item.length}</h2>
                 </div>
-                {item.length > 0 ? (
+                {products.length > 0 ? (
                 <section className="2xl:grid grid-cols-3 gap-x-10 gap-y-[60px] mb-40">
-                    {item}
+                    {products.map((item, index) => <ProductCard key={index} {...item} />)}
                 </section>
                 ) : (
                 <div className="flex w-full h-[800px] py-auto justify-center items-center">
                     <p>No item found</p>
                 </div>
-                )} */}
+                )}
 
             </>) : (
                 <>Loading</>
