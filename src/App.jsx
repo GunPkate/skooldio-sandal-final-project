@@ -6,12 +6,18 @@ import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Mycart from "./pages/Mycart";
 
-import { createBrowserRouter, Link, RouterProvider, BrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Link, RouterProvider, BrowserRouter, useParams } from "react-router-dom";
 import axios from "axios";
 import ProductCard from "./components/ProductCard";
 import ProductsByCategories from "./pages/ProductsByCategories";
 
 export const UserContext = createContext();
+
+function getCat() {
+  // const {Categories} = useParams();
+  let Categories = ""
+  return Categories;
+}
 
 const router = createBrowserRouter([
   {
@@ -23,7 +29,8 @@ const router = createBrowserRouter([
     element: <Products/>,
     children: [
       {
-        path: "/Products/Categories",
+        path: "/Products/:Categories",
+        // element: <ProductsByCategories cat={getCat()}/>
         element: <ProductsByCategories/>
       }
     ]
