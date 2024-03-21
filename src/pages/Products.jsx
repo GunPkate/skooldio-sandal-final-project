@@ -6,7 +6,24 @@ import { Outlet, useParams } from "react-router-dom";
 
 function Products() {
 
+  const { Categories} = useParams();
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const BASE_URL = "https://api.storefront.wdb.skooldio.dev/products?categories="+Categories;
 
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${BASE_URL}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data",JSON.stringify(Object.keys(data.data[0])))
+        setProducts(data.data);
+        setLoading(false);
+      });
+  }, []);
+
+  const productsContext = {products,loading}
+  console.log("YYY",productsContext)
   return <>
     <Navbar/>
 
@@ -20,7 +37,7 @@ function Products() {
         <p>Catagory</p>
       </div>
       <div className="font-poppins flex flex-col items-center w-full 2xl:w-fit px-[18px]">
-        <Outlet/>
+        <Outlet context={{productsContext}}/>
       </div>
     </div>
   </>
