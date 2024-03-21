@@ -21,7 +21,8 @@ export default function Navbar() {
     const navHomeStyle = " text-white text-base my-auto "
     const navItemStyle = "text-white ml-6 text-base my-auto bg-black"
     const contentStyle = "flex items-center text-white "
-    const responsiveStyle = "invisible md:visible md:opacity-1 md:items-center   "
+    const responsiveStyle = " md:opacity-1 md:items-center  "
+    const positionY = "translate-y-[100px] md:translate-y-[0px] "
 
     const baseMenuStyle = "flex md:inline-flex bg-black "
     const cart = `
@@ -36,7 +37,7 @@ export default function Navbar() {
 
     return (
     <div className={"bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] "+contentStyle}>
-        <div className="container">
+        <div className={"container "+positionY}>
             <Link className={navHomeStyle} to={"/"}>
                 Home
             </Link>
