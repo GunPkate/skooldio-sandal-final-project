@@ -2,28 +2,14 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 // import ProductsDetail from "../hooks/ProductDetailMock";
 import Navbar from "../components/Navbar/Navbar";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 
 function Products() {
 
-  const { Categories} = useParams();
-  const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-  const BASE_URL = "https://api.storefront.wdb.skooldio.dev/products?categories="+Categories;
-
-  useEffect(() => {
-    setLoading(true);
-    fetch(`${BASE_URL}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data",JSON.stringify(Object.keys(data.data[0])))
-        setProducts(data.data);
-        setLoading(false);
-      });
-  }, []);
-
-  const productsContext = {products,loading}
+  const location = useLocation();
+  const productsContext = {value:"2"}
   console.log("YYY",productsContext)
+
   return <>
     <Navbar/>
 
@@ -37,7 +23,7 @@ function Products() {
         <p>Catagory</p>
       </div>
       <div className="font-poppins flex flex-col items-center w-full 2xl:w-fit px-[18px]">
-        <Outlet context={{productsContext}}/>
+        <Outlet context={{productsContext}} key={location.pathname}/>
       </div>
     </div>
   </>

@@ -7,10 +7,26 @@ const ProductsByCategories = () => {
     const { Name } = useParams();
     const [filterOpen, setFilterOpen] = useState(false);
     
+    const { Categories} = useParams();
+    const [loading, setLoading] = useState(false);
+    const [products, setProducts] = useState([]);
+    const BASE_URL = "https://api.storefront.wdb.skooldio.dev/products?categories="+Categories;
+  
+    useEffect(() => {
+      setLoading(true);
+      fetch(`${BASE_URL}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("data",JSON.stringify(Object.keys(data.data[0])))
+          setProducts(data.data);
+          setLoading(false);
+        });
+    }, []);
+
     console.log("xxx",productsContext)
     return (
         <>
-        {!productsContext.loading ? 
+        {!loading ? 
             (<>
                 <header>
                     <div className="my-6 mb-[22px] w-[340px] 2xl:flex 2xl:items-center 2xl:justify-between 2xl:mb-16 2xl:w-[1190px]">
@@ -46,11 +62,11 @@ const ProductsByCategories = () => {
                     ) : null}
                 </header>
                 <div className="flex w-[370px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
-                <h2>Found {productsContext.products.length}</h2>
+                <h2>Found {products.length}</h2>
                 </div>
-                {productsContext.products.length > 0 ? (
+                {products.length > 0 ? (
                 <section className="2xl:grid grid-cols-3 gap-x-10 gap-y-[60px] mb-40">
-                    {productsContext.products.map((item, index) => <ProductCard key={index} {...item} />)}
+                    {products.map((item, index) => <ProductCard key={index} {...item} />)}
                 </section>
                 ) : (
                 <div className="flex w-full h-[800px] py-auto justify-center items-center">
