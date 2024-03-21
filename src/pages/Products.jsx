@@ -8,8 +8,10 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [catagoriesInclude, setCatagoriesInclude] = useState([]);
-  const [categoriesExclude, setCategoriesExclude] = useState([]);
+  // const [catagoriesInclude, setCatagoriesInclude] = useState([]);
+  // const [categoriesExclude, setCategoriesExclude] = useState([]);
+
+  const [filterSelect, setFilterSelect] = useState("ratingAsc");
 
   const url = window.location.href;
   // const pId = url.split("=")[1];
@@ -27,27 +29,59 @@ function Products() {
       });
   }, []);
 
-  useEffect(() => {
-    setCatagoriesInclude(["all-ladies"]);
-    setCategoriesExclude(["ladies-shoes", "ladies-accessories"]);
-  }, []);
+  const priceAsc = (a, b) => {
+    return b.promotionalPrice - a.promotionalPrice;
+  };
+
+  const priceDesc = (a, b) => {
+    return a.promotionalPrice - b.promotionalPrice;
+  };
+
+  const ratingDesc = (a, b) => {
+    return a.ratings - b.ratings;
+  };
+
+  const sortedProduct = (item, filter) => {
+    if (filter === "Price - Low to high") {
+      return item.sort(priceAsc);
+    } else if (filter === "Price - High to low") {
+      return item.sort(priceDesc);
+    } else if (filter === "Rating") {
+      return item.sort(ratingDesc);
+    } else {
+      return item;
+    }
+  };
+
+  // useEffect(() => {
+  //   setCatagoriesInclude(["all-ladies"]);
+  //   setCategoriesExclude(["ladies-shoes", "ladies-accessories"]);
+  // }, []);
 
   let item = [];
 
   if (products) {
     item = products
-      .filter((item) => {
-        return catagoriesInclude.some((category) =>
-          item.categories.includes(category)
-        );
-      })
-      .filter((item) => {
-        return !categoriesExclude.some((category) =>
-          item.categories.includes(category)
-        );
-      })
+      // .filter((item) => {
+      //   return catagoriesInclude.some((category) =>
+      //     item.categories.includes(category)
+      //   );
+      // })
+      // .filter((item) => {
+      //   return !categoriesExclude.some((category) =>
+      //     item.categories.includes(category)
+      //   );
+      // })
       .map((item, index) => <ProductCard key={index} {...item} />);
   }
+
+  useEffect(() => {
+    setProducts(sortedProduct(products, filterSelect));
+  }, [filterSelect]);
+
+  useEffect(() => {
+    item = products.map((item, index) => <ProductCard key={index} {...item} />);
+  }, [products]);
 
   return (
     <>
@@ -78,25 +112,37 @@ function Products() {
                 </div>
                 {filterOpen ? (
                   <div className="w-full py-2 px-4 bg-white">
-                    <ul class="grid w-full gap-6 lg:grid-cols-3 lg:gap-y-2">
+                    <ul className="grid w-full gap-6 lg:grid-cols-3 lg:gap-y-2">
                       {[
-                        "Price - Low to high",
-                        "Price - High to low",
-                        "Rating",
+                        {
+                          name: "Price - Low to high",
+                          filter: "Price - Low to high",
+                        },
+                        {
+                          name: "Price - High to low",
+                          filter: "Price - High to low",
+                        },
+                        {
+                          name: "Rating",
+                          filter: "Rating",
+                        },
                       ].map((value, index) => (
                         <li
                           className="py-3 px-6 w-full hover:bg-primary-300 rounded-md text-center cursor-pointer"
                           key={index}
+                          onClick={() => {
+                            return setFilterSelect(value.filter);
+                          }}
                         >
                           <input
                             type="checkbox"
-                            id={value}
+                            id={value.name}
                             value=""
                             className="hidden"
                             required=""
                           />
-                          <label for={value} className="font-semibold">
-                            {value}
+                          <label htmlFor={value.name} className="font-semibold">
+                            {value.name}
                           </label>
                         </li>
                       ))}
