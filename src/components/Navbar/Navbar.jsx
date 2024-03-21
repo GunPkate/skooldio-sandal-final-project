@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { UserContext } from "../../App"
-import { useContext} from "react"
+import { useContext, useState} from "react"
 import  "./navbar.css"
 
 
@@ -35,16 +35,26 @@ export default function Navbar() {
         display: "inlineBlock"
     }}>x</span>`
 
+    const [hideMenu,setHideMenu] = useState(false);
+    const [movePositionY,setMovePositionY] = useState("container "+positionY);
+
+    function togggleNavbar(){
+        setHideMenu(!hideMenu)
+        hideMenu? setMovePositionY("container "+positionY) : setMovePositionY("container ")
+    }
+
     return (
     <div className={"bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] "+contentStyle}>
-        <div className={"container "+positionY}>
-            <span className={navHomeStyle+" ml-6 visible md:invisible"}> 
-                menu
-            </span>
+        <div className={movePositionY}>
+            <button onClick={()=>{togggleNavbar()}}>
+                <span className={navHomeStyle+" ml-6 visible md:invisible"}> 
+                    {hideMenu?<>|||</>:<>|X|</>}
+                </span>
+            </button>
             <Link className={navHomeStyle+" ml-6 md:ml-[0px]"} to={"/"}>
                 Home
             </Link>
-            {categories? categories.map((item,id) => 
+            {categories && !hideMenu? categories.map((item,id) => 
                 <span className={baseMenuStyle + responsiveStyle}> 
                     <Link key={id+1} to={`/Products/${item.name}/${item.permalink}`} className={navItemStyle}>
                         {item.name}
