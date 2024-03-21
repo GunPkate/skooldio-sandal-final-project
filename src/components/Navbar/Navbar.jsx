@@ -38,7 +38,10 @@ export default function Navbar() {
     return (
     <div className={"bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] "+contentStyle}>
         <div className={"container "+positionY}>
-            <Link className={navHomeStyle} to={"/"}>
+            <span className={navHomeStyle+" ml-6 visible md:invisible"}> 
+                menu
+            </span>
+            <Link className={navHomeStyle+" ml-6 md:ml-[0px]"} to={"/"}>
                 Home
             </Link>
             {categories? categories.map((item,id) => 
