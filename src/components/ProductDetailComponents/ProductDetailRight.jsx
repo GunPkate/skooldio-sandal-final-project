@@ -36,14 +36,16 @@ const ProductDetailRight = (data) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px]">
+    <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px] desktop:mt-0  ">
       {/* upper infomation */}
       <div>
-        <div className="text-lg font-semibold mb-1">ID : {data.skuCode}</div>
+        <div className="text-lg font-semibold mb-1 desktop:text-2xl desktop:bold">
+          ID : {data.skuCode}
+        </div>
         <div className="text-5xl font-bold mb-1 leading-[60px]">
           {data.name}
         </div>
-        <div className="text-lg font-semibold mb-6 leading-6 text-secondary-700 ">
+        <div className="text-lg font-semibold mb-6 leading-6 text-secondary-700 desktop:text-2xl">
           {data.description}
         </div>
         <div className="flex flex-col justify-center">
@@ -70,24 +72,25 @@ const ProductDetailRight = (data) => {
 
       {/* lower information from color below*/}
       <div className="mb-6 mt-14">
-        <div className="font-normal text-base mb-2">Color</div>
-        <div className="flex  justify-evenly gap-6 mb-6">
-          {/* Color options */}
-          {Array.from(
-            new Set(data?.variants?.map((variant) => variant.colorCode))
-            
-          )
-            .slice(0, 3)
-            .map((colorCode, index) => (
-              <div>
-                <div
-                  key={index}
-                  className="w-14 h-14 "
-                  style={{ background: colorCode }}
-                ></div>
-                <div className="text-center mt-[6.5px]">xoxo</div>
-              </div>
-            ))}
+        <div className="laptop:w-72 desktop:w-80">
+          <div className="font-normal text-base mb-2">Color</div>
+          <div className="flex  justify-evenly gap-6 mb-6">
+            {/* Color options */}
+            {Array.from(
+              new Set(data?.variants?.map((variant) => variant.colorCode))
+            )
+              .slice(0, 3)
+              .map((colorCode, index) => (
+                <div>
+                  <div
+                    key={index}
+                    className="w-14 h-14 "
+                    style={{ background: colorCode }}
+                  ></div>
+                  <div className="text-center mt-[6.5px]">xoxo</div>
+                </div>
+              ))}
+          </div>
         </div>
 
         <div className="font-normal text-base mb-2">Size</div>
@@ -96,7 +99,7 @@ const ProductDetailRight = (data) => {
           {["XS", "S", "M", "L", "XL"].map((size) => (
             <button
               key={size}
-              className={`w-16 h-14 border border-gray-300  ${
+              className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
                 selectedSize === size ? "bg-yellow-300" : ""
               }`}
               onClick={() => handleSizeSelection(size)}
@@ -110,9 +113,10 @@ const ProductDetailRight = (data) => {
           type="number"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
-          className="w-full h-14 px-2"
+          className="w-full h-14 px-2  border border-gray-300 desktop:w-36"
           min="1"
         />
+        
       </div>
       <button className="w-full h-[54px] bg-black text-white py-2 ">
         Add to cart
