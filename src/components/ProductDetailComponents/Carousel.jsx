@@ -26,7 +26,7 @@ const Carousel = (data) => {
 
   return (
     <div className="flex flex-col gap-4 mx-auto relative flex-1 min-w-[375px]">
-      <div className="relative w-[343px] h-[343px] 2xl:w-[780px] 2xl:h-[780px]">
+      <div className="relative w-[343px] h-[343px] laptop:w-[514.5px] laptop:h-[514.5px] desktop:w-[780px] desktop:h-[780px] desktop:mb-4">
         {/* main image */}
         <img
           src={images[currentImageIndex]}
@@ -48,9 +48,12 @@ const Carousel = (data) => {
       </div>
 
       {/* 4 pictures below the main pic */}
-      <div className=" flex gap-2 2xl:w-[780px]">
+      <div className=" flex gap-2 laptop:gap-3 desktop:gap-[30.7px]">
         {thumbnailImages.map((image, index) => (
-          <div key={index} className=" w-20 h-20 2xl:w-44 2xl:h-44 2xl:gap-8">
+          <div
+            key={index}
+            className=" w-20 h-20 laptop:w-[120px] laptop:h-[120px] desktop:w-[172.21px] desktop:h-[172.21px]"
+          >
             <img
               src={image}
               alt={`Thumbnail ${index}`}
