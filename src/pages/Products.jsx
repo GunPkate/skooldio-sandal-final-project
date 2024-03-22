@@ -87,8 +87,8 @@ function Products() {
                   <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
                     Woman's Cloth
                   </h1>
-                  <div className="dropdown dropdown-bottom dropdown-end ">
-                    <div
+                  <details className="dropdown dropdown-bottom dropdown-end ">
+                    <summary
                       tabIndex={0}
                       role="button"
                       className="btn m-1 rounded-none border-solid border-primary-700 bg-white gap-0 hover:bg-white hover:border-primary focus:bg-white focus:border-primary-700"
@@ -99,11 +99,8 @@ function Products() {
                         src="../src/assets/chevron.svg"
                         className={filterOpen ? "rotate-180" : "rotate-0"}
                       />
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white"
-                    >
+                    </summary>
+                    <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white">
                       <li
                         className="rounded-none"
                         onClick={() => {
@@ -150,7 +147,7 @@ function Products() {
                         </a>
                       </li>
                     </ul>
-                  </div>
+                  </details>
                 </div>
               </header>
               <div className="flex w-[340px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
