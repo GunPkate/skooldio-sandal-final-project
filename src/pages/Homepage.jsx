@@ -98,7 +98,7 @@ function Homepage() {
       </div>
 
       <div className="flex flex-col items-center px-4 font-bold mb-16">
-        <p className="text-[32px]">Feature Products</p>
+        <p className="text-[32px] mb-16">Feature Products</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mx-auto w-full md:w-fit">
           {items}
         </div>
