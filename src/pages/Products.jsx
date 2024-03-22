@@ -92,7 +92,7 @@ function Products() {
                     <Drawer.Portal>
                       <Drawer.Overlay className="fixed inset-0 bg-black/40" />
                       <Drawer.Content className="bg-zinc-100 flex flex-col rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
-                        <div className="flex flex-col w-full bg-white items-center px-[18px] pb-8">
+                        <div className="flex flex-col w-full bg-white items-center px-[18px] pb-8 rounded-xl">
                           <div className="flex justify-between w-full py-8 text-info text-[16px]">
                             <button>Cancel</button>
                             <h2 className="font-semibold text-lg text-black">
