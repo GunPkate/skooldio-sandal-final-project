@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { UserContext } from "../../App"
-import { useContext, useState} from "react"
+import { useContext, useEffect, useState} from "react"
 import  "./navbar.css"
 
 
@@ -18,11 +18,48 @@ export default function Navbar() {
         categories
     } = useContext(UserContext)
 
+    const positionY = "translate-y-[100px] md:translate-y-[0px] "
+    const [hideMenu,setHideMenu] = useState(false);
+    const [movePositionY,setMovePositionY] = useState("container "+positionY);
+    const [dimensions, setDimensions] = useState({
+        width: window.innerWidth,
+      });
+
+    const handleResize = () => {
+        setMovePositionY("container ") 
+
+        setDimensions({
+            width: window.innerWidth,
+        });
+    }
+
+    useEffect(()=>{
+        window.addEventListener("resize", handleResize, false);
+
+
+        setTimeout(() => {
+            initialNavbar()
+        }, 100);
+    },[])
+
+    const initialNavbar = () => {
+        setHideMenu(false);
+        if (dimensions.width > 720 ) {
+
+            setMovePositionY("container ")
+            setHideMenu(false)
+            // console.log(hideMenu)
+        }else{
+            hideMenu? setMovePositionY("container "+positionY) : setMovePositionY("container ")
+            setHideMenu(true)
+            // console.log(hideMenu)
+        }
+    }
+
     const navHomeStyle = " text-white text-base my-auto "
     const navItemStyle = "text-white ml-6 text-base my-auto bg-black"
     const contentStyle = "flex items-center text-white "
     const responsiveStyle = " md:opacity-1 md:items-center  "
-    const positionY = "translate-y-[100px] md:translate-y-[0px] "
 
     const baseMenuStyle = "flex md:inline-flex bg-black "
     const cart = `
@@ -35,8 +72,6 @@ export default function Navbar() {
         display: "inlineBlock"
     }}>x</span>`
 
-    const [hideMenu,setHideMenu] = useState(false);
-    const [movePositionY,setMovePositionY] = useState("container "+positionY);
 
     function togggleNavbar(){
         setHideMenu(!hideMenu)
@@ -45,7 +80,8 @@ export default function Navbar() {
 
     return (
     <div className={"bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] "+contentStyle}>
-        <div className={movePositionY}>
+        <div className={movePositionY}> 
+        {/* {dimensions.width}  */}
             <button onClick={()=>{togggleNavbar()}}>
                 <span className={navHomeStyle+" ml-6 visible md:invisible"}> 
                     {hideMenu?<>|||</>:<>|X|</>}
