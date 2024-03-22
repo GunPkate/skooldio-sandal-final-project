@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-
-// import ProductsDetail from "../hooks/ProductDetailMock";
 import Navbar from "../components/Navbar/Navbar";
 
 function Products() {
@@ -9,7 +7,7 @@ function Products() {
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const [filterSelect, setFilterSelect] = useState("ratingAsc");
+  const [filterSelect, setFilterSelect] = useState("");
 
   const pId = "all-ladies";
   const BASE_URL =
@@ -34,6 +32,7 @@ function Products() {
   };
 
   const ratingDesc = (a, b) => {
+    console.log("a", a.ratings, "b", b.ratings);
     return a.ratings - b.ratings;
   };
 
@@ -52,7 +51,9 @@ function Products() {
   let item = [];
 
   if (products) {
-    item = products.map((item, index) => <ProductCard key={index} {...item} />);
+    item = products.map((item, index) => {
+      return <ProductCard key={index} {...item} />;
+    });
   }
 
   useEffect(() => {
@@ -83,7 +84,10 @@ function Products() {
                   <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
                     Woman's Cloth
                   </h1>
-                  <details className="dropdown dropdown-bottom dropdown-end ">
+                  <div className="lg:hidden flex items-center justify-end">
+                    Sort By <img src="../src/assets/Filter.svg" />
+                  </div>
+                  <details className="hidden lg:block dropdown dropdown-bottom dropdown-end ">
                     <summary
                       tabIndex={0}
                       role="button"
@@ -96,9 +100,9 @@ function Products() {
                         className={filterOpen ? "rotate-180" : "rotate-0"}
                       />
                     </summary>
-                    <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white">
+                    <ul className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white">
                       <li
-                        className="rounded-none"
+                        className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white"
                         onClick={() => {
                           return setFilterSelect("Price - Low to high");
                         }}
