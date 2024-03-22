@@ -25,7 +25,7 @@ const Carousel = (data) => {
   );
 
   return (
-    <div className="flex flex-col gap-4 mx-auto relative flex-1">
+    <div className="flex flex-col gap-4 mx-auto relative flex-1 min-w-[375px]">
       <div className="relative w-[343px] h-[343px] 2xl:w-[780px] 2xl:h-[780px]">
         {/* main image */}
         <img

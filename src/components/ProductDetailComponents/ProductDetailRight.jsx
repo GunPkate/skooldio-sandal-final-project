@@ -1,59 +1,95 @@
 import React, { useState } from "react";
 
-const ProductDetailRight = () => {
+const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [starRating] = useState(4); // Static rating for demonstration
 
-  // Function to handle size selection
+  let description = [];
+  if (data) {
+    description = data;
+  }
+
+  // function to handle size selection
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
   };
 
+  // price with commas from k'Ter (product cart)
+  function numberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  //rating section from k'Ter (product cart)
+  const createStars = (rating) => {
+    const amount = Math.floor(rating);
+    if (amount) {
+      const fill = [...Array(amount)].map(() => (
+        <img src="../src/assets/star-fill.svg" key={Math.random()} />
+      ));
+      const unstar = [...Array(5 - amount)].map(() => (
+        <img src="../src/assets/star-grey.svg" key={Math.random()} />
+      ));
+      return [...fill, ...unstar];
+    } else {
+      return null;
+    }
+  };
+
   return (
-    <div className="w-80 font-poppins">
+    <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px]">
+      {/* upper infomation */}
       <div>
-        <div className="text-lg font-semibold mb-1">ID: 104860</div>
-        <div className="text-5xl font-bold mb-1">Reyon Long Sleeve Shirt</div>
-        <div className="text-lg font-semibold mb-6">
-          Soft and smooth feel. Wrinkle-resistant for easy care after washing.
+        <div className="text-lg font-semibold mb-1">ID : {data.skuCode}</div>
+        <div className="text-5xl font-bold mb-1 leading-[60px]">
+          {data.name}
         </div>
-        <div className="flex flex-col align-center">
-          <div className="text-3xl font-bold mb-7">THB 1,000.00</div>
-          {/* star from the */}
-          <div className="flex-none w-[180px] h-[40px] mb-[72px]">
-            <div className="flex ">
-              {[...Array(5)].map((_, index) => (
-                <svg
-                  key={index}
-                  xmlns="http://www.w3.org/2000/svg"
-                  className={`h-6 w-6 ${
-                    index < starRating ? "text-yellow-400" : "text-gray-300"
-                  }`}
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M11.049 2.927c.3-.921 1.602-.921 1.902 0l1.868 5.754a1.001 1.001 0 00.95.674h6.027c.97 0 1.37 1.24.588 1.81l-4.884 3.546a1.001 1.001 0 00-.36 1.107l1.868 5.754c.3.921-.755 1.686-1.54 1.107l-4.884-3.546a1.001 1.001 0 00-1.176 0l-4.884 3.546c-.785.579-1.84-.186-1.54-1.107l1.868-5.754a1.001 1.001 0 00-.36-1.107l-4.884-3.546c-.782-.57-.382-1.81.588-1.81h6.027a1.001 1.001 0 00.95-.674l1.868-5.754z"
-                  />
-                </svg>
-              ))}
-            </div>
-          </div>
+        <div className="text-lg font-semibold mb-6 leading-6 text-secondary-700 ">
+          {data.description}
+        </div>
+        <div className="flex flex-col justify-center">
+          {data.promotionalPrice < data.price ? (
+            <>
+              <div className="flex justify-center items-center text-3xl font-bold mb-2 w-56 h-16 bg-[#FF000D] text-white w-16 h-10 ">
+                THB {numberWithCommas(data.promotionalPrice) + ".00"}
+              </div>
+
+              <div className="text-lg font-semibold mb-6 ">
+                From
+                <span className="line-through">
+                  {" " + " THB " + numberWithCommas(data.price) + ".00"}
+                </span>
+              </div>
+            </>
+          ) : (
+            <div className="text-3xl font-bold mb-7"> {data.price}</div>
+          )}
+
+          <div className="flex gap-[10px]">{createStars(data.ratings)}</div>
         </div>
       </div>
-      <div className="mb-6">
+
+      {/* lower information from color below*/}
+      <div className="mb-6 mt-14">
         <div className="font-normal text-base mb-2">Color</div>
-        <div className="flex gap-6 mb-6">
+        <div className="flex  justify-evenly gap-6 mb-6">
           {/* Color options */}
-          <div className="w-14 h-14 bg-black rounded-md"></div>
-          <div className="w-14 h-14 bg-primary rounded-md"></div>
-          <div className="w-14 h-14 bg-secondary rounded-md"></div>
+          {Array.from(
+            new Set(data?.variants?.map((variant) => variant.colorCode))
+            
+          )
+            .slice(0, 3)
+            .map((colorCode, index) => (
+              <div>
+                <div
+                  key={index}
+                  className="w-14 h-14 "
+                  style={{ background: colorCode }}
+                ></div>
+                <div className="text-center mt-[6.5px]">xoxo</div>
+              </div>
+            ))}
         </div>
+
         <div className="font-normal text-base mb-2">Size</div>
         <div className="flex gap-2 mb-6">
           {/* Size options */}
