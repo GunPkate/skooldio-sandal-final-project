@@ -93,7 +93,59 @@ function Products() {
                       <Drawer.Content>
                         <p>Sort By</p>
                       </Drawer.Content>
-                      <Drawer.Overlay />
+                      <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+                      <Drawer.Content className="bg-zinc-100 flex flex-col rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
+                        <div>
+                          <h2>Sort By</h2>
+                          <ul className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white">
+                            <li
+                              className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white"
+                              onClick={() => {
+                                return setFilterSelect("Price - Low to high");
+                              }}
+                            >
+                              <a>
+                                {filterSelect === "Price - Low to high" ? (
+                                  <img src="../src/assets/radioSelected.svg" />
+                                ) : (
+                                  <img src="../src/assets/radioUnselected.svg" />
+                                )}
+                                Price - Low to high
+                              </a>
+                            </li>
+                            <li
+                              className="rounded-none"
+                              onClick={() => {
+                                return setFilterSelect("Price - High to low");
+                              }}
+                            >
+                              <a>
+                                {filterSelect === "Price - High to low" ? (
+                                  <img src="../src/assets/radioSelected.svg" />
+                                ) : (
+                                  <img src="../src/assets/radioUnselected.svg" />
+                                )}
+                                Price - High to low
+                              </a>
+                            </li>
+                            <li
+                              className="rounded-none"
+                              onClick={() => {
+                                return setFilterSelect("Rating");
+                              }}
+                            >
+                              <a>
+                                {filterSelect === "Rating" ? (
+                                  <img src="../src/assets/radioSelected.svg" />
+                                ) : (
+                                  <img src="../src/assets/radioUnselected.svg" />
+                                )}
+                                Rating
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </Drawer.Content>
                     </Drawer.Portal>
                   </Drawer.Root>
 
