@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar/Navbar";
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
+import Footer from "../components/Footer";
 
 function Homepage() {
   const [products, setProducts] = useState([]);
@@ -103,6 +104,7 @@ function Homepage() {
           {items}
         </div>
       </div>
+      <Footer />
     </>
   );
 }
