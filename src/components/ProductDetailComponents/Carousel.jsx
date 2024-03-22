@@ -31,8 +31,10 @@ const Carousel = (data) => {
         <img
           src={images[currentImageIndex]}
           alt="Product"
-          className="w-full h-full object-cover "
+          className="w-full h-full object-cover relative"
         />
+        {data.promotionalPrice < data.price ? <div className="absolute -right-1 top-8 w-24 h-14 bg-[#FF000D] text-center text-2xl text-white flex justify-center items-center ">Sale</div>: null}
+        
         <button
           onClick={prevImage}
           className="absolute left-[16px] top-1/2 transform -translate-y-1/2  w-8 h-8"
