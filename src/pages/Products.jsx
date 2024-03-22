@@ -102,74 +102,56 @@ function Products() {
                     </div>
                     <ul
                       tabIndex={0}
-                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white"
                     >
                       <li
-                        className=" hover:bg-primary-300 rounded-none"
+                        className="rounded-none"
                         onClick={() => {
                           return setFilterSelect("Price - Low to high");
                         }}
                       >
-                        <a>Price - Low to high</a>
+                        <a>
+                          {filterSelect === "Price - Low to high" ? (
+                            <img src="../src/assets/radioSelected.svg" />
+                          ) : (
+                            <img src="../src/assets/radioUnselected.svg" />
+                          )}
+                          Price - Low to high
+                        </a>
                       </li>
                       <li
-                        className=" hover:bg-primary-300 rounded-none"
+                        className="rounded-none"
                         onClick={() => {
                           return setFilterSelect("Price - High to low");
                         }}
                       >
-                        <a>Price - High to low</a>
+                        <a>
+                          {filterSelect === "Price - High to low" ? (
+                            <img src="../src/assets/radioSelected.svg" />
+                          ) : (
+                            <img src="../src/assets/radioUnselected.svg" />
+                          )}
+                          Price - High to low
+                        </a>
                       </li>
                       <li
-                        className=" hover:bg-primary-300 rounded-none"
+                        className="rounded-none"
                         onClick={() => {
                           return setFilterSelect("Rating");
                         }}
                       >
-                        <a>Rating</a>
+                        <a>
+                          {filterSelect === "Rating" ? (
+                            <img src="../src/assets/radioSelected.svg" />
+                          ) : (
+                            <img src="../src/assets/radioUnselected.svg" />
+                          )}
+                          Rating
+                        </a>
                       </li>
                     </ul>
                   </div>
                 </div>
-                {filterOpen ? (
-                  <div className="w-full py-2 px-4 bg-white">
-                    <ul className="grid w-full gap-6 lg:grid-cols-3 lg:gap-y-2">
-                      {[
-                        {
-                          name: "Price - Low to high",
-                          filter: "Price - Low to high",
-                        },
-                        {
-                          name: "Price - High to low",
-                          filter: "Price - High to low",
-                        },
-                        {
-                          name: "Rating",
-                          filter: "Rating",
-                        },
-                      ].map((value, index) => (
-                        <li
-                          className="py-3 px-6 w-full hover:bg-primary-300 rounded-md text-center cursor-pointer"
-                          key={index}
-                          onClick={() => {
-                            return setFilterSelect(value.filter);
-                          }}
-                        >
-                          <input
-                            type="checkbox"
-                            id={value.name}
-                            value=""
-                            className="hidden"
-                            required=""
-                          />
-                          <label htmlFor={value.name} className="font-semibold">
-                            {value.name}
-                          </label>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
               </header>
               <div className="flex w-[340px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
                 <h2>Found {item.length}</h2>
