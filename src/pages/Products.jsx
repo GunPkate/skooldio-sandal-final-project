@@ -53,26 +53,10 @@ function Products() {
     }
   };
 
-  // useEffect(() => {
-  //   setCatagoriesInclude(["all-ladies"]);
-  //   setCategoriesExclude(["ladies-shoes", "ladies-accessories"]);
-  // }, []);
-
   let item = [];
 
   if (products) {
-    item = products
-      // .filter((item) => {
-      //   return catagoriesInclude.some((category) =>
-      //     item.categories.includes(category)
-      //   );
-      // })
-      // .filter((item) => {
-      //   return !categoriesExclude.some((category) =>
-      //     item.categories.includes(category)
-      //   );
-      // })
-      .map((item, index) => <ProductCard key={index} {...item} />);
+    item = products.map((item, index) => <ProductCard key={index} {...item} />);
   }
 
   useEffect(() => {
@@ -103,11 +87,48 @@ function Products() {
                   <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
                     Woman's Cloth
                   </h1>
-                  <div className="relative flex w-auto justify-end items-center">
-                    <p className="font-semibold mr-2">Sort by</p>
-                    <button onClick={() => setFilterOpen(!filterOpen)}>
-                      <img src="../src/assets/Filter.svg" />
-                    </button>
+                  <div className="dropdown dropdown-bottom dropdown-end ">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="btn m-1 rounded-none border-solid border-primary-700 bg-white gap-0 hover:bg-white hover:border-primary focus:bg-white focus:border-primary-700"
+                      onClick={() => setFilterOpen(!filterOpen)}
+                    >
+                      Sort By
+                      <img
+                        src="../src/assets/chevron.svg"
+                        className={filterOpen ? "rotate-180" : "rotate-0"}
+                      />
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                    >
+                      <li
+                        className=" hover:bg-primary-300 rounded-none"
+                        onClick={() => {
+                          return setFilterSelect("Price - Low to high");
+                        }}
+                      >
+                        <a>Price - Low to high</a>
+                      </li>
+                      <li
+                        className=" hover:bg-primary-300 rounded-none"
+                        onClick={() => {
+                          return setFilterSelect("Price - High to low");
+                        }}
+                      >
+                        <a>Price - High to low</a>
+                      </li>
+                      <li
+                        className=" hover:bg-primary-300 rounded-none"
+                        onClick={() => {
+                          return setFilterSelect("Rating");
+                        }}
+                      >
+                        <a>Rating</a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
                 {filterOpen ? (
