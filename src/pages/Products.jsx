@@ -90,21 +90,24 @@ function Products() {
                       Sort By <img src="../src/assets/Filter.svg" />
                     </Drawer.Trigger>
                     <Drawer.Portal>
-                      <Drawer.Content>
-                        <p>Sort By</p>
-                      </Drawer.Content>
                       <Drawer.Overlay className="fixed inset-0 bg-black/40" />
                       <Drawer.Content className="bg-zinc-100 flex flex-col rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
-                        <div>
-                          <h2>Sort By</h2>
-                          <ul className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white">
+                        <div className="flex flex-col w-full bg-white items-center px-[18px] pb-8">
+                          <div className="flex justify-between w-full py-8 text-info text-[16px]">
+                            <button>Cancel</button>
+                            <h2 className="font-semibold text-lg text-black">
+                              Sort By
+                            </h2>
+                            <button>Reset</button>
+                          </div>
+                          <ul className="menu rounded-none w-full p-0 gap-6 mb-6">
                             <li
                               className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white"
                               onClick={() => {
                                 return setFilterSelect("Price - Low to high");
                               }}
                             >
-                              <a>
+                              <a className="p-0">
                                 {filterSelect === "Price - Low to high" ? (
                                   <img src="../src/assets/radioSelected.svg" />
                                 ) : (
@@ -119,7 +122,7 @@ function Products() {
                                 return setFilterSelect("Price - High to low");
                               }}
                             >
-                              <a>
+                              <a className="p-0">
                                 {filterSelect === "Price - High to low" ? (
                                   <img src="../src/assets/radioSelected.svg" />
                                 ) : (
@@ -134,7 +137,7 @@ function Products() {
                                 return setFilterSelect("Rating");
                               }}
                             >
-                              <a>
+                              <a className="p-0">
                                 {filterSelect === "Rating" ? (
                                   <img src="../src/assets/radioSelected.svg" />
                                 ) : (
@@ -144,6 +147,9 @@ function Products() {
                               </a>
                             </li>
                           </ul>
+                          <button className="bg-black text-white py-[17px] px-auto w-full">
+                            Apply
+                          </button>
                         </div>
                       </Drawer.Content>
                     </Drawer.Portal>
