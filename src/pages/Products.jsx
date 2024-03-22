@@ -7,7 +7,7 @@ function Products() {
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const [filterSelect, setFilterSelect] = useState("");
+  const [filterSelect, setFilterSelect] = useState("Price - High to low");
 
   const pId = "all-ladies";
   const BASE_URL =
@@ -18,51 +18,40 @@ function Products() {
     fetch(`${BASE_URL}`)
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data.data);
+        setProducts(sortedProduct(data.data, filterSelect));
         setLoading(false);
       });
   }, []);
 
   const priceAsc = (a, b) => {
-    return b.promotionalPrice - a.promotionalPrice;
-  };
-
-  const priceDesc = (a, b) => {
     return a.promotionalPrice - b.promotionalPrice;
   };
 
-  const ratingDesc = (a, b) => {
-    console.log("a", a.ratings, "b", b.ratings);
-    return a.ratings - b.ratings;
+  const priceDesc = (a, b) => {
+    return b.promotionalPrice - a.promotionalPrice;
   };
 
-  const sortedProduct = (item, filter) => {
+  const ratingDesc = (a, b) => {
+    return b.ratings - a.ratings;
+  };
+
+  const sortedProduct = (items, filter) => {
     if (filter === "Price - Low to high") {
-      return item.sort(priceAsc);
+      return items.sort(priceAsc);
     } else if (filter === "Price - High to low") {
-      return item.sort(priceDesc);
+      return items.sort(priceDesc);
     } else if (filter === "Rating") {
-      return item.sort(ratingDesc);
+      return items.sort(ratingDesc);
     } else {
-      return item;
+      return items;
     }
   };
 
-  let item = [];
-
-  if (products) {
-    item = products.map((item, index) => {
-      return <ProductCard key={index} {...item} />;
-    });
-  }
-
-  useEffect(() => {
-    setProducts(sortedProduct(products, filterSelect));
-  }, [filterSelect]);
-
-  useEffect(() => {
-    item = products.map((item, index) => <ProductCard key={index} {...item} />);
-  }, [products]);
+  const handleFilterSelect = (filter) => {
+    setFilterSelect(filter);
+    const sorted = sortedProduct(products, filter);
+    setProducts(sorted);
+  };
 
   return (
     <>
@@ -103,9 +92,9 @@ function Products() {
                     <ul className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white">
                       <li
                         className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white"
-                        onClick={() => {
-                          return setFilterSelect("Price - Low to high");
-                        }}
+                        onClick={() =>
+                          handleFilterSelect("Price - Low to high")
+                        }
                       >
                         <a>
                           {filterSelect === "Price - Low to high" ? (
@@ -118,9 +107,9 @@ function Products() {
                       </li>
                       <li
                         className="rounded-none"
-                        onClick={() => {
-                          return setFilterSelect("Price - High to low");
-                        }}
+                        onClick={() =>
+                          handleFilterSelect("Price - High to low")
+                        }
                       >
                         <a>
                           {filterSelect === "Price - High to low" ? (
@@ -133,9 +122,7 @@ function Products() {
                       </li>
                       <li
                         className="rounded-none"
-                        onClick={() => {
-                          return setFilterSelect("Rating");
-                        }}
+                        onClick={() => handleFilterSelect("Rating")}
                       >
                         <a>
                           {filterSelect === "Rating" ? (
@@ -150,9 +137,11 @@ function Products() {
                   </details>
                 </div>
               </header>
-              {item.length > 0 ? (
+              {products.length > 0 ? (
                 <section className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 md:gap-x-10 md:gap-y-[60px] mb-40">
-                  {item}
+                  {products.map((items, index) => (
+                    <ProductCard key={index} {...items} />
+                  ))}
                 </section>
               ) : (
                 <div className="flex w-full h-[800px] py-auto justify-center items-center">
