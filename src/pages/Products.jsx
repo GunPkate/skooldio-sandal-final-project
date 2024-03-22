@@ -8,13 +8,9 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-  // const [catagoriesInclude, setCatagoriesInclude] = useState([]);
-  // const [categoriesExclude, setCategoriesExclude] = useState([]);
 
   const [filterSelect, setFilterSelect] = useState("ratingAsc");
 
-  const url = window.location.href;
-  // const pId = url.split("=")[1];
   const pId = "all-ladies";
   const BASE_URL =
     "https://api.storefront.wdb.skooldio.dev/products?categories=" + pId;
@@ -150,9 +146,9 @@ function Products() {
                   </details>
                 </div>
               </header>
-              <div className="flex w-[340px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
+              {/* <div className="flex w-[340px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
                 <h2>Found {item.length}</h2>
-              </div>
+              </div> */}
               {item.length > 0 ? (
                 <section className="lg:grid lg:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-[60px] mb-40">
                   {item}
