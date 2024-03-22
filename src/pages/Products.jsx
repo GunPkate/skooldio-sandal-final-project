@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar/Navbar";
+import { Drawer } from "vaul";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -84,9 +85,18 @@ function Products() {
                   <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
                     Woman's Cloth
                   </h1>
-                  <div className="lg:hidden flex items-center justify-end">
-                    Sort By <img src="../src/assets/Filter.svg" />
-                  </div>
+                  <Drawer.Root>
+                    <Drawer.Trigger className="lg:hidden flex items-center justify-end w-full">
+                      Sort By <img src="../src/assets/Filter.svg" />
+                    </Drawer.Trigger>
+                    <Drawer.Portal>
+                      <Drawer.Content>
+                        <p>Sort By</p>
+                      </Drawer.Content>
+                      <Drawer.Overlay />
+                    </Drawer.Portal>
+                  </Drawer.Root>
+
                   <details className="hidden lg:block dropdown dropdown-bottom dropdown-end ">
                     <summary
                       tabIndex={0}
