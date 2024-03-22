@@ -31,7 +31,7 @@ function ProductCard({
   return (
     <a
       href={`/productDetail/?=${permalink}`}
-      className="mb-10 p-2 transition-all lg:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg"
+      className="p-2 pt-0 transition-all lg:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg"
       key={id}
     >
       <div className="relative">
@@ -42,7 +42,7 @@ function ProductCard({
         )}
         <img
           src={imageUrls[0]}
-          className="h-[370px] mx-[-8px] min-w-[356px] lg:min-w-[386px] object-cover mb-6 hover:rounded-t-xl"
+          className="h-[370px] mx-[-8px] min-w-[370px] lg:min-w-[386px] object-cover mb-6 hover:rounded-t-xl"
           alt={`${name}`}
         />
       </div>

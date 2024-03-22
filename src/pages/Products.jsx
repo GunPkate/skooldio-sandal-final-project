@@ -150,11 +150,8 @@ function Products() {
                   </details>
                 </div>
               </header>
-              {/* <div className="flex w-[340px] lg:ml-auto h-10 font-bold text-xl justify-end mb-4">
-                <h2>Found {item.length}</h2>
-              </div> */}
               {item.length > 0 ? (
-                <section className="lg:grid lg:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-[60px] mb-40">
+                <section className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 md:gap-x-10 md:gap-y-[60px] mb-40">
                   {item}
                 </section>
               ) : (
