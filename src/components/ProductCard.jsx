@@ -8,10 +8,10 @@ const createStars = (rating) => {
   const amount = Math.floor(rating);
   if (amount) {
     const fill = [...Array(amount)].map(() => (
-      <img src="../src/assets/star-fill.svg" key={Math.random()} />
+      <img src="../../src/assets/star-fill.svg" key={Math.random()} />
     ));
     const unstar = [...Array(5 - amount)].map(() => (
-      <img src="../src/assets/star-grey.svg" key={Math.random()} />
+      <img src="../../src/assets/star-grey.svg" key={Math.random()} />
     ));
     return [...fill, ...unstar];
   } else {

@@ -12,8 +12,6 @@ export default function Products() {
   const [filterSelect, setFilterSelect] = useState("Price - Low to high");
   const { Categories, Name } = useParams();
 
-  console.log(Categories);
-
   const BASE_URL =
     "https://api.storefront.wdb.skooldio.dev/products?categories=" + Categories;
 
@@ -99,9 +97,9 @@ export default function Products() {
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterOptions === "Price - Low to high" ? (
-                                  <img src="../src/assets/radioSelected.svg" />
+                                  <img src="../../src/assets/radioSelected.svg" />
                                 ) : (
-                                  <img src="../src/assets/radioUnselected.svg" />
+                                  <img src="../../src/assets/radioUnselected.svg" />
                                 )}
                                 Price - Low to high
                               </a>
@@ -114,9 +112,9 @@ export default function Products() {
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterOptions === "Price - High to low" ? (
-                                  <img src="../src/assets/radioSelected.svg" />
+                                  <img src="../../src/assets/radioSelected.svg" />
                                 ) : (
-                                  <img src="../src/assets/radioUnselected.svg" />
+                                  <img src="../../src/assets/radioUnselected.svg" />
                                 )}
                                 Price - High to low
                               </a>
@@ -127,9 +125,9 @@ export default function Products() {
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterOptions === "Rating" ? (
-                                  <img src="../src/assets/radioSelected.svg" />
+                                  <img src="../../src/assets/radioSelected.svg" />
                                 ) : (
-                                  <img src="../src/assets/radioUnselected.svg" />
+                                  <img src="../../src/assets/radioUnselected.svg" />
                                 )}
                                 Rating
                               </a>
@@ -155,7 +153,7 @@ export default function Products() {
                     >
                       Sort By
                       <img
-                        src="../src/assets/chevron.svg"
+                        src="../../src/assets/chevron.svg"
                         className={filterOpen ? "rotate-180" : "rotate-0"}
                       />
                     </summary>
@@ -168,9 +166,9 @@ export default function Products() {
                       >
                         <a>
                           {filterSelect === "Price - Low to high" ? (
-                            <img src="../src/assets/radioSelected.svg" />
+                            <img src="../../src/assets/radioSelected.svg" />
                           ) : (
-                            <img src="../src/assets/radioUnselected.svg" />
+                            <img src="../../src/assets/radioUnselected.svg" />
                           )}
                           Price - Low to high
                         </a>
@@ -183,9 +181,9 @@ export default function Products() {
                       >
                         <a>
                           {filterSelect === "Price - High to low" ? (
-                            <img src="../src/assets/radioSelected.svg" />
+                            <img src="../../src/assets/radioSelected.svg" />
                           ) : (
-                            <img src="../src/assets/radioUnselected.svg" />
+                            <img src="../../src/assets/radioUnselected.svg" />
                           )}
                           Price - High to low
                         </a>
@@ -196,9 +194,9 @@ export default function Products() {
                       >
                         <a>
                           {filterSelect === "Rating" ? (
-                            <img src="../src/assets/radioSelected.svg" />
+                            <img src="../../src/assets/radioSelected.svg" />
                           ) : (
-                            <img src="../src/assets/radioUnselected.svg" />
+                            <img src="../../src/assets/radioUnselected.svg" />
                           )}
                           Rating
                         </a>
