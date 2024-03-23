@@ -8,7 +8,7 @@ function Products() {
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const [filterSelect, setFilterSelect] = useState("Price - High to low");
+  const [filterSelect, setFilterSelect] = useState("Price - Low to high");
 
   const pId = "all-ladies";
   const BASE_URL =
@@ -89,7 +89,7 @@ function Products() {
                             </h2>
                             <button
                               onClick={() =>
-                                setFilterSelect("Price - Low to high")
+                                handleFilterSelect("Price - Low to high")
                               }
                             >
                               Reset
@@ -98,9 +98,9 @@ function Products() {
                           <ul className="menu rounded-none w-full p-0 gap-6 mb-6">
                             <li
                               className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white"
-                              onClick={() => {
-                                return setFilterSelect("Price - Low to high");
-                              }}
+                              onClick={() =>
+                                handleFilterSelect("Price - Low to high")
+                              }
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterSelect === "Price - Low to high" ? (
@@ -113,9 +113,9 @@ function Products() {
                             </li>
                             <li
                               className="rounded-none"
-                              onClick={() => {
-                                return setFilterSelect("Price - High to low");
-                              }}
+                              onClick={() =>
+                                handleFilterSelect("Price - High to low")
+                              }
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterSelect === "Price - High to low" ? (
@@ -128,9 +128,7 @@ function Products() {
                             </li>
                             <li
                               className="rounded-none"
-                              onClick={() => {
-                                return setFilterSelect("Rating");
-                              }}
+                              onClick={() => handleFilterSelect("Rating")}
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterSelect === "Rating" ? (
