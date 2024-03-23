@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import { useContext, useEffect, useState } from "react";
-import "./navbar.css";
 
 import { Drawer } from "vaul";
 
