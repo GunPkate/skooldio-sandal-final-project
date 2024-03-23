@@ -79,7 +79,7 @@ export default function Navbar() {
     }
 
     return (
-    <div className={"bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] "+contentStyle}>
+    <div className={"bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] justify-between "+contentStyle}>
         <div className={movePositionY}> 
         {/* {dimensions.width}  */}
             <button onClick={()=>{togggleNavbar()}}>
