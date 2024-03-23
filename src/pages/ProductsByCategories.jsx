@@ -12,8 +12,6 @@ export default function Products() {
   const [filterSelect, setFilterSelect] = useState("Price - Low to high");
   const { Categories, Name } = useParams();
 
-  console.log(Categories);
-
   const BASE_URL =
     "https://api.storefront.wdb.skooldio.dev/products?categories=" + Categories;
 

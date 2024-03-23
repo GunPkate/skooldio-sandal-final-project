@@ -7,7 +7,6 @@ import { Outlet, useLocation, useParams } from "react-router-dom";
 function Products() {
   const location = useLocation();
   const productsContext = { value: "2" };
-  console.log("YYY", productsContext);
 
   return (
     <>
