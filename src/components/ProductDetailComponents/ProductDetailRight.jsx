@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState("");
@@ -129,7 +130,9 @@ const ProductDetailRight = (data) => {
         />
       </div>
       <button className="w-full h-[54px] bg-black text-white py-2 ">
-        Add to cart
+        <Link to="/Mycart/" >
+          Add to cart
+        </Link>
       </button>
     </div>
   );
