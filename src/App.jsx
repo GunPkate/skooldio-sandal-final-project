@@ -34,7 +34,7 @@ const router = createBrowserRouter([
     element: <Mycart />,
   },
   {
-    path: "/ProductDetail/",
+    path: "/ProductDetail/:permalink",
     element: <ProductDetail />,
   },
 ]);
