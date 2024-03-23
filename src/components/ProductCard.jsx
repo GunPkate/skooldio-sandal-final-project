@@ -44,11 +44,11 @@ function ProductCard({
         )}
         <img
           src={imageUrls[0]}
-          className="h-[370px] mx-[-8px] min-w-[340px] 2xl:min-w-[386px] object-cover mb-6 hover:rounded-t-xl"
+          className="h-[370px] mx-[-8px] min-w-[370px] lg:min-w-[386px] object-cover mb-6 hover:rounded-t-xl"
           alt={`${name}`}
         />
       </div>
-      <div className="grid grid-cols-1 gap-2 w-[340px] 2xl:w-[370px]">
+      <div className="grid grid-cols-1 gap-2 w-[340px] lg:w-[370px]">
         <h2 className="font-bold text-2xl text-secondary whitespace-nowrap text-ellipsis overflow-hidden">
           {name}
         </h2>

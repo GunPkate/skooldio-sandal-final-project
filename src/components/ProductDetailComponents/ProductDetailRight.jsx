@@ -63,7 +63,11 @@ const ProductDetailRight = (data) => {
               </div>
             </>
           ) : (
-            <div className="text-3xl font-bold mb-7"> {data.price}</div>
+            <div className="text-3xl font-bold mb-7">
+              {console.log("testtttttttttt", data.price)}{" "}
+              {console.log("testttttttttttDATA", data)}{" "}
+              {" " + " THB " + numberWithCommas(data.price) + ".00"}
+            </div>
           )}
 
           <div className="flex gap-[10px]">{createStars(data.ratings)}</div>
@@ -77,7 +81,11 @@ const ProductDetailRight = (data) => {
           <div className="flex  justify-evenly gap-6 mb-6">
             {/* Color options */}
             {Array.from(
-              new Set(data?.variants?.map((variant) => variant.colorCode))
+              new Set(
+                data?.variants?.map((variant) => {
+                  return { colorCode: variant.colorCode, color: variant.color };
+                })
+              )
             )
               .slice(0, 3)
               .map((colorCode, index) => (
@@ -85,9 +93,12 @@ const ProductDetailRight = (data) => {
                   <div
                     key={index}
                     className="w-14 h-14 "
-                    style={{ background: colorCode }}
+                    style={{ background: colorCode.colorCode }}
                   ></div>
-                  <div className="text-center mt-[6.5px]">xoxo</div>
+
+                  <div className="text-center mt-[6.5px]">
+                    {colorCode.color}
+                  </div>
                 </div>
               ))}
           </div>
@@ -116,7 +127,6 @@ const ProductDetailRight = (data) => {
           className="w-full h-14 px-2  border border-gray-300 desktop:w-36"
           min="1"
         />
-        
       </div>
       <button className="w-full h-[54px] bg-black text-white py-2 ">
         Add to cart
