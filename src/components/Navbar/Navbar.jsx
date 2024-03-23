@@ -82,17 +82,19 @@ export default function Navbar() {
     <div className={"bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] justify-between "+contentStyle}>
         <div className={movePositionY}> 
         {/* {dimensions.width}  */}
+            {   self.innerWidth < 768 ?
             <button onClick={()=>{togggleNavbar()}}>
                 <span className={navHomeStyle+" ml-6 visible md:invisible"}> 
                     {hideMenuMobile?<>|||</>:<>|X|</>}
                 </span>
-            </button>
+            </button>:<></>
+            }
             <Link className={navHomeStyle+" ml-6 md:ml-[0px]"} to={"/"}>
                 Home
             </Link>
             {   self.innerWidth < 768 ?
                 <>
-                {categories && !hideMenuMobile? categories.map((item,id) => 
+                {categories && hideMenuMobile == false? categories.map((item,id) => 
                     <span className={baseMenuStyle + responsiveStyle}> 
                     <Link key={id+1} to={`/Products/${item.name}/${item.permalink}`} className={navItemStyle}>
                     {item.name}
