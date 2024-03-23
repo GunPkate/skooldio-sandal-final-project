@@ -1,14 +1,11 @@
 import Navbar from "../components/Navbar/Navbar";
 import ProductCard from "../components/ProductCard";
-import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
+import { useEffect, useState } from "react";
 
 function Homepage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [catagoriesInclude, setCatagoriesInclude] = useState([]);
-  const [categoriesExclude, setCategoriesExclude] = useState([]);
   const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
 
   useEffect(() => {
@@ -21,7 +18,7 @@ function Homepage() {
       });
   }, []);
 
-  let items = [];
+  let items = null;
 
   if (products.length > 0) {
     // Sort the products by ratings
