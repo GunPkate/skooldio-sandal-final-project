@@ -21,9 +21,7 @@ function Products() {
           <p>Catagory</p>
           <p>Catagory</p>
         </div>
-        <div className="font-poppins flex flex-col items-center w-full 2xl:w-fit px-[18px]">
-          <Outlet context={{ productsContext }} key={location.pathname} />
-        </div>
+        <Outlet context={{ productsContext }} key={location.pathname} />
       </div>
     </>
   );
