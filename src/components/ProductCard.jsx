@@ -25,12 +25,12 @@ function ProductCard({
   promotionalPrice,
   price,
   ratings,
-  permalink
+  permalink,
 }) {
   const discount = promotionalPrice < price ? true : false;
   return (
     <a
-      href={`/productDetail/?=${permalink}`}
+      href={`/ProductDetail/`}
       className="mb-10 p-2 transition-all 2xl:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg"
       key={id}
     >

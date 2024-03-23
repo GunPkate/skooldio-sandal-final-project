@@ -34,35 +34,35 @@ const router = createBrowserRouter([
     element: <Mycart />,
   },
   {
-    path: "/ProductDetail",
+    path: "/ProductDetail/",
     element: <ProductDetail />,
   },
 ]);
 
 function App() {
-    const items = [
-        {
-          id:1,
-          name: "Reyon Long Sleeve Shirt",
-          price: 2000,
-          quantity: 2,
-          image: "https://picsum.photos/200/300",
-        },
-        {
-          id:2,
-          name: "Flexi Move Sneaker",
-          price: 1700,
-          quantity: 1,
-          image: "https://picsum.photos/200/300",
-        },
-        {
-          id:3,
-          name: "Flexi Move Sneaker",
-          price: 1700,
-          quantity: 1,
-          image: "https://picsum.photos/200/300",
-        },
-    ]
+  const items = [
+    {
+      id: 1,
+      name: "Reyon Long Sleeve Shirt",
+      price: 2000,
+      quantity: 2,
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 2,
+      name: "Flexi Move Sneaker",
+      price: 1700,
+      quantity: 1,
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 3,
+      name: "Flexi Move Sneaker",
+      price: 1700,
+      quantity: 1,
+      image: "https://picsum.photos/200/300",
+    },
+  ];
   // const [userInfo,setUserInfo] = useState({user:""});
 
   const [userPurhcase,setuserPurhcase] = useState(items);
@@ -87,18 +87,22 @@ function App() {
       } catch (error) {
           console.log(error)
       }
-
-  }
+    }
 
   return (
-    <UserContext.Provider value={{
-      userPurhcase,setuserPurhcase,
-      categories,setCategories
-    }}>
-    {/* <UserContext.Provider value={{userInfo,setUserInfo,userPurhcase,setuserPurhcase}}> */}
-      <RouterProvider router={router}/>
+    <UserContext.Provider
+      value={{
+        userPurhcase,
+        setuserPurhcase,
+        categories,
+        setCategories,
+      }}
+    >
+      {/* <UserContext.Provider value={{userInfo,setUserInfo,userPurhcase,setuserPurhcase}}> */}
+      <RouterProvider router={router} />
     </UserContext.Provider>
   );
+
 }
 
 export default App;
