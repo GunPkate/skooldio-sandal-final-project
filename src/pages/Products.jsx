@@ -83,11 +83,17 @@ function Products() {
                       <Drawer.Content className="bg-zinc-100 flex flex-col rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
                         <div className="flex flex-col w-full bg-white items-center px-[18px] pb-8 rounded-xl">
                           <div className="flex justify-between w-full py-8 text-info text-[16px]">
-                            <button>Cancel</button>
+                            <Drawer.Trigger>Cancel</Drawer.Trigger>
                             <h2 className="font-semibold text-lg text-black">
                               Sort By
                             </h2>
-                            <button>Reset</button>
+                            <button
+                              onClick={() =>
+                                setFilterSelect("Price - Low to high")
+                              }
+                            >
+                              Reset
+                            </button>
                           </div>
                           <ul className="menu rounded-none w-full p-0 gap-6 mb-6">
                             <li
@@ -96,7 +102,7 @@ function Products() {
                                 return setFilterSelect("Price - Low to high");
                               }}
                             >
-                              <a className="p-0">
+                              <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterSelect === "Price - Low to high" ? (
                                   <img src="../src/assets/radioSelected.svg" />
                                 ) : (
@@ -111,7 +117,7 @@ function Products() {
                                 return setFilterSelect("Price - High to low");
                               }}
                             >
-                              <a className="p-0">
+                              <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterSelect === "Price - High to low" ? (
                                   <img src="../src/assets/radioSelected.svg" />
                                 ) : (
@@ -126,7 +132,7 @@ function Products() {
                                 return setFilterSelect("Rating");
                               }}
                             >
-                              <a className="p-0">
+                              <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterSelect === "Rating" ? (
                                   <img src="../src/assets/radioSelected.svg" />
                                 ) : (
