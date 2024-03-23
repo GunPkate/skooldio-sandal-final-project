@@ -10,19 +10,23 @@ import { useEffect, useState } from "react";
 export default function ProductDetail() {
   const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { permalink } = useParams();
 
   useEffect(() => {
-    setLoading(true);
     fetch(`${BASE_URL}products/${permalink}`)
       .then(async (res) => {
         console.log("resres", res);
         let data = await res.json();
         setProducts(data);
+        setLoading(false);
       })
       .catch((err) => console.log("error ", err));
   }, []);
+
+  if (loading && products.length === 0) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="section ">
