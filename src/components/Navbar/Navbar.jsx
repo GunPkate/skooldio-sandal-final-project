@@ -1,18 +1,9 @@
 import { Link } from "react-router-dom"
 import { UserContext } from "../../App"
 import { useContext, useState} from "react"
-import  "./navbar.css"
 
 
 export default function Navbar() {
-    // console.log(userData)
-    // const {userInfo,setUserInfo} = useContext(UserContext)
-    // const logIn = () =>{
-    //     setUserInfo({user:"Gun P"})
-    // }
-    // const logOut = () => {
-    //     setUserInfo({user:""})   
-    // }
     const {
         userPurhcase,
         categories
