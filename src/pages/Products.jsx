@@ -12,7 +12,7 @@ function Products() {
     <>
       <Navbar />
 
-      <div className="2xl:flex 2xl:h-fit 2xl:max-w-[1600px] justify-between mx-auto">
+      <div className="2xl:flex h-[100vh] 2xl:max-w-[1600px] justify-between mx-auto">
         <div className="hidden 2xl:flex 2xl:flex-col 2xl:w-[280px] 2xl:min-h-max text-secondary font-semibold px-4 gap-4">
           <h1 className="font-bold">Tops</h1>
           <p className="text-primary">Catagory</p>

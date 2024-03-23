@@ -3,6 +3,7 @@ import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar/Navbar";
 import { Drawer } from "vaul";
 import { useParams } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -220,7 +221,7 @@ export default function Products() {
           </div>
         </div>
       ) : (
-        <>Loading</>
+        <LoadingSpinner />
       )}
     </>
   );
