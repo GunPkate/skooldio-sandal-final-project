@@ -19,7 +19,7 @@ export default function Navbar() {
     } = useContext(UserContext)
 
     const positionY = "translate-y-[100px] md:translate-y-[0px] "
-    const [hideMenu,setHideMenu] = useState(false);
+    const [hideMenuMobile,setHideMenuMobile] = useState(false);
     const [movePositionY,setMovePositionY] = useState("container "+positionY);
     const [dimensions, setDimensions] = useState({
         width: window.innerWidth,
@@ -43,15 +43,15 @@ export default function Navbar() {
     },[])
 
     const initialNavbar = () => {
-        setHideMenu(false);
+        setHideMenuMobile(false);
         if (dimensions.width > 720 ) {
 
             setMovePositionY("container ")
-            setHideMenu(false)
+            setHideMenuMobile(false)
             // console.log(hideMenu)
         }else{
-            hideMenu? setMovePositionY("container "+positionY) : setMovePositionY("container ")
-            setHideMenu(true)
+            hideMenuMobile? setMovePositionY("container "+positionY) : setMovePositionY("container ")
+            setHideMenuMobile(true)
             // console.log(hideMenu)
         }
     }
@@ -74,8 +74,8 @@ export default function Navbar() {
 
 
     function togggleNavbar(){
-        setHideMenu(!hideMenu)
-        hideMenu? setMovePositionY("container "+positionY) : setMovePositionY("container ")
+        setHideMenuMobile(!hideMenuMobile)
+        hideMenuMobile? setMovePositionY("container "+positionY) : setMovePositionY("container ")
     }
 
     return (
@@ -84,19 +84,35 @@ export default function Navbar() {
         {/* {dimensions.width}  */}
             <button onClick={()=>{togggleNavbar()}}>
                 <span className={navHomeStyle+" ml-6 visible md:invisible"}> 
-                    {hideMenu?<>|||</>:<>|X|</>}
+                    {hideMenuMobile?<>|||</>:<>|X|</>}
                 </span>
             </button>
             <Link className={navHomeStyle+" ml-6 md:ml-[0px]"} to={"/"}>
                 Home
             </Link>
-            {categories && !hideMenu? categories.map((item,id) => 
-                <span className={baseMenuStyle + responsiveStyle}> 
+            {   self.innerWidth < 768 ?
+                <>
+                {categories && !hideMenuMobile? categories.map((item,id) => 
+                    <span className={baseMenuStyle + responsiveStyle}> 
                     <Link key={id+1} to={`/Products/${item.name}/${item.permalink}`} className={navItemStyle}>
-                        {item.name}
+                    {item.name}
                     </Link>
-                </span>
-                ): <></>}
+                    </span>
+                    ): <></>
+                }
+                </>
+                :
+                <>
+                {categories ? categories.map((item,id) => 
+                    <span className={baseMenuStyle + responsiveStyle}> 
+                    <Link key={id+1} to={`/Products/${item.name}/${item.permalink}`} className={navItemStyle}>
+                    {item.name}
+                    </Link>
+                    </span>
+                    ): <></>
+                }
+                </>
+            }
 
         </div>
 
