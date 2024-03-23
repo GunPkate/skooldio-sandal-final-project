@@ -1,13 +1,41 @@
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar/Navbar";
+import Carousel from "../components/ProductDetailComponents/Carousel";
+import ProductDetailRight from "../components/ProductDetailComponents/ProductDetailRight";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
+// import Modal from "../components/ProductDetailComponents/Modal/Modal";
 
-export default function ProductDetail(){
-    return(
-        <div className="section">
-            <Navbar/>
-            <h1>Product Detail</h1>
-            <Footer/>
-        </div>
-    )
+export default function ProductDetail() {
+  const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { permalink } = useParams();
+
+  useEffect(() => {
+    fetch(`${BASE_URL}products/${permalink}`)
+      .then(async (res) => {
+        console.log("resres", res);
+        let data = await res.json();
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((err) => console.log("error ", err));
+  }, []);
+
+  if (loading && products.length === 0) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className="section ">
+      <Navbar />
+      <div className="flex flex-col min-w-[375px]  mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-row desktop:mx-40  desktop:justify-around ">
+        <Carousel {...products} />
+        <ProductDetailRight {...products} />
+      </div>
+      <Footer />
+    </div>
+  );
 }
