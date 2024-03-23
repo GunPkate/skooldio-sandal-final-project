@@ -36,6 +36,17 @@ const ProductDetailRight = (data) => {
     }
   };
 
+  //about color
+  const uniqueByKey = (array, key) => {
+    return array.filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t[key] === item[key])
+    );
+  };
+
+  const uniqueData = uniqueByKey(data.variants, "color");
+  console.log("++++++++", uniqueData);
+
   return (
     <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px] desktop:mt-0  ">
       {/* upper infomation */}
@@ -65,8 +76,6 @@ const ProductDetailRight = (data) => {
             </>
           ) : (
             <div className="text-3xl font-bold mb-7">
-              {console.log("testtttttttttt", data.price)}{" "}
-              {console.log("testttttttttttDATA", data)}{" "}
               {" " + " THB " + numberWithCommas(data.price) + ".00"}
             </div>
           )}
@@ -79,29 +88,18 @@ const ProductDetailRight = (data) => {
       <div className="mb-6 mt-14">
         <div className="laptop:w-72 desktop:w-80">
           <div className="font-normal text-base mb-2">Color</div>
-          <div className="flex  justify-evenly gap-6 mb-6">
+          <div className="flex justify-evenly gap-6 mb-6">
             {/* Color options */}
-            {Array.from(
-              new Set(
-                data?.variants?.map((variant) => {
-                  return { colorCode: variant.colorCode, color: variant.color };
-                })
-              )
-            )
-              .slice(0, 3)
-              .map((colorCode, index) => (
-                <div>
-                  <div
-                    key={index}
-                    className="w-14 h-14 "
-                    style={{ background: colorCode.colorCode }}
-                  ></div>
+            {uniqueData.map((value, index) => (
+              <div key={index}>
+                <div
+                  className="w-14 h-14"
+                  style={{ background: value.colorCode}}
+                ></div>
 
-                  <div className="text-center mt-[6.5px]">
-                    {colorCode.color}
-                  </div>
-                </div>
-              ))}
+                <div className="text-center mt-[6.5px]">{value.color}</div>
+              </div>
+            ))}
           </div>
         </div>
 
