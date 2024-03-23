@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar/Navbar";
+import { Drawer } from "vaul";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -73,9 +74,76 @@ function Products() {
                   <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
                     Woman's Cloth
                   </h1>
-                  <div className="lg:hidden flex items-center justify-end">
-                    Sort By <img src="../src/assets/Filter.svg" />
-                  </div>
+                  <Drawer.Root>
+                    <Drawer.Trigger className="lg:hidden flex items-center justify-end w-full">
+                      Sort By <img src="../src/assets/Filter.svg" />
+                    </Drawer.Trigger>
+                    <Drawer.Portal>
+                      <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+                      <Drawer.Content className="bg-zinc-100 flex flex-col rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
+                        <div className="flex flex-col w-full bg-white items-center px-[18px] pb-8 rounded-xl">
+                          <div className="flex justify-between w-full py-8 text-info text-[16px]">
+                            <button>Cancel</button>
+                            <h2 className="font-semibold text-lg text-black">
+                              Sort By
+                            </h2>
+                            <button>Reset</button>
+                          </div>
+                          <ul className="menu rounded-none w-full p-0 gap-6 mb-6">
+                            <li
+                              className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white"
+                              onClick={() => {
+                                return setFilterSelect("Price - Low to high");
+                              }}
+                            >
+                              <a className="p-0">
+                                {filterSelect === "Price - Low to high" ? (
+                                  <img src="../src/assets/radioSelected.svg" />
+                                ) : (
+                                  <img src="../src/assets/radioUnselected.svg" />
+                                )}
+                                Price - Low to high
+                              </a>
+                            </li>
+                            <li
+                              className="rounded-none"
+                              onClick={() => {
+                                return setFilterSelect("Price - High to low");
+                              }}
+                            >
+                              <a className="p-0">
+                                {filterSelect === "Price - High to low" ? (
+                                  <img src="../src/assets/radioSelected.svg" />
+                                ) : (
+                                  <img src="../src/assets/radioUnselected.svg" />
+                                )}
+                                Price - High to low
+                              </a>
+                            </li>
+                            <li
+                              className="rounded-none"
+                              onClick={() => {
+                                return setFilterSelect("Rating");
+                              }}
+                            >
+                              <a className="p-0">
+                                {filterSelect === "Rating" ? (
+                                  <img src="../src/assets/radioSelected.svg" />
+                                ) : (
+                                  <img src="../src/assets/radioUnselected.svg" />
+                                )}
+                                Rating
+                              </a>
+                            </li>
+                          </ul>
+                          <button className="bg-black text-white py-[17px] px-auto w-full">
+                            Apply
+                          </button>
+                        </div>
+                      </Drawer.Content>
+                    </Drawer.Portal>
+                  </Drawer.Root>
+
                   <details className="hidden lg:block dropdown dropdown-bottom dropdown-end ">
                     <summary
                       tabIndex={0}
