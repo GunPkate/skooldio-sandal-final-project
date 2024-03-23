@@ -7,7 +7,7 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-
+  const [filterOptions, setFilterOptions] = useState("");
   const [filterSelect, setFilterSelect] = useState("Price - Low to high");
 
   const pId = "all-ladies";
@@ -50,6 +50,7 @@ function Products() {
 
   const handleFilterSelect = (filter) => {
     setFilterSelect(filter);
+    setFilterOptions(filter);
     const sorted = sortedProduct(products, filter);
     setProducts(sorted);
   };
@@ -70,7 +71,7 @@ function Products() {
             </div>
             <div className="font-poppins flex flex-col items-center w-full lg:w-fit px-[18px]">
               <header className="lg:w-full">
-                <div className="my-6 mb-[22px] w-[340px] lg:flex lg:items-center lg:justify-between lg:mb-16 lg:w-full ">
+                <div className="my-6 mb-[22px] w-[370px] lg:flex lg:items-center lg:justify-between lg:mb-16 lg:w-full ">
                   <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
                     Woman's Cloth
                   </h1>
@@ -99,11 +100,11 @@ function Products() {
                             <li
                               className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white"
                               onClick={() =>
-                                handleFilterSelect("Price - Low to high")
+                                setFilterOptions("Price - Low to high")
                               }
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
-                                {filterSelect === "Price - Low to high" ? (
+                                {filterOptions === "Price - Low to high" ? (
                                   <img src="../src/assets/radioSelected.svg" />
                                 ) : (
                                   <img src="../src/assets/radioUnselected.svg" />
@@ -114,11 +115,11 @@ function Products() {
                             <li
                               className="rounded-none"
                               onClick={() =>
-                                handleFilterSelect("Price - High to low")
+                                setFilterOptions("Price - High to low")
                               }
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
-                                {filterSelect === "Price - High to low" ? (
+                                {filterOptions === "Price - High to low" ? (
                                   <img src="../src/assets/radioSelected.svg" />
                                 ) : (
                                   <img src="../src/assets/radioUnselected.svg" />
@@ -128,10 +129,10 @@ function Products() {
                             </li>
                             <li
                               className="rounded-none"
-                              onClick={() => handleFilterSelect("Rating")}
+                              onClick={() => setFilterOptions("Rating")}
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
-                                {filterSelect === "Rating" ? (
+                                {filterOptions === "Rating" ? (
                                   <img src="../src/assets/radioSelected.svg" />
                                 ) : (
                                   <img src="../src/assets/radioUnselected.svg" />
@@ -140,7 +141,10 @@ function Products() {
                               </a>
                             </li>
                           </ul>
-                          <button className="bg-black text-white py-[17px] px-auto w-full">
+                          <button
+                            className="bg-black text-white py-[17px] px-auto w-full"
+                            onClick={() => handleFilterSelect(filterOptions)}
+                          >
                             Apply
                           </button>
                         </div>
@@ -211,9 +215,9 @@ function Products() {
               </header>
               {products.length > 0 ? (
                 <section className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 md:gap-x-10 md:gap-y-[60px] mb-40">
-                  {products.map((items, index) => (
-                    <ProductCard key={index} {...items} />
-                  ))}
+                  {products.map((items, index) => {
+                    return <ProductCard key={index} {...items} />;
+                  })}
                 </section>
               ) : (
                 <div className="flex w-full h-[800px] py-auto justify-center items-center">
