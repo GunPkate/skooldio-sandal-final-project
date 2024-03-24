@@ -21,41 +21,31 @@ const ProductDetailRight = (data) => {
     description = data;
   }
 
-  const setUpdateItem = (group,value) => {
+  const setUpdateItem = (groupSize,groupColor,value,e) => {
+    e.preventDefault();
     let tempItems = initialProducts;
 
     // checkActive(value);
-    if(group == 'Size'){
+    if(groupSize == 'Size'){
       setActiveSize(value)
     }
-    if(group == 'Color'){
+    if(groupColor == 'Color'){
       setActiveColor(value) 
     }
 
-    console.log("group",group)
-    console.log("value",value)
-    console.log("C",activeColor)
-    console.log("S",activeSize)
-    console.log(JSON.stringify( tempItems ))
-
     let a = []
-    if(group == 'Color' && checkColor()){
+    if(groupColor == 'Color'){
       a = tempItems.filter(x=>x.color == value )
-    }if(group == 'Size' && checkSize()){
+    }if(groupSize == 'Size'){
       a = tempItems.filter(x=>x.size == value )
+    }
+    if(groupColor == 'Color' &&  groupSize == 'Size'){
+      a = tempItems.filter(x=>x.size == activeSize && x.color == activeColor )
     }
     console.log( a )
     console.log(a.length)
-
-
   }
 
-
-
-  let checkSizeAndColor = (tempItems,group) =>{
-
-    return tempItems
-  }
 
   function checkSize(){
     return activeSize == null || activeSize == ""
@@ -169,7 +159,7 @@ const ProductDetailRight = (data) => {
             )
               .slice(0, 3)
               .map((colorCode, index) => (
-                <button onClick={()=>{setUpdateItem('Color',colorCode.color)}}>
+                <button onClick={(e)=>{setUpdateItem('','Color',colorCode.color,e)}}>
                   <div
                     key={index}
                     className="w-14 h-14 "
@@ -193,7 +183,7 @@ const ProductDetailRight = (data) => {
               className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
                 selectedSize === size ? "bg-yellow-300" : ""
               }`}
-              onClick={() => setUpdateItem('Size',size)}
+              onClick={(e) => setUpdateItem('Size','',size,e)}
             >
               {size}
             </button>
@@ -211,7 +201,7 @@ const ProductDetailRight = (data) => {
         <input
           type="number"
           value={quantity}
-          onChange={(e) => setUpdateItem('Qty',e.target.value)}
+          onChange={(e) => setUpdateItem('Qty',e.target.value,e)}
           className="w-full h-14 px-2  border border-gray-300 desktop:w-36"
           min="1"
         />
