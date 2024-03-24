@@ -3,9 +3,10 @@ import { UserContext } from "../../App";
 import { useContext, useEffect, useState } from "react";
 
 import { Drawer } from "vaul";
+import axios from "axios";
 
 export default function Navbar() {
-  const { userPurhcase, categories } = useContext(UserContext);
+  const { userPurhcase, categories, setuserPurhcase } = useContext(UserContext);
 
   const positionY = "translate-y-[100px] md:translate-y-[0px] ";
   const [hideMenuMobile, setHideMenuMobile] = useState(false);
@@ -30,6 +31,25 @@ export default function Navbar() {
     }, 100);
   }, []);
 
+  useEffect( () => {
+    let id = localStorage.getItem('id')
+    console.log("xxx id",id)
+    fetchMycart(id);
+  }, []);
+
+  const fetchMycart = async (id) => {
+    try {
+  
+      if(id !== null || id !== undefined || id !== ""){
+        await axios.get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`).then( res => {
+          console.log(res.data)
+           setuserPurhcase(res.data.items)
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const initialNavbar = () => {
     setHideMenuMobile(false);
     if (dimensions.width > 720) {
