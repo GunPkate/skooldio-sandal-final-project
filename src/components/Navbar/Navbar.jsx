@@ -6,7 +6,7 @@ import "./navbar.css";
 import { Drawer } from "vaul";
 
 export default function Navbar() {
-  const { userPurhcase, categories } = useContext(UserContext);
+  const { userPurhcase, categories, collections } = useContext(UserContext);
 
   const positionY = "translate-y-[100px] md:translate-y-[0px] ";
   const [hideMenuMobile, setHideMenuMobile] = useState(false);
@@ -49,7 +49,7 @@ export default function Navbar() {
   const contentStyle = "flex items-center text-white ";
   const responsiveStyle = " md:opacity-1 md:items-center  ";
   const navMenuTextStyle =
-    "text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary";
+    "text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center";
 
   const baseMenuStyle = "flex md:inline-flex bg-black ";
   const cart = `
@@ -65,11 +65,17 @@ export default function Navbar() {
     const gender = capitalizeFirstLetter(input);
     return (
       <Drawer.NestedRoot asChild direction="left">
-        <Drawer.Trigger className={navMenuTextStyle}>{gender}</Drawer.Trigger>
+        <Drawer.Trigger className={navMenuTextStyle}>
+          {gender}
+          <img src="../../src/assets/chevron.svg" className="-rotate-90" />
+        </Drawer.Trigger>
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/40" />
           <Drawer.Content className="bg-grey-100 flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
-            <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
+            <div
+              key={Math.random()}
+              className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl"
+            >
               <Drawer.Trigger className="flex items-center py-1 gap-6 border-solid border-b-[1px] border-b-secondary-300">
                 <img src="../../src/assets/chevron.svg" className="rotate-90" />
                 <h2 className="font-bold text-2xl">All {gender}</h2>
@@ -82,6 +88,7 @@ export default function Navbar() {
                     <Drawer.Trigger
                       asChild={close}
                       onClick={() => setOpen(false)}
+                      className="text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center"
                     >
                       <Link
                         key={id + 1}
@@ -132,9 +139,52 @@ export default function Navbar() {
                 {drawerRoot("men")}
                 {drawerRoot("ladies")}
 
-                <Link className={navMenuTextStyle} to={"/"}>
-                  Collection
-                </Link>
+                <Drawer.NestedRoot asChild direction="left">
+                  <Drawer.Trigger className={navMenuTextStyle}>
+                    Collection
+                    <img
+                      src="../../src/assets/chevron.svg"
+                      className="-rotate-90"
+                    />
+                  </Drawer.Trigger>
+                  <Drawer.Portal>
+                    <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+                    <Drawer.Content className="bg-grey-100 flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
+                      <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
+                        <Drawer.Trigger className="flex items-center py-1 gap-6 border-solid border-b-[1px] border-b-secondary-300">
+                          <img
+                            src="../../src/assets/chevron.svg"
+                            className="rotate-90"
+                          />
+                          <h2 className="font-bold text-2xl">All Collection</h2>
+                        </Drawer.Trigger>
+                        {collections.map((item, id) => {
+                          return (
+                            <Drawer.Trigger
+                              asChild={close}
+                              onClick={() => setOpen(false)}
+                              className="text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center"
+                            >
+                              <Link
+                                key={id + 1}
+                                to={`/Products/${item.name}/${item.permalink}`}
+                                className="flex justify-between"
+                              >
+                                <Link className={navMenuTextStyle}>
+                                  {item.name}
+                                </Link>
+                                <img
+                                  src="../../src/assets/chevron.svg"
+                                  className="-rotate-90"
+                                />
+                              </Link>
+                            </Drawer.Trigger>
+                          );
+                        })}
+                      </div>
+                    </Drawer.Content>
+                  </Drawer.Portal>
+                </Drawer.NestedRoot>
               </div>
             </Drawer.Content>
           </Drawer.Portal>
