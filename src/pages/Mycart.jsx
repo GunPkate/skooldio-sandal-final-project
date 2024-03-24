@@ -20,8 +20,9 @@ export default function Mycart(){
             for(let i =0; i < userPurhcase?.length; i++){
                 fetchItemsDetails(userPurhcase[i],itemListmapping)
             }
-
-
+        }
+        else{
+            setLoading(false);
         }
     },[])
 
@@ -32,6 +33,7 @@ export default function Mycart(){
                 const data = res.data
 
                 let displayBody = {
+                    id: dataTemp.id,
                     skuCode: dataTemp.skuCode,
                     quantity: dataTemp.quantity,
                     variants:  []
@@ -55,7 +57,7 @@ export default function Mycart(){
         // console.log(tempData)
         // console.log(e)
         setuserPurhcase(tempData)
-        // axios.delete('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemId',)
+        axios.delete(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${e.id}`)
     }
 
     // localStorage.setItem('id',1234)
@@ -143,7 +145,7 @@ export default function Mycart(){
 
     
         <>
-                <button onClick={()=>{console.log(displayMycart)}}>1234</button>
+                {/* <button onClick={()=>{console.log(displayMycart)}}>1234</button> */}
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
@@ -152,7 +154,7 @@ export default function Mycart(){
 
                 <CardTemplate title={"Items"} width={"min-w-[49.16%]"} height={"  "}  ml = {" mx-[max(16px,16px)] lg:ml-[max(8.34%,16px)] "} mr = {" mr-[20px] mb-[40px] "}>
 
-                    {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
+                    {displayMycart.length >0 ? displayMycart.map( (item,id) =>                
                         <div key={id} className="lg:flex lg:inline-block md:block">
                             <div className="flex justify-center">
                                 <img className={"lg:px-[24px] pb-[24px] " + "object-cover  h-[209px] w-[209px] "} src={item.image} alt=""/>
