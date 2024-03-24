@@ -107,9 +107,8 @@ export default function Navbar() {
             Home
           </Link>
           {categories.map((item, id) => (
-            <span className={baseMenuStyle + responsiveStyle}>
+            <span className={baseMenuStyle + responsiveStyle} key={id + 1}>
               <Link
-                key={id + 1}
                 to={`/Products/${item.name}/${item.permalink}`}
                 className={navItemStyle}
               >
