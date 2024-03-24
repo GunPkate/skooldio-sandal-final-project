@@ -81,31 +81,38 @@ const ProductDetailRight = (data) => {
   };
 
 
-  const handleAddItem = () => {
+  const handleAddItem = async () => {
     const id = localStorage.getItem('id')
     console.log("Add Item",id)
 
     let addItem = {
       skuCode: myItem[0].skuCode,
-      qty: quantity,
+      quantity: quantity,
     }
 
+    let mycartBody = []
+    mycartBody.push(addItem)
+
     console.log("Add Item",addItem)
+    if(mycartBody.length){
+      setuserPurhcase(mycartBody)
+      console.log(mycartBody)
+      
     if(id === null || undefined) {
       try {
-        // axios.post("https://api.storefront.wdb.skooldio.dev/carts",).then( res => {
-        //       let data = res.data
-        //       // let data = res.data.map(item=>item.name)
-        //       // console.log(data)
-        //       setCategories(data)
-        //   })
+       await axios.post("https://api.storefront.wdb.skooldio.dev/carts",{"items":mycartBody}).then( res => {
+              let data = res.data
+              // let data = res.data.map(item=>item.name)
+              console.log("add new cart data",data)
+              localStorage.setItem('id',data.id)
+          })
       } catch (error) {
           console.log(error)
       }
       console.log("Add Item 11",id)
     }else{
       try {
-        // axios.post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`,).then( res => {
+        // axios.post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`,addItem).then( res => {
         //       let data = res.data
         //       // let data = res.data.map(item=>item.name)
         //       // console.log(data)
@@ -115,6 +122,8 @@ const ProductDetailRight = (data) => {
           console.log(error)
       }
       console.log("Add Item 22",id)
+    }
+
     }
   }
 

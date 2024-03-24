@@ -17,7 +17,7 @@ export default function Mycart(){
         // axios.delete('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemId',)
     }
 
-    localStorage.setItem('id',1234)
+    // localStorage.setItem('id',1234)
     const handleUpdateCart = (item, name,value) => {
         let tempData = userPurhcase
         // console.log("item",item)
