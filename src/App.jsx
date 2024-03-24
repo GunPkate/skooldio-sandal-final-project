@@ -6,10 +6,7 @@ import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Mycart from "./pages/Mycart";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
 import ProductCard from "./components/ProductCard";
 import ProductsByCategories from "./pages/ProductsByCategories";
@@ -68,9 +65,11 @@ function App() {
 
   const [userPurhcase, setuserPurhcase] = useState(items);
   const [categories, setCategories] = useState([]);
+  const [collections, setCollections] = useState([]);
 
   useEffect(() => {
     getCategories();
+    getCollection();
   }, []);
 
   const getCategories = async () => {
@@ -86,6 +85,19 @@ function App() {
     }
   };
 
+  const getCollection = async () => {
+    try {
+      await axios
+        .get("https://api.storefront.wdb.skooldio.dev/collections")
+        .then((res) => {
+          let data = res.data;
+          setCollections(data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -93,6 +105,8 @@ function App() {
         setuserPurhcase,
         categories,
         setCategories,
+        collections,
+        setCollections,
       }}
     >
       <RouterProvider router={router} />
