@@ -51,9 +51,13 @@ const ProductDetailRight = (data) => {
       tempItems = tempItems.filter(x=>x.size == value )
       setMyItem(tempItems)
     }
-
+    if(tempItems.length == 1) console.log(tempItems)
   }
 
+  const setUpdateItem = (e) => {
+    e.preventDefault()
+    setQuantity(e.target.value)
+  }
   
   // price with commas from k'Ter (product cart)
   function numberWithCommas(number) {
@@ -80,6 +84,13 @@ const ProductDetailRight = (data) => {
   const handleAddItem = () => {
     const id = localStorage.getItem('id')
     console.log("Add Item",id)
+
+    let addItem = {
+      skuCode: myItem[0].skuCode,
+      qty: quantity,
+    }
+
+    console.log("Add Item",addItem)
     if(id === null || undefined) {
       try {
         // axios.post("https://api.storefront.wdb.skooldio.dev/carts",).then( res => {
@@ -201,16 +212,25 @@ const ProductDetailRight = (data) => {
         <input
           type="number"
           value={quantity}
-          onChange={(e) => setUpdateItem('Qty',e.target.value,e)}
+          onChange={(e) => {setUpdateItem(e);}}
           className="w-full h-14 px-2  border border-gray-300 desktop:w-36"
           min="1"
-        />
+        /> {myItem.length === 1 ? <span>{myItem[0].remains} </span>:<></>}
       </div>
+      {myItem.length === 1 ?
+
+        <Link to="#" onClick={()=>{handleAddItem() }} >
+        <button className="w-full h-[54px] bg-black text-white py-2 ">
+            Add to cart
+        </button>
+      </Link>
+      :
+      <Link >
       <button className="w-full h-[54px] bg-black text-white py-2 ">
-        <Link to="/Mycart/" >
-          Add to cart
-        </Link>
+          Items not Selected
       </button>
+    </Link>
+      }
     </div>
   );
 };
