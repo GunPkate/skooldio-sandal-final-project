@@ -93,7 +93,7 @@ export default function Navbar() {
                       <Link
                         key={id + 1}
                         to={`/Products/${item.name}/${item.permalink}`}
-                        className="flex justify-between"
+                        className="flex justify-between active:text-primary-300"
                       >
                         <Link className={navMenuTextStyle}>{item.name}</Link>
                         <img
