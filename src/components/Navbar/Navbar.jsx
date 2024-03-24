@@ -95,7 +95,7 @@ export default function Navbar() {
                         to={`/Products/${item.name}/${item.permalink}`}
                         className="flex justify-between active:text-primary-300"
                       >
-                        <Link className={navMenuTextStyle}>{item.name}</Link>
+                        <p className={navMenuTextStyle}>{item.name}</p>
                         <img
                           src="../../src/assets/chevron.svg"
                           className="-rotate-90"
@@ -170,9 +170,7 @@ export default function Navbar() {
                                 to={`/Products/${item.name}/${item.permalink}`}
                                 className="flex justify-between"
                               >
-                                <Link className={navMenuTextStyle}>
-                                  {item.name}
-                                </Link>
+                                <p className={navMenuTextStyle}>{item.name}</p>
                                 <img
                                   src="../../src/assets/chevron.svg"
                                   className="-rotate-90"
