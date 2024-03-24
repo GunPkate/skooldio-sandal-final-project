@@ -17,7 +17,6 @@ export default function ProductDetail() {
     fetch(`${BASE_URL}products/${permalink}`)
       .then(async (res) => {
         let data = await res.json();
-        console.log("data1",data)
         setProducts(data);
         setLoading(false);
       })

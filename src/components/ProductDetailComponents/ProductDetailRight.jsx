@@ -10,21 +10,60 @@ const ProductDetailRight = (data) => {
   const [quantity, setQuantity] = useState(1);
   const [myItem,setMyItem] = useState([]);
 
-  console.log("xx data",data)
+  const [activeSize,setActiveSize] = useState("");
+  const [activeColor,setActiveColor] = useState("");
+
+  // console.log("xx data",data)
+  const initialProducts = data.variants
+
   let description = [];
   if (data) {
     description = data;
   }
 
   const setUpdateItem = (group,value) => {
-    // let tempItem =  
-    console.log(group,value)
+    let tempItems = initialProducts;
+
+    // checkActive(value);
+    if(group == 'Size'){
+      setActiveSize(value)
+    }
+    if(group == 'Color'){
+      setActiveColor(value) 
+    }
+
+    console.log("group",group)
+    console.log("value",value)
+    console.log("C",activeColor)
+    console.log("S",activeSize)
+    console.log(JSON.stringify( tempItems ))
+
+    let a = []
+    if(group == 'Color' && checkColor()){
+      a = tempItems.filter(x=>x.color == value )
+    }if(group == 'Size' && checkSize()){
+      a = tempItems.filter(x=>x.size == value )
+    }
+    console.log( a )
+    console.log(a.length)
+
+
   }
-  // function to handle size selection
-  const handleSizeSelection = (size) => {
-    setSelectedSize(size);
-    console.log(size)
-  };
+
+
+
+  let checkSizeAndColor = (tempItems,group) =>{
+
+    return tempItems
+  }
+
+  function checkSize(){
+    return activeSize == null || activeSize == ""
+  }
+
+  function checkColor(){
+    return activeColor == null || activeColor == ""
+  }
   
   // price with commas from k'Ter (product cart)
   function numberWithCommas(number) {
@@ -47,16 +86,6 @@ const ProductDetailRight = (data) => {
     }
   };
 
-  //about color
-  const uniqueByKey = (array, key) => {
-    return array.filter(
-      (item, index, self) =>
-        index === self.findIndex((t) => t[key] === item[key])
-    );
-  };
-
-  const uniqueData = uniqueByKey(data.variants, "color");
-  console.log("++++++++", uniqueData);
 
   const handleAddItem = () => {
     const id = localStorage.getItem('id')
@@ -128,7 +157,7 @@ const ProductDetailRight = (data) => {
       {/* lower information from color below*/}
       <div className="mb-6 mt-14">
         <div className="laptop:w-72 desktop:w-80">
-          <div className="font-normal text-base mb-2">Color</div>
+          <div className="font-normal text-base mb-2">Color {activeColor !== null || activeColor !== ""  ? activeColor : "X"}</div>
           <div className="flex justify-evenly gap-6 mb-6">
             {/* Color options */}
             {Array.from(
@@ -140,7 +169,7 @@ const ProductDetailRight = (data) => {
             )
               .slice(0, 3)
               .map((colorCode, index) => (
-                <button onClick={()=>{setUpdateItem('Color',colorCode.colorCode)}}>
+                <button onClick={()=>{setUpdateItem('Color',colorCode.color)}}>
                   <div
                     key={index}
                     className="w-14 h-14 "
@@ -155,26 +184,24 @@ const ProductDetailRight = (data) => {
           </div>
         </div>
 
-        <div className="font-normal text-base mb-2">Size</div>
+        <div className="font-normal text-base mb-2">Size {activeSize !== null || activeSize !== ""? activeSize : "X"}</div>
         <div className="flex gap-2 mb-6">
           {/* Size options */}
-          {data.variants.map(x=>x.size)[0] !== undefined || null ? data.variants.map(x=>x.size).map((size) => (
+          {data.variants.map(x=>x.size)[0] !== undefined || null ? Array.from( new Set(data.variants.map(x=>x.size)) ).map((size) => (
             <button
               key={size}
               className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
                 selectedSize === size ? "bg-yellow-300" : ""
               }`}
-              onClick={() => handleSizeSelection(size)}
+              onClick={() => setUpdateItem('Size',size)}
             >
               {size}
             </button>
           ))
           :
+          // disabled
           <button
-          // key={size}
           className={`bg-gray-300 w-16 h-14 border border-gray-300 desktop:w-36  `}
-          onClick={() => handleSizeSelection(size)}
-          disabled
         >
           {/* {size} */}
         </button>
@@ -184,7 +211,7 @@ const ProductDetailRight = (data) => {
         <input
           type="number"
           value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
+          onChange={(e) => setUpdateItem('Qty',e.target.value)}
           className="w-full h-14 px-2  border border-gray-300 desktop:w-36"
           min="1"
         />
