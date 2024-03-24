@@ -3,7 +3,7 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar/Navbar";
 import { UserContext } from "../App"
 import axios from "axios";
-
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
@@ -11,27 +11,39 @@ export default function Mycart(){
     const [loading, setLoading] = useState(false);
 
 
-    let aa = []
-
     useEffect(()=>{
         setLoading(true);
-        if(userPurhcase.length >0){
-            setLoading(false);
-            for(let i =0; i < userPurhcase.length; i++){
-                fetchItemsDetails(userPurhcase[i])
+        //? fix slow loading
+        if(userPurhcase?.length >0){
+            
+            let  itemListmapping = []
+            for(let i =0; i < userPurhcase?.length; i++){
+                fetchItemsDetails(userPurhcase[i],itemListmapping)
             }
-            console.log("22",aa)
-        
+        }
+        else{
+            setLoading(false);
         }
     },[])
 
-    async function fetchItemsDetails(dataTemp){
-        console.log("delete",dataTemp)
+    async function fetchItemsDetails(dataTemp,dataSet){
+
         try {
-            await axios.get("https://api.storefront.wdb.skooldio.dev/"+dataTemp.productPermalink).then(res=>{
+            await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+dataTemp.productPermalink).then(res=>{
                 const data = res.data
-                console.log("aa",data)
-                aa.push(data)
+
+                let displayBody = {
+                    id: dataTemp.id,
+                    skuCode: dataTemp.skuCode,
+                    quantity: dataTemp.quantity,
+                    variants:  []
+                }
+
+                setLoading(false);
+                displayBody.variants = data.variants
+                dataSet.push(displayBody)
+                console.log("|||",dataSet)
+                setDisplayMycart(dataSet)
             })
         } catch (error) {
             console.log(error)
@@ -45,7 +57,7 @@ export default function Mycart(){
         // console.log(tempData)
         // console.log(e)
         setuserPurhcase(tempData)
-        // axios.delete('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemId',)
+        axios.delete(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${e.id}`)
     }
 
     // localStorage.setItem('id',1234)
@@ -128,11 +140,12 @@ export default function Mycart(){
     const noItemImg = "https://picsum.photos/200/300"
 
     return <>
+    <Navbar/>
      {!loading ?
 
     
         <>
-        <Navbar/>
+                {/* <button onClick={()=>{console.log(displayMycart)}}>1234</button> */}
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
@@ -141,7 +154,7 @@ export default function Mycart(){
 
                 <CardTemplate title={"Items"} width={"min-w-[49.16%]"} height={"  "}  ml = {" mx-[max(16px,16px)] lg:ml-[max(8.34%,16px)] "} mr = {" mr-[20px] mb-[40px] "}>
 
-                    {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
+                    {displayMycart.length >0 ? displayMycart.map( (item,id) =>                
                         <div key={id} className="lg:flex lg:inline-block md:block">
                             <div className="flex justify-center">
                                 <img className={"lg:px-[24px] pb-[24px] " + "object-cover  h-[209px] w-[209px] "} src={item.image} alt=""/>
@@ -297,11 +310,13 @@ export default function Mycart(){
             </div>
 
             </div>
-        <Footer/>
         </>
-     : <>
-    </>
+        : 
+        <div className="h-[80vh]">
+             <LoadingSpinner />
+        </div>
     }
+    <Footer/>
 
     </>
 }

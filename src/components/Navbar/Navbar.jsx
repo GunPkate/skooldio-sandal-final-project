@@ -33,7 +33,6 @@ export default function Navbar() {
 
   useEffect( () => {
     let id = localStorage.getItem('id')
-    console.log("xxx id",id)
     fetchMycart(id);
   }, []);
 
