@@ -1,33 +1,23 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
-import { useEffect, useState } from "react";
-
 function Homepage() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
   const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
 
   useEffect(() => {
-    setLoading(true);
     fetch(`${BASE_URL}products`)
       .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.data);
-        setLoading(false);
-      });
+      .then((data) => setProducts(data.data))
+      .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
-  let items = null;
+  const sortedProducts = [...products].sort((a, b) => b.ratings - a.ratings);
+  const topProducts = sortedProducts.slice(0, 4);
+  const items = topProducts.map((item) => <ProductCard key={item.id} {...item} />);
 
-  if (products.length > 0) {
-    // Sort the products by ratings
-    const sortedProducts = products.sort((a, b) => b.ratings - a.ratings);
-    // Take only the first 4 sorted products
-    const topProducts = sortedProducts.slice(0, 4);
-    // Map the top products to ProductCard components
-    items = topProducts.map((item, index) => <ProductCard key={index} {...item} />);
-  }
 
   return (
     <>
@@ -41,7 +31,6 @@ function Homepage() {
         />
       </div>
 
-      <div className="gap-10">
   <div className="relative bg-white px-6 pb-20 lg:px-8 lg:pb-28">
     <div className="mx-auto max-w-7xl">
       <div className="mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3">
@@ -72,7 +61,7 @@ function Homepage() {
             src="https://s3-alpha-sig.figma.com/img/d5fe/7eb0/680055de67c3d9c6a271ba03847a3cb9?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=QoAoFPFXTGXqVstIsmBMC1Sq3~qsDWeK3I-z3NwP12WOlKPS1Lwe7KRuHjvCBR-cCyxGKAz4wT~tr3KbIMlOZvxVxhTwJspMskLIvd3T24u6GCoZdC4bMjvqCK9AvKo6DoAIgNS1fETMpXgo0ICafS1TR~hg0S2t~hSaZFFlqxpAlo3D6zOREfaMLdPq1GHk1Vj6dsp2QZTpDtwta35OnVf0tc2oj6WuPLBV81ZOYB6IYs3Gig6MczVVDGFoFJz9sxv6iDbh6J4xmTM7lDg9RK8WzVjY91CoOGJRgUDi-fITZ3-OmqgJqx9ymptp5Ki-HNTjerkv5KwkvZBV~zvsFg__"
             alt=""
           />
-          <div className="flex flex-1 flex-col justify-between p-6 absolute bottom-0">
+          <div className="flex flex-1 flex-col justify-between p-6 absolute bottom-0" style={{ background: "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))" }}>
             <div className="flex flex-col items-center justify-center gap-4">
               <p className="text-xl font-semibold text-white">Cozy Breeze</p>
               <p className="mt-3 text-base text-white font-light">
@@ -82,9 +71,10 @@ function Homepage() {
                 collection invites you to indulge in the allure of winter
                 fashion.
               </p>
-              <button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
+              <Link to="/ProductDetail/shirts-premium-linen-long-sleeve-shirt"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
                 View more
               </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -95,7 +85,7 @@ function Homepage() {
             src="https://s3-alpha-sig.figma.com/img/1f4b/d42b/1a0763187b13c1a39bff2d14eb960993?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gEKex1PxYViM7KPPxulfJklZIC7Mqmdn8aQ6mBZNzy7AKrkbgGkbR94W7S7yNlny2yt6SDI4beAzXimPDrZzokvYQtk0kbzz6BLH-bqbUs4sYJ5VEv6GDG8sfGDrFxAVqIKnUgh-gIlDNpTG4NmW8IQGBdtYwd0uoxL5pOeUo8lbUZ593oHFhTEYDaeCSKLFv8WSaAU~sMlkM1clnUVXVQtOB3mxMYObWcHZsanK~6pK~Ar5Nimju5y5n~4xgj-9tqyQqqU6EHoNDKB4SqbPSAIkFlXG-s1BtVx-UMVtsTZPWOyxsUu34J7eU6IWo-RLEL6ZG86---8-EiXLmX70Jw__"
             alt=""
           />
-          <div className="flex flex-1 flex-col justify-between p-6 absolute bottom-0">
+          <div className="flex flex-1 flex-col justify-between p-6 absolute bottom-0" style={{ background: "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))" }}>
             <div className="flex flex-col items-center justify-center gap-4">
               <p className="text-xl font-semibold text-white">Flexi Move</p>
               <p className="mt-3 text-base text-white font-light">
@@ -104,16 +94,17 @@ function Homepage() {
                 the perfect fusion of style and comfort, our curated selection
                 of sneakers is a celebration of urban chic.
               </p>
-              <button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
+              <Link to="/ProductDetail/shoes-athletic-mesh-slip-on-sneakers"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
                 View more
               </button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>     
+
 
       <div className="flex flex-col items-center px-4 font-bold mb-16 mx-auto">
         <p className="text-[32px] mb-16">Feature Products</p>
