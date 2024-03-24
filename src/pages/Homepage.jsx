@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import ProductCard from "../components/ProductCard";
@@ -106,9 +106,9 @@ function Homepage() {
   </div>
 
 
-      <div className="flex flex-col items-center px-4 font-bold mb-16 mx-auto">
+      <div className="flex flex-col items-center px-4 font-bold mx-auto">
         <p className="text-[32px] mb-16">Feature Products</p>
-        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 md:gap-x-10 md:gap-y-[60px] mb-40">
+        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 md:gap-x-10 md:gap-y-[60px]">
           {items}
         </div>
       </div>
