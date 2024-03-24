@@ -48,10 +48,47 @@ export default function Navbar() {
   const navItemStyle = "text-white ml-6 text-base my-auto bg-black";
   const contentStyle = "flex items-center text-white ";
   const responsiveStyle = " md:opacity-1 md:items-center  ";
+  const navMenuStyle =
+    "text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary";
 
   const baseMenuStyle = "flex md:inline-flex bg-black ";
   const cart = `
     <svg width="40px" height="40px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#fcfcfc" d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>    `;
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  const drawerRoot = (input) => {
+    const gender = capitalizeFirstLetter(input);
+    return (
+      <Drawer.NestedRoot asChild direction="left">
+        <Drawer.Trigger className={navMenuStyle}>{gender}</Drawer.Trigger>
+        <Drawer.Portal>
+          <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+          <Drawer.Content className="bg-grey-100 flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
+            <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
+              {categories.map((item, id) => {
+                if (
+                  item.permalink.toUpperCase().includes(gender.toUpperCase())
+                ) {
+                  return (
+                    <Link
+                      key={id + 1}
+                      to={`/Products/${item.name}/${item.permalink}`}
+                      className={navMenuStyle}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                }
+              })}
+            </div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.NestedRoot>
+    );
+  };
 
   return (
     <div
@@ -69,21 +106,16 @@ export default function Navbar() {
             <Drawer.Overlay className="fixed inset-0 bg-black/40" />
             <Drawer.Content className="bg-white flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
               <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
-                <Link
-                  className="text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary"
-                  to={"/"}
-                >
+                <Link className={navMenuStyle} to={"/"}>
                   Home
                 </Link>
-                {categories.map((item, id) => (
-                  <Link
-                    key={id + 1}
-                    to={`/Products/${item.name}/${item.permalink}`}
-                    className="text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+
+                {drawerRoot("men")}
+                {drawerRoot("ladies")}
+
+                <Link className={navMenuStyle} to={"/"}>
+                  Collection
+                </Link>
               </div>
             </Drawer.Content>
           </Drawer.Portal>
