@@ -98,30 +98,28 @@ const ProductDetailRight = (data) => {
       setuserPurhcase(mycartBody)
       console.log(mycartBody)
       
-    if(id === null || undefined) {
+    if(id === null || id === undefined || id === "" ) {
       try {
        await axios.post("https://api.storefront.wdb.skooldio.dev/carts",{"items":mycartBody}).then( res => {
               let data = res.data
-              // let data = res.data.map(item=>item.name)
               console.log("add new cart data",data)
               localStorage.setItem('id',data.id)
           })
       } catch (error) {
           console.log(error)
       }
-      console.log("Add Item 11",id)
+
     }else{
       try {
-        // axios.post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`,addItem).then( res => {
-        //       let data = res.data
-        //       // let data = res.data.map(item=>item.name)
-        //       // console.log(data)
-        //       setCategories(data)
-        //   })
+        axios.post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`,{"items":mycartBody}).then( res => {
+              let data = res.data
+              console.log("add old cart data",data)
+
+          })
       } catch (error) {
           console.log(error)
       }
-      console.log("Add Item 22",id)
+
     }
 
     }
