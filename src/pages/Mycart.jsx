@@ -17,7 +17,7 @@ export default function Mycart(){
         if(userPurhcase?.length >0){
             
             let  itemListmapping = []
-            for(let i =0; i < userPurhcase.length; i++){
+            for(let i =0; i < userPurhcase?.length; i++){
                 fetchItemsDetails(userPurhcase[i],itemListmapping)
             }
 
@@ -26,19 +26,21 @@ export default function Mycart(){
     },[])
 
     async function fetchItemsDetails(dataTemp,dataSet){
-        console.log("delete",dataTemp)
-        let displayBody = {
-            skuCode: dataTemp.skuCode,
-            quantity: dataTemp.quantity,
-            variants:  []
-        }
+
         try {
             await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+dataTemp.productPermalink).then(res=>{
                 const data = res.data
-                console.log("aa",data)
+
+                let displayBody = {
+                    skuCode: dataTemp.skuCode,
+                    quantity: dataTemp.quantity,
+                    variants:  []
+                }
+
                 setLoading(false);
-                displayBody.variant = data.variants
-                dataSet.push(data)
+                displayBody.variants = data.variants
+                dataSet.push(displayBody)
+                console.log("|||",dataSet)
                 setDisplayMycart(dataSet)
             })
         } catch (error) {
@@ -141,6 +143,7 @@ export default function Mycart(){
 
     
         <>
+                <button onClick={()=>{console.log(displayMycart)}}>1234</button>
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
