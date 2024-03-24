@@ -226,7 +226,8 @@ const ProductDetailRight = (data) => {
       </div>
       {myItem.length === 1 ?
 
-        <Link to="#" onClick={()=>{handleAddItem() }} >
+        <Link to="/Mycart" onClick={()=>{handleAddItem() }} >
+        {/* <Link to="/Mycart" onClick={()=>{handleAddItem() }} > */}
         <button className="w-full h-[54px] bg-black text-white py-2 ">
             Add to cart
         </button>

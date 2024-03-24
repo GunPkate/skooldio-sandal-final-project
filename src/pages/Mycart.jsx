@@ -7,13 +7,44 @@ import axios from "axios";
 
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
+    const [displayMycart,setDisplayMycart] = useState([])
+    const [loading, setLoading] = useState(false);
+
+
+    let aa = []
+
+    useEffect(()=>{
+        setLoading(true);
+        if(userPurhcase.length >0){
+            setLoading(false);
+            for(let i =0; i < userPurhcase.length; i++){
+                fetchItemsDetails(userPurhcase[i])
+            }
+            console.log("22",aa)
+        
+        }
+    },[])
+
+    async function fetchItemsDetails(dataTemp){
+        console.log("delete",dataTemp)
+        try {
+            await axios.get("https://api.storefront.wdb.skooldio.dev/"+dataTemp.productPermalink).then(res=>{
+                const data = res.data
+                console.log("aa",data)
+                aa.push(data)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
 
     const handleDelete = (e) => {
         let tempData = userPurhcase.filter(data=>data !== e)
         // console.log(tempData)
         // console.log(e)
         setuserPurhcase(tempData)
-        localStorage.setItem('myCart',JSON.stringify(userPurhcase))
         // axios.delete('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemId',)
     }
 
@@ -30,7 +61,6 @@ export default function Mycart(){
 
         console.log(qtyData)
         setuserPurhcase(tempData)
-        localStorage.setItem('myCart',JSON.stringify(userPurhcase))
 
         switch (name){
             case 'quantity': 
@@ -97,7 +127,10 @@ export default function Mycart(){
 
     const noItemImg = "https://picsum.photos/200/300"
 
-    return(
+    return <>
+     {!loading ?
+
+    
         <>
         <Navbar/>
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
@@ -266,5 +299,9 @@ export default function Mycart(){
             </div>
         <Footer/>
         </>
-    )
+     : <>
+    </>
+    }
+
+    </>
 }
