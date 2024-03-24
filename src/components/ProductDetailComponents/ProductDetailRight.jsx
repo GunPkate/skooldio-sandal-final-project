@@ -1,20 +1,31 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../App";
 
 const ProductDetailRight = (data) => {
+  const { userPurhcase, setuserPurhcase } = useContext(UserContext);
+
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [myItem,setMyItem] = useState([]);
 
+  console.log("xx data",data)
   let description = [];
   if (data) {
     description = data;
   }
 
+  const setUpdateItem = (group,value) => {
+    // let tempItem =  
+    console.log(group,value)
+  }
   // function to handle size selection
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
+    console.log(size)
   };
-
+  
   // price with commas from k'Ter (product cart)
   function numberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -46,6 +57,36 @@ const ProductDetailRight = (data) => {
 
   const uniqueData = uniqueByKey(data.variants, "color");
   console.log("++++++++", uniqueData);
+
+  const handleAddItem = () => {
+    const id = localStorage.getItem('id')
+    console.log("Add Item",id)
+    if(id === null || undefined) {
+      try {
+        // axios.post("https://api.storefront.wdb.skooldio.dev/carts",).then( res => {
+        //       let data = res.data
+        //       // let data = res.data.map(item=>item.name)
+        //       // console.log(data)
+        //       setCategories(data)
+        //   })
+      } catch (error) {
+          console.log(error)
+      }
+      console.log("Add Item 11",id)
+    }else{
+      try {
+        // axios.post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`,).then( res => {
+        //       let data = res.data
+        //       // let data = res.data.map(item=>item.name)
+        //       // console.log(data)
+        //       setCategories(data)
+        //   })
+      } catch (error) {
+          console.log(error)
+      }
+      console.log("Add Item 22",id)
+    }
+  }
 
   return (
     <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px] desktop:mt-0  ">
@@ -90,23 +131,34 @@ const ProductDetailRight = (data) => {
           <div className="font-normal text-base mb-2">Color</div>
           <div className="flex justify-evenly gap-6 mb-6">
             {/* Color options */}
-            {uniqueData.map((value, index) => (
-              <div key={index}>
-                <div
-                  className="w-14 h-14"
-                  style={{ background: value.colorCode}}
-                ></div>
+            {Array.from(
+              new Set(
+                data?.variants?.map((variant) => {
+                  return { colorCode: variant.colorCode, color: variant.color };
+                })
+              )
+            )
+              .slice(0, 3)
+              .map((colorCode, index) => (
+                <button onClick={()=>{setUpdateItem('Color',colorCode.colorCode)}}>
+                  <div
+                    key={index}
+                    className="w-14 h-14 "
+                    style={{ background: colorCode.colorCode }}
+                  ></div>
 
-                <div className="text-center mt-[6.5px]">{value.color}</div>
-              </div>
-            ))}
+                  <div className="text-center mt-[6.5px]">
+                    {colorCode.color}
+                  </div>
+                </button>
+              ))}
           </div>
         </div>
 
         <div className="font-normal text-base mb-2">Size</div>
         <div className="flex gap-2 mb-6">
           {/* Size options */}
-          {["XS", "S", "M", "L", "XL"].map((size) => (
+          {data.variants.map(x=>x.size)[0] !== undefined || null ? data.variants.map(x=>x.size).map((size) => (
             <button
               key={size}
               className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
@@ -116,7 +168,17 @@ const ProductDetailRight = (data) => {
             >
               {size}
             </button>
-          ))}
+          ))
+          :
+          <button
+          // key={size}
+          className={`bg-gray-300 w-16 h-14 border border-gray-300 desktop:w-36  `}
+          onClick={() => handleSizeSelection(size)}
+          disabled
+        >
+          {/* {size} */}
+        </button>
+        }
         </div>
         <div className="font-normal text-base mb-2">Qty.</div>
         <input
