@@ -10,8 +10,8 @@ const ProductDetailRight = (data) => {
   const [quantity, setQuantity] = useState(1);
   const [myItem,setMyItem] = useState([]);
 
-  const [activeSize,setActiveSize] = useState("");
-  const [activeColor,setActiveColor] = useState("");
+  const [activeSize,setActiveSize] = useState(null);
+  const [activeColor,setActiveColor] = useState(null);
 
   // console.log("xx data",data)
   const initialProducts = data.variants
@@ -21,39 +21,39 @@ const ProductDetailRight = (data) => {
     description = data;
   }
 
-  const setUpdateItem = (groupSize,groupColor,value,e) => {
+  const setUpdateColor = (groupSize,groupColor,value,e) => {
     e.preventDefault();
-    let tempItems = initialProducts;
+    let tempItems = []
+    myItem.length === 0 ? tempItems = initialProducts : tempItems = myItem;
 
-    // checkActive(value);
+    if(groupColor == 'Color'){
+      activeColor !== value ? setActiveColor(value) : setActiveColor(''); 
+    }
+
+    console.log("Color",activeColor)
+    if(groupColor == 'Color' ){
+      tempItems = tempItems.filter(x=>x.color == value )
+      setMyItem(tempItems)
+    }
+
+  }
+  const setUpdateSize = (groupSize,groupColor,value,e) => {
+    e.preventDefault();
+
+    let tempItems = []
+    myItem.length === 0 ? tempItems = initialProducts : tempItems = myItem;
+
     if(groupSize == 'Size'){
-      setActiveSize(value)
-    }
-    if(groupColor == 'Color'){
-      setActiveColor(value) 
+      activeSize !== value ? setActiveSize(value) :setActiveSize('');
     }
 
-    let a = []
-    if(groupColor == 'Color'){
-      a = tempItems.filter(x=>x.color == value )
-    }if(groupSize == 'Size'){
-      a = tempItems.filter(x=>x.size == value )
+    if(groupSize == 'Size' ){
+      tempItems = tempItems.filter(x=>x.size == value )
+      setMyItem(tempItems)
     }
-    if(groupColor == 'Color' &&  groupSize == 'Size'){
-      a = tempItems.filter(x=>x.size == activeSize && x.color == activeColor )
-    }
-    console.log( a )
-    console.log(a.length)
+
   }
 
-
-  function checkSize(){
-    return activeSize == null || activeSize == ""
-  }
-
-  function checkColor(){
-    return activeColor == null || activeColor == ""
-  }
   
   // price with commas from k'Ter (product cart)
   function numberWithCommas(number) {
@@ -115,7 +115,7 @@ const ProductDetailRight = (data) => {
           ID : {data.skuCode}
         </div>
         <div className="text-5xl font-bold mb-1 leading-[60px]">
-          {data.name}
+          {data.name} {myItem.length}
         </div>
         <div className="text-lg font-semibold mb-6 leading-6 text-secondary-700 desktop:text-2xl">
           {data.description}
@@ -159,7 +159,7 @@ const ProductDetailRight = (data) => {
             )
               .slice(0, 3)
               .map((colorCode, index) => (
-                <button onClick={(e)=>{setUpdateItem('','Color',colorCode.color,e)}}>
+                <button onClick={(e)=>{setUpdateColor('','Color',colorCode.color,e)}}>
                   <div
                     key={index}
                     className="w-14 h-14 "
@@ -183,7 +183,7 @@ const ProductDetailRight = (data) => {
               className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
                 selectedSize === size ? "bg-yellow-300" : ""
               }`}
-              onClick={(e) => setUpdateItem('Size','',size,e)}
+              onClick={(e) => setUpdateSize('Size','',size,e)}
             >
               {size}
             </button>
