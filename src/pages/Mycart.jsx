@@ -13,14 +13,15 @@ export default function Mycart(){
 
     useEffect(()=>{
         setLoading(true);
+        //? fix slow loading
         if(userPurhcase?.length >0){
             
-            let  aa = []
+            let  itemListmapping = []
             for(let i =0; i < userPurhcase.length; i++){
-                fetchItemsDetails(userPurhcase[i],aa)
+                fetchItemsDetails(userPurhcase[i],itemListmapping)
             }
-            console.log("22",aa)
-        
+
+
         }
     },[])
 
@@ -38,6 +39,7 @@ export default function Mycart(){
                 setLoading(false);
                 displayBody.variant = data.variants
                 dataSet.push(data)
+                setDisplayMycart(dataSet)
             })
         } catch (error) {
             console.log(error)
