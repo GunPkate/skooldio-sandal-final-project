@@ -3,7 +3,7 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar/Navbar";
 import { UserContext } from "../App"
 import axios from "axios";
-
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
@@ -11,27 +11,33 @@ export default function Mycart(){
     const [loading, setLoading] = useState(false);
 
 
-    let aa = []
-
     useEffect(()=>{
         setLoading(true);
-        if(userPurhcase.length >0){
-            setLoading(false);
+        if(userPurhcase?.length >0){
+            
+            let  aa = []
             for(let i =0; i < userPurhcase.length; i++){
-                fetchItemsDetails(userPurhcase[i])
+                fetchItemsDetails(userPurhcase[i],aa)
             }
             console.log("22",aa)
         
         }
     },[])
 
-    async function fetchItemsDetails(dataTemp){
+    async function fetchItemsDetails(dataTemp,dataSet){
         console.log("delete",dataTemp)
+        let displayBody = {
+            skuCode: dataTemp.skuCode,
+            quantity: dataTemp.quantity,
+            variants:  []
+        }
         try {
-            await axios.get("https://api.storefront.wdb.skooldio.dev/"+dataTemp.productPermalink).then(res=>{
+            await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+dataTemp.productPermalink).then(res=>{
                 const data = res.data
                 console.log("aa",data)
-                aa.push(data)
+                setLoading(false);
+                displayBody.variant = data.variants
+                dataSet.push(data)
             })
         } catch (error) {
             console.log(error)
@@ -128,11 +134,11 @@ export default function Mycart(){
     const noItemImg = "https://picsum.photos/200/300"
 
     return <>
+    <Navbar/>
      {!loading ?
 
     
         <>
-        <Navbar/>
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
@@ -297,11 +303,13 @@ export default function Mycart(){
             </div>
 
             </div>
-        <Footer/>
         </>
-     : <>
-    </>
+        : 
+        <div className="h-[80vh]">
+             <LoadingSpinner />
+        </div>
     }
+    <Footer/>
 
     </>
 }
