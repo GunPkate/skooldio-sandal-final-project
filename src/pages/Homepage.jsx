@@ -3,20 +3,47 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
+import LoadingSpinner from "../components/LoadingSpinner";
 function Homepage() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
 
   useEffect(() => {
     fetch(`${BASE_URL}products`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data.data))
-      .catch((error) => console.error("Error fetching products:", error));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch products. Please try again later.");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setProducts(data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Error: {error}</p>
+      </div>
+    );
+  }
 
   const sortedProducts = [...products].sort((a, b) => b.ratings - a.ratings);
   const topProducts = sortedProducts.slice(0, 4);
   const items = topProducts.map((item) => <ProductCard key={item.id} {...item} />);
+
 
 
   return (
