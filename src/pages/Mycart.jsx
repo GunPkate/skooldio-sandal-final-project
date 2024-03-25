@@ -11,21 +11,22 @@ export default function Mycart(){
     const [loading, setLoading] = useState(false);
 
 
-
-    useEffect(()=>{
-        setLoading(true);
-        //? fix slow loading
-        if(userPurhcase?.length >0){
-            console.log("userPurhcase",userPurhcase)
-            let  itemListmapping = []
-            for(let i =0; i < userPurhcase?.length; i++){
-                fetchItemsDetails(userPurhcase[i],itemListmapping)
-            }
-        }
-        else if(userPurhcase.length === 0){
-            setLoading(false);
-        }
-    },[])
+    console.log("12345",userPurhcase)
+    
+    // useEffect(()=>{
+    //     setLoading(true);
+    //     //? fix slow loading
+    //     if(userPurhcase?.length >0){
+    //         console.log("userPurhcase",userPurhcase)
+    //         let  itemListmapping = []
+    //         for(let i =0; i < userPurhcase?.length; i++){
+    //             fetchItemsDetails(userPurhcase[i],itemListmapping)
+    //         }
+    //     }
+    //     else if(userPurhcase.length === 0){
+    //         setLoading(false);
+    //     }
+    // },[])
 
     async function fetchItemsDetails(dataTemp,dataSet){
 
