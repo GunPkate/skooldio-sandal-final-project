@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function NavItem({ to, children }) {
     return (
         <li className="pb-4">
-            <Link to={to} className="text-white hover:text-gray-400 transition-colors duration-300">
+            <Link to={to} className="text-white hover:hover:text-primary-700 transition-colors duration-300">
                 {children}
             </Link>
         </li>
