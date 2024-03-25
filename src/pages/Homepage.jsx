@@ -58,7 +58,7 @@ function Homepage() {
         <div className="flex flex-col overflow-hidden relative">
           <img
             className="object-fit"
-            src="https://s3-alpha-sig.figma.com/img/d5fe/7eb0/680055de67c3d9c6a271ba03847a3cb9?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=QoAoFPFXTGXqVstIsmBMC1Sq3~qsDWeK3I-z3NwP12WOlKPS1Lwe7KRuHjvCBR-cCyxGKAz4wT~tr3KbIMlOZvxVxhTwJspMskLIvd3T24u6GCoZdC4bMjvqCK9AvKo6DoAIgNS1fETMpXgo0ICafS1TR~hg0S2t~hSaZFFlqxpAlo3D6zOREfaMLdPq1GHk1Vj6dsp2QZTpDtwta35OnVf0tc2oj6WuPLBV81ZOYB6IYs3Gig6MczVVDGFoFJz9sxv6iDbh6J4xmTM7lDg9RK8WzVjY91CoOGJRgUDi-fITZ3-OmqgJqx9ymptp5Ki-HNTjerkv5KwkvZBV~zvsFg__"
+            src="./src/assets/img2.jpg"
             alt=""
           />
           <div className="flex flex-1 flex-col justify-between p-6 absolute bottom-0" style={{ background: "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))" }}>
@@ -82,7 +82,7 @@ function Homepage() {
         <div className="flex flex-col overflow-hidden relative">
           <img
             className="w-full object-fit"
-            src="https://s3-alpha-sig.figma.com/img/1f4b/d42b/1a0763187b13c1a39bff2d14eb960993?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gEKex1PxYViM7KPPxulfJklZIC7Mqmdn8aQ6mBZNzy7AKrkbgGkbR94W7S7yNlny2yt6SDI4beAzXimPDrZzokvYQtk0kbzz6BLH-bqbUs4sYJ5VEv6GDG8sfGDrFxAVqIKnUgh-gIlDNpTG4NmW8IQGBdtYwd0uoxL5pOeUo8lbUZ593oHFhTEYDaeCSKLFv8WSaAU~sMlkM1clnUVXVQtOB3mxMYObWcHZsanK~6pK~Ar5Nimju5y5n~4xgj-9tqyQqqU6EHoNDKB4SqbPSAIkFlXG-s1BtVx-UMVtsTZPWOyxsUu34J7eU6IWo-RLEL6ZG86---8-EiXLmX70Jw__"
+            src="./src/assets/img3.jpg"
             alt=""
           />
           <div className="flex flex-1 flex-col justify-between p-6 absolute bottom-0" style={{ background: "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))" }}>
