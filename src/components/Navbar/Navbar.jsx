@@ -9,6 +9,17 @@ import DrawerRootByCollections from "../DrawerRootByCollections.jsx";
 import DropdownRootByGender from "../DropdownRootByGender.jsx";
 import DropdownRootByCollections from "../DropdownRootByCollections.jsx";
 
+const logoButton = () => {
+  return (
+    <Link
+      className="btn btn-ghost rounded-btn font-light text-md mr-10"
+      to={"/"}
+    >
+      <img src="../../src/assets/Logo/Storefront.svg" />
+    </Link>
+  );
+};
+
 export default function Navbar() {
   const { userPurhcase } = useContext(UserContext);
 
@@ -24,7 +35,7 @@ export default function Navbar() {
   return (
     <div
       className={
-        "bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] justify-between " +
+        "bg-fixed bg-black lg:h-[60px] h-[56px] w-full px-auto justify-center px-4 py-2 " +
         contentStyle
       }
     >
@@ -37,6 +48,9 @@ export default function Navbar() {
         <Drawer.Trigger asChild className="lg:hidden">
           <img src="../../src/assets/hamburger.svg" />
         </Drawer.Trigger>
+
+        {logoButton()}
+
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/40" />
           <Drawer.Content className="bg-white flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
@@ -54,41 +68,38 @@ export default function Navbar() {
       </Drawer.Root>
 
       {/* DESKTOP */}
-      <div className="hidden lg:flex">
-        <Link className="btn btn-ghost rounded-btn font-light text-md" to={"/"}>
-          Home
-        </Link>
-
-        {DropdownRootByGender("men")}
-        {DropdownRootByGender("ladies")}
-        {DropdownRootByCollections("collections")}
-      </div>
-
-      <div className={contentStyle}>
-        <Link className={navItemStyle} to={"/Mycart"}>
-          <div className="flex">
-            <div className="relative">
-              <span className="absolute m-auto left-0 top-0.25 right-0 text-pink-600 text-xl text-center font-bold">
-                {userPurhcase.length}
+      <div className="flex w-full max-w-[1600px] justify-between">
+        <div className="hidden lg:flex">
+          {DropdownRootByGender("men")}
+          {DropdownRootByGender("ladies")}
+          {DropdownRootByCollections("collections")}
+        </div>
+        <div className={contentStyle + "ml-auto"}>
+          <Link className={navItemStyle} to={"/Mycart"}>
+            <div className="flex">
+              <div className="relative">
+                <span className="absolute m-auto left-0 top-0.25 right-0 text-pink-600 text-xl text-center font-bold">
+                  {userPurhcase.length}
+                </span>
+                <span dangerouslySetInnerHTML={{ __html: `${cart}` }}></span>
+              </div>
+              <span
+                style={{
+                  height: "15px",
+                  width: "15px",
+                  background: "red",
+                  borderRadius: "50%",
+                  display: "inlineBlock",
+                  color: "red",
+                  opacity: `${userPurhcase.length > 0 ? 1 : 0.1}`,
+                  overflow: "hidden",
+                }}
+              >
+                x
               </span>
-              <span dangerouslySetInnerHTML={{ __html: `${cart}` }}></span>
             </div>
-            <span
-              style={{
-                height: "15px",
-                width: "15px",
-                background: "red",
-                borderRadius: "50%",
-                display: "inlineBlock",
-                color: "red",
-                opacity: `${userPurhcase.length > 0 ? 1 : 0.1}`,
-                overflow: "hidden",
-              }}
-            >
-              x
-            </span>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </div>
     </div>
   );
