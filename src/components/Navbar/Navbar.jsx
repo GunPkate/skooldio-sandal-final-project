@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "./navbar.css";
 
 import { Drawer } from "vaul";
@@ -24,7 +24,7 @@ export default function Navbar() {
   return (
     <div
       className={
-        "bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] justify-between " +
+        "bg-fixed bg-black lg:h-[60px] h-[56px]  w-full px-[max(8.34%,16px)] justify-between fixed top-0 z-30 " +
         contentStyle
       }
     >
