@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState("");
@@ -35,6 +36,17 @@ const ProductDetailRight = (data) => {
     }
   };
 
+  //about color
+  const uniqueByKey = (array, key) => {
+    return array.filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t[key] === item[key])
+    );
+  };
+
+  const uniqueData = uniqueByKey(data.variants, "color");
+  console.log("++++++++", uniqueData);
+
   return (
     <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px] desktop:mt-0  ">
       {/* upper infomation */}
@@ -63,7 +75,9 @@ const ProductDetailRight = (data) => {
               </div>
             </>
           ) : (
-            <div className="text-3xl font-bold mb-7"> {data.price}</div>
+            <div className="text-3xl font-bold mb-7">
+              {" " + " THB " + numberWithCommas(data.price) + ".00"}
+            </div>
           )}
 
           <div className="flex gap-[10px]">{createStars(data.ratings)}</div>
@@ -74,22 +88,18 @@ const ProductDetailRight = (data) => {
       <div className="mb-6 mt-14">
         <div className="laptop:w-72 desktop:w-80">
           <div className="font-normal text-base mb-2">Color</div>
-          <div className="flex  justify-evenly gap-6 mb-6">
+          <div className="flex justify-evenly gap-6 mb-6">
             {/* Color options */}
-            {Array.from(
-              new Set(data?.variants?.map((variant) => variant.colorCode))
-            )
-              .slice(0, 3)
-              .map((colorCode, index) => (
-                <div>
-                  <div
-                    key={index}
-                    className="w-14 h-14 "
-                    style={{ background: colorCode }}
-                  ></div>
-                  <div className="text-center mt-[6.5px]">xoxo</div>
-                </div>
-              ))}
+            {uniqueData.map((value, index) => (
+              <div key={index}>
+                <div
+                  className="w-14 h-14"
+                  style={{ background: value.colorCode}}
+                ></div>
+
+                <div className="text-center mt-[6.5px]">{value.color}</div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -116,10 +126,11 @@ const ProductDetailRight = (data) => {
           className="w-full h-14 px-2  border border-gray-300 desktop:w-36"
           min="1"
         />
-        
       </div>
       <button className="w-full h-[54px] bg-black text-white py-2 ">
-        Add to cart
+        <Link to="/Mycart/" >
+          Add to cart
+        </Link>
       </button>
     </div>
   );
