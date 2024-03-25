@@ -4,68 +4,22 @@ import { useContext, useEffect, useState } from "react";
 import "./navbar.css";
 
 import { Drawer } from "vaul";
+import DrawerRootByGender from "../DrawerRootByGender.jsx";
+import DrawerRootByCollections from "../DrawerRootByCollections.jsx";
+import DropdownRootByGender from "../DropdownRootByGender.jsx";
+import DropdownRootByCollections from "../DropdownRootByCollections.jsx";
 
 export default function Navbar() {
-  const { userPurhcase, categories } = useContext(UserContext);
+  const { userPurhcase } = useContext(UserContext);
 
-  const positionY = "translate-y-[100px] md:translate-y-[0px] ";
-  const [hideMenuMobile, setHideMenuMobile] = useState(false);
-  const [movePositionY, setMovePositionY] = useState("container " + positionY);
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-  });
-
-  const handleResize = () => {
-    setMovePositionY("container ");
-
-    setDimensions({
-      width: window.innerWidth,
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize, false);
-
-    setTimeout(() => {
-      initialNavbar();
-    }, 100);
-  }, []);
-
-  const initialNavbar = () => {
-    setHideMenuMobile(false);
-    if (dimensions.width > 720) {
-      setMovePositionY("container ");
-      setHideMenuMobile(false);
-    } else {
-      hideMenuMobile
-        ? setMovePositionY("container " + positionY)
-        : setMovePositionY("container ");
-      setHideMenuMobile(true);
-    }
-  };
-
-  const navHomeStyle = " text-white text-base my-auto ";
   const navItemStyle = "text-white ml-6 text-base my-auto bg-black";
   const contentStyle = "flex items-center text-white ";
-  const responsiveStyle = " md:opacity-1 md:items-center  ";
-
-  const baseMenuStyle = "flex md:inline-flex bg-black ";
+  const navMenuTextStyle =
+    "text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center";
   const cart = `
     <svg width="40px" height="40px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#fcfcfc" d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>    `;
-  const noti = `  <span style={{
-        height: "30px",
-        width: "25px",
-        background: "red",
-        borderRadius: "50%",
-        display: "inlineBlock"
-    }}>x</span>`;
 
-  function togggleNavbar() {
-    setHideMenuMobile(!hideMenuMobile);
-    hideMenuMobile
-      ? setMovePositionY("container " + positionY)
-      : setMovePositionY("container ");
-  }
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
     <div
@@ -74,51 +28,40 @@ export default function Navbar() {
         contentStyle
       }
     >
-      <div className={`${movePositionY}`}>
-        <Drawer.Root direction="left">
-          <Drawer.Trigger asChild className="lg:hidden">
-            <img src="../../src/assets/hamburger.svg" />
-          </Drawer.Trigger>
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-            <Drawer.Content className="bg-white flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
-              <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
-                <Link
-                  className="text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary"
-                  to={"/"}
-                >
-                  Home
-                </Link>
-                {categories.map((item, id) => (
-                  <Link
-                    key={id + 1}
-                    to={`/Products/${item.name}/${item.permalink}`}
-                    className="text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
-
-        <div className="hidden lg:flex">
-          <Link className={navHomeStyle + " ml-6 md:ml-[0px]"} to={"/"}>
-            Home
-          </Link>
-          {categories.map((item, id) => (
-            <span className={baseMenuStyle + responsiveStyle}>
-              <Link
-                key={id + 1}
-                to={`/Products/${item.name}/${item.permalink}`}
-                className={navItemStyle}
-              >
-                {item.name}
+      {/* MOBILE */}
+      <Drawer.Root
+        direction="left"
+        open={openDrawer}
+        onOpenChange={setOpenDrawer}
+      >
+        <Drawer.Trigger asChild className="lg:hidden">
+          <img src="../../src/assets/hamburger.svg" />
+        </Drawer.Trigger>
+        <Drawer.Portal>
+          <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+          <Drawer.Content className="bg-white flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
+            <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
+              <Link className={navMenuTextStyle} to={"/"}>
+                Home
               </Link>
-            </span>
-          ))}
-        </div>
+
+              {DrawerRootByGender("men")}
+              {DrawerRootByGender("ladies")}
+              {DrawerRootByCollections("collections")}
+            </div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
+
+      {/* DESKTOP */}
+      <div className="hidden lg:flex">
+        <Link className="btn btn-ghost rounded-btn font-light text-md" to={"/"}>
+          Home
+        </Link>
+
+        {DropdownRootByGender("men")}
+        {DropdownRootByGender("ladies")}
+        {DropdownRootByCollections("collections")}
       </div>
 
       <div className={contentStyle}>
