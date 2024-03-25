@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
 
 const ProductDetailRight = (data) => {
   const { userPurhcase, setuserPurhcase } = useContext(UserContext);
+  const { permalink } = useParams();
 
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -88,6 +89,7 @@ const ProductDetailRight = (data) => {
     let addItem = {
       skuCode: myItem[0].skuCode,
       quantity: quantity,
+      productPermalink: permalink,
     }
 
     let mycartBody = []
