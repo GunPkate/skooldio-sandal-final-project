@@ -13,6 +13,7 @@ export default function ProductDetail() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { permalink } = useParams();
+  const [receiveData, setReceiveData] = useState(null);
 
   useEffect(() => {
     fetch(`${BASE_URL}products/${permalink}`)
@@ -29,13 +30,17 @@ export default function ProductDetail() {
     return <div>Loading...</div>;
   }
 
+  const handleDataFromChild = (data) => {
+    console.log("________",data);
+    setReceiveData(data);}
+
   return (
     <div className="section ">
       <Navbar />
       <div className="flex flex-col min-w-[375px]  mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-col desktop:mx-40  desktop:justify-around ">
         <div className="flex flex-col desktop:flex-row">
-          <Carousel {...products} />
-          <ProductDetailRight {...products} />
+          <Carousel {...products} readOnly={receiveData}/>
+          <ProductDetailRight {...products} sendDataToParent={handleDataFromChild}/>
         </div>
         <PeopleAlsoLike {...products}/>
       </div>

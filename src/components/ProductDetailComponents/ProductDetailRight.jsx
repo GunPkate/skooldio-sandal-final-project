@@ -6,41 +6,81 @@ const ProductDetailRight = (data) => {
   const [selectColor, setSelectColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [remains, setRemains] = useState(0);
+  const [readOnly, setReadOnly] = useState(false);
 
   let description = [];
   if (data) {
     description = data;
   }
 
-useEffect(() => {
-  if (selectColor === "") {
-    setRemains(0); // Reset remains if color is not selected
-  } else {
-    const remains = getRemains(selectedSize, selectColor);
-    setRemains(remains);
-  }
-}, [selectedSize, selectColor]);
+  useEffect(() => {
+    if (selectColor === "") {
+      setRemains(0); // Reset remains if color is not selected
+    } else {
+      const remains = getRemains(selectedSize, selectColor);
+      setRemains(remains);
+    }
+  }, [selectedSize, selectColor]);
+
+
+
+
+  useEffect(() => {
+    const sum = sumRemains(data.variants);
+    if (sum === 0 ) { // If all variants are out of stock
+      setReadOnly(true);
+    }else{ // If all variants are in stock }
+      setReadOnly(false);
+    }
+  }, []);
+
+
+
   
+
+  // Function to calculate the sum of "remains" values
+  function sumRemains(variants) {
+    let sum = 0;
+    for (const variant of variants) {
+      sum += variant.remains;
+    }
+    return sum;
+  }
 
   // function to handle size selection
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
     const remains = getRemains(size, selectColor);
+    if(remains === 0){
+      data.sendDataToParent(true);
+    }else{
+      data.sendDataToParent(false);
+    }
     setRemains(remains);
 
-    console.log(`1)Remains for size ${size} and color ${selectColor}: ${remains}`);
+    console.log(
+      `1)Remains for size ${size} and color ${selectColor}: ${remains}`
+    );
   };
 
   const handleColorSelection = (color) => {
     setSelectedSize("");
-    setRemains(prevState => 0);
 
     // setRemains((preProv) => getRemains(selectedSize, color  || ''));
     setSelectColor(color);
     const remains = getRemains(selectedSize || "", color);
+    if (uniqueDataSize[0].size?.length == 0) {
+      if(remains === 0){
+        data.sendDataToParent(true);
+      }else{
+        data.sendDataToParent(false);
+      }
+    }
+    
     setRemains(remains);
-    console.log(`2)Remains for size ${selectedSize} and color ${color}: ${remains}`);
-
+    console.log(
+      `2)Remains for size ${selectedSize} and color ${color}: ${remains}`
+    );
   };
 
   // price with commas from k'Ter (product cart)
@@ -151,10 +191,13 @@ useEffect(() => {
   const variants = data.variants;
   const getRemains = (selectedSize, selectColor) => {
     const variant = variants.find((v) => {
-      if(uniqueDataSize[0].size?.length > 0){
-        return v.size === selectedSize || null && v.color === selectColor ||'';
-      }else{
-        return  v.color === selectColor ||''; }
+      if (uniqueDataSize[0].size?.length > 0) {
+        return (
+          v.size === selectedSize || (null && v.color === selectColor) || ""
+        );
+      } else {
+        return v.color === selectColor || "";
+      }
     });
     return variant ? variant.remains : 0;
   };
@@ -234,7 +277,6 @@ useEffect(() => {
                 {uniqueDataColor.map((value, index) => (
                   <div key={index}>
                     <div
-
                       className="w-14 h-14 "
                       style={{
                         background: value.colorCode,
@@ -257,13 +299,11 @@ useEffect(() => {
           </div>
         </div>
 
-        
-
         {/* size options */}
+        
 
         {uniqueDataSize[0].size?.length > 0 && (
           <>
-          
             <div className="font-normal text-base mb-2">Size</div>
             <div className="flex gap-2 mb-6">
               <div className="flex justify-evenly gap-6 mb-6">
@@ -276,7 +316,11 @@ useEffect(() => {
                       className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
                         selectedSize === value.size ? "bg-yellow-300" : ""
                       }`}
-                      onClick={() => selectColor!=''?handleSizeSelection(value.size):null}
+                      onClick={() =>
+                        selectColor != ""
+                          ? handleSizeSelection(value.size)
+                          : null
+                      }
                     >
                       {value.size}
                     </button>
@@ -286,14 +330,20 @@ useEffect(() => {
             </div>
           </>
         )}
-        <div className="font-normal text-base mb-2">Qty. <text className="text-red-500 font-semibold text-xl">{`In stock : ${remains}`}</text></div>
+        <div className="font-normal text-base mb-2">
+          Qty.{" "}
+          <text className="text-red-500 font-semibold text-xl">{`In stock : ${remains}`}</text>
+        </div>
+        
 
         <form className=" max-w-xs mx-auto">
           <div class="relative flex items-start max-w-[8rem]">
             <button
               type="button"
               id="decrement-button"
-              disabled={remains === 0 ? true : false || quantity === 1 ? true : false}
+              disabled={
+                remains === 0 ? true : false || quantity === 1 ? true : false
+              }
               data-input-counter-decrement="quantity-input"
               class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
               onClick={() => {
@@ -325,18 +375,24 @@ useEffect(() => {
               aria-describedby="helper-text-explanation"
               class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder={quantity}
-             disabled
+              disabled
               required
             />
             <button
               type="button"
               id="increment-button"
-              disabled={remains === 0 ? true : false || quantity >= remains ? true : false}
+              disabled={
+                remains === 0
+                  ? true
+                  : false || quantity >= remains
+                  ? true
+                  : false
+              }
               data-input-counter-increment="quantity-input"
               class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
               onClick={() => {
                 if (quantity < remains) {
-                setQuantity(quantity + 1);
+                  setQuantity(quantity + 1);
                 }
               }}
             >
@@ -357,7 +413,6 @@ useEffect(() => {
               </svg>
             </button>
           </div>
-          
         </form>
       </div>
 

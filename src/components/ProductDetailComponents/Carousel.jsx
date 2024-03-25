@@ -1,12 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Carousel = (data) => {
+  const [readOnly, setReadOnly] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  console.log("dataZOZOZOZO", data);
+
   let images = [];
   if (data && data?.imageUrls) {
     images = data?.imageUrls;
   }
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  useEffect(() => {
+    const sum = sumRemains(data.variants);
+
+    if (sum === 0 || data.readOnly === true) {
+      // If all variants are out of stock
+      setReadOnly(true);
+    } else {
+      setReadOnly(false);
+    }
+  }, [data]);
+  useEffect(() => {
+    if (data.readOnly === true) {
+      setReadOnly(true);
+    } else {
+      setReadOnly(false);
+    }
+  }, [data.readOnly]);
+
+  // Function to calculate the sum of "remains" values
+  function sumRemains(variants) {
+    let sum = 0;
+    for (const variant of variants) {
+      sum += variant.remains;
+    }
+    return sum;
+  }
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -26,14 +56,21 @@ const Carousel = (data) => {
     <div className="flex flex-col gap-4 mx-auto relative flex-1 min-w-[375px]">
       <div className="relative w-[343px] h-[343px] laptop:w-[514.5px] laptop:h-[514.5px] desktop:w-[780px] desktop:h-[780px] desktop:mb-4">
         {/* main image */}
+
         <img
           src={images[currentImageIndex]}
           alt="Product"
-          className="w-full h-full object-cover relative"
+          className={`w-full h-full object-cover ${
+            readOnly ? "opacity-50" : ""
+          }`}
         />
         {data.promotionalPrice < data.price ? (
-          <div className="absolute -right-1 top-8 w-24 h-14 bg-[#FF000D] text-center text-2xl text-white flex justify-center items-center ">
-            Sale
+          <div
+            className={`absolute -right-1 top-8 w-24 h-14 ${
+              readOnly ? "bg-black" : "bg-[#FF000D]"
+            } text-center text-2xl text-white flex justify-center items-center `}
+          >
+            {readOnly ? "Out Of Stock" : "Sale"}
           </div>
         ) : null}
 
@@ -102,7 +139,9 @@ const Carousel = (data) => {
             <img
               src={image}
               alt={`Thumbnail ${index}`}
-              className="w-full h-full object-cover"
+              className={`w-full h-full object-cover ${
+                readOnly ? "opacity-50" : ""
+              }`}
             />
           </div>
         ))}
