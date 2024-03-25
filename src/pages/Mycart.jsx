@@ -7,6 +7,58 @@ import axios from "axios";
 
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
+    const [displayMycart,setDisplayMycart] = useState([])
+    const [loading, setLoading] = useState(false);
+
+
+
+    useEffect(()=>{
+        setLoading(true);
+        //? fix slow loading
+        if(userPurhcase?.length >0){
+            console.log("userPurhcase",userPurhcase)
+            let  itemListmapping = []
+            for(let i =0; i < userPurhcase?.length; i++){
+                fetchItemsDetails(userPurhcase[i],itemListmapping)
+            }
+        }
+        else if(userPurhcase.length === 0){
+            setLoading(false);
+        }
+    },[])
+
+    async function fetchItemsDetails(dataTemp,dataSet){
+
+        try {
+            if(dataTemp !== null || dataTemp !== undefined){
+                
+            await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+dataTemp.productPermalink).then(res=>{
+                const data = res.data
+
+                let displayBody = {
+                    id: dataTemp.id,
+                    name: data.name,
+                    skuCode: dataTemp.skuCode,
+                    quantity: dataTemp.quantity,
+                    variants:  data.variants,
+                    image: data.imageUrls[0]
+                }
+
+                
+                // console.log("||| data",data)
+                dataSet.push(displayBody)
+                // console.log("|||",dataSet)
+                setDisplayMycart(dataSet)
+                setLoading(false);
+            })
+
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
 
     const handleDelete = (e) => {
         let tempData = userPurhcase.filter(data=>data !== e)

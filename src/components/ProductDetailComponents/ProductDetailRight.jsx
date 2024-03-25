@@ -45,7 +45,79 @@ const ProductDetailRight = (data) => {
   };
 
   const uniqueData = uniqueByKey(data.variants, "color");
-  console.log("++++++++", uniqueData);
+  const fetchMycart = async (id) => {
+    try {
+      if (id !== null || id !== undefined || id !== "") {
+        await axios
+          .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
+          .then((res) => {
+            console.log(res.data);
+            setuserPurhcase(res.data.items);
+          });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAddItem = async () => {
+    const id = localStorage.getItem("id");
+    console.log("Add Item", id);
+
+    let addItem = {
+      skuCode: myItem[0].skuCode,
+      quantity: quantity,
+      productPermalink: permalink,
+    };
+
+    let mycartBody = [];
+    mycartBody.push(addItem);
+
+    console.log("Add Item", addItem);
+    if (mycartBody.length) {
+      setuserPurhcase(mycartBody);
+      console.log(mycartBody);
+
+      let statusCode = "";
+
+      if (id === null || id === undefined || id === "") {
+        try {
+          await axios
+            .post("https://api.storefront.wdb.skooldio.dev/carts", {
+              items: mycartBody,
+            })
+            .then((res) => {
+              let data = res.data;
+              console.log("add new res", res);
+              console.log("add new cart data", data);
+              statusCode = res.status;
+              localStorage.setItem("id", data.id);
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          axios
+            .post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`, {
+              items: mycartBody,
+            })
+            .then((res) => {
+              let data = res.data;
+              statusCode = res.status;
+              console.log("add old cart data", data);
+              console.log("add old res", res);
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      if (statusCode == 200 || statusCode == 201) {
+        fetchMycart(id);
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px] desktop:mt-0  ">
@@ -88,18 +160,37 @@ const ProductDetailRight = (data) => {
       <div className="mb-6 mt-14">
         <div className="laptop:w-72 desktop:w-80">
           <div className="font-normal text-base mb-2">Color</div>
-          <div className="flex justify-evenly gap-6 mb-6">
+          <div className="flex justify-start gap-6 mb-6">
             {/* Color options */}
-            {uniqueData.map((value, index) => (
-              <div key={index}>
-                <div
-                  className="w-14 h-14"
-                  style={{ background: value.colorCode}}
-                ></div>
 
-                <div className="text-center mt-[6.5px]">{value.color}</div>
+            {uniqueData.length === 1 ? (
+              <>
+                {uniqueData.map((value, index) => (
+                  <div key={index}>
+                    <div
+                      className="w-14 h-14"
+                      style={{ background: value.colorCode }}
+                    ></div>
+
+                    <div className="text-center mt-[6.5px]">{value.color}</div>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <div className="flex justify-evenly gap-6 mb-6">
+                {" "}
+                {uniqueData.map((value, index) => (
+                  <div key={index}>
+                    <div
+                      className="w-14 h-14"
+                      style={{ background: value.colorCode }}
+                    ></div>
+
+                    <div className="text-center mt-[6.5px]">{value.color}</div>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         </div>
 
@@ -127,10 +218,10 @@ const ProductDetailRight = (data) => {
           min="1"
         />
       </div>
+
+      {/* Add to cart button */}
       <button className="w-full h-[54px] bg-black text-white py-2 ">
-        <Link to="/Mycart/" >
-          Add to cart
-        </Link>
+        <Link to="/Mycart/">Add to cart</Link>
       </button>
     </div>
   );
