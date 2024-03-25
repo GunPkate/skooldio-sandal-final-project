@@ -61,8 +61,8 @@ export default function Products() {
       {!loading ? (
         <div className="flex flex-1 justify-center lg:max-w-[1238px] mx-auto">
           <div className="lg:flex lg:h-fit lg:w-full lg:justify-center 2xl:justify-between px-auto pt-24">
-            <div className="flex flex-col items-center w-full lg:max-w-[1238px]">
-              <header className="w-full">
+            <div className="flex flex-col items-center w-fit xl:w-full lg:max-w-[1238px]">
+              <header className="lg:w-full">
                 <div className="my-6 mb-[22px] w-[370px] lg:flex lg:items-center lg:justify-between lg:mb-16 lg:w-full ">
                   <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
                     {Name}
