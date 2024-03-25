@@ -8,7 +8,6 @@ import Mycart from "./pages/Mycart";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
-import ProductCard from "./components/ProductCard";
 import ProductsByCategories from "./pages/ProductsByCategories";
 
 export const UserContext = createContext();

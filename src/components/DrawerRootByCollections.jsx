@@ -32,6 +32,7 @@ export default function DrawerRootByCollections(input) {
             {collections.map((item, id) => {
               return (
                 <Drawer.Trigger
+                  key={item.name}
                   asChild={close}
                   onClick={() => setOpen(false)}
                   className="text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center"
