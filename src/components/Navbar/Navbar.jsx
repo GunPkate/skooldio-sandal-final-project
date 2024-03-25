@@ -4,140 +4,22 @@ import { useContext, useEffect, useState } from "react";
 import "./navbar.css";
 
 import { Drawer } from "vaul";
+import DrawerRootByGender from "../DrawerRootByGender.jsx";
+import DrawerRootByCollections from "../DrawerRootByCollections.jsx";
+import DropdownRootByGender from "../DropdownRootByGender.jsx";
+import DropdownRootByCollections from "../DropdownRootByCollections.jsx";
 
 export default function Navbar() {
-  const { userPurhcase, categories, collections } = useContext(UserContext);
+  const { userPurhcase } = useContext(UserContext);
 
-  const positionY = "translate-y-[100px] md:translate-y-[0px] ";
-  const [hideMenuMobile, setHideMenuMobile] = useState(false);
-  const [movePositionY, setMovePositionY] = useState("container " + positionY);
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-  });
-
-  const handleResize = () => {
-    setMovePositionY("container ");
-
-    setDimensions({
-      width: window.innerWidth,
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize, false);
-
-    setTimeout(() => {
-      initialNavbar();
-    }, 100);
-  }, []);
-
-  const initialNavbar = () => {
-    setHideMenuMobile(false);
-    if (dimensions.width > 720) {
-      setMovePositionY("container ");
-      setHideMenuMobile(false);
-    } else {
-      hideMenuMobile
-        ? setMovePositionY("container " + positionY)
-        : setMovePositionY("container ");
-      setHideMenuMobile(true);
-    }
-  };
-
-  const navHomeStyle = " text-white text-base my-auto ";
   const navItemStyle = "text-white ml-6 text-base my-auto bg-black";
   const contentStyle = "flex items-center text-white ";
-  const responsiveStyle = " md:opacity-1 md:items-center  ";
   const navMenuTextStyle =
     "text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center";
-
-  const baseMenuStyle = "flex md:inline-flex bg-black ";
   const cart = `
     <svg width="40px" height="40px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#fcfcfc" d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>    `;
 
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   const [openDrawer, setOpenDrawer] = useState(false);
-
-  const drawerRoot = (input) => {
-    const gender = capitalizeFirstLetter(input);
-    return (
-      <Drawer.NestedRoot asChild direction="left">
-        <Drawer.Trigger className={navMenuTextStyle}>
-          {gender}
-          <img src="../../src/assets/chevron.svg" className="-rotate-90" />
-        </Drawer.Trigger>
-        <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-          <Drawer.Content className="bg-grey-100 flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
-            <div
-              key={Math.random()}
-              className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl"
-            >
-              <Drawer.Trigger className="flex items-center py-1 gap-6 border-solid border-b-[1px] border-b-secondary-300">
-                <img src="../../src/assets/chevron.svg" className="rotate-90" />
-                <h2 className="font-bold text-2xl">All {gender}</h2>
-              </Drawer.Trigger>
-              {categories.map((item, id) => {
-                if (
-                  item.permalink.toUpperCase().includes(gender.toUpperCase())
-                ) {
-                  return (
-                    <Drawer.Trigger
-                      asChild={close}
-                      onClick={() => setOpen(false)}
-                      className="text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center"
-                    >
-                      <Link
-                        key={id + 1}
-                        to={`/Products/${item.name}/${item.permalink}`}
-                        className="flex justify-between active:text-primary-300"
-                      >
-                        <p className={navMenuTextStyle}>{item.name}</p>
-                        <img
-                          src="../../src/assets/chevron.svg"
-                          className="-rotate-90"
-                        />
-                      </Link>
-                    </Drawer.Trigger>
-                  );
-                }
-              })}
-            </div>
-          </Drawer.Content>
-        </Drawer.Portal>
-      </Drawer.NestedRoot>
-    );
-  };
-
-  const dropdownRoot = (input) => {
-    const gender = capitalizeFirstLetter(input);
-    return (
-      <div class="dropdown dropdown-start">
-        <div tabindex="0" role="button" class="btn btn-ghost rounded-btn">
-          <h2 className="font-light text-md">{gender}</h2>
-        </div>
-        <ul
-          tabindex="0"
-          class="menu dropdown-content z-[1] p-2 shadow text-secondary bg-base-100 rounded-none w-52 mt-4"
-        >
-          {categories.map((item, id) => {
-            if (item.permalink.toUpperCase().includes(gender.toUpperCase())) {
-              return (
-                <li>
-                  <a href={`/Products/${item.name}/${item.permalink}`}>
-                    {item.name}
-                  </a>
-                </li>
-              );
-            }
-          })}
-        </ul>
-      </div>
-    );
-  };
 
   return (
     <div
@@ -163,53 +45,9 @@ export default function Navbar() {
                 Home
               </Link>
 
-              {drawerRoot("men")}
-              {drawerRoot("ladies")}
-
-              <Drawer.NestedRoot asChild direction="left">
-                <Drawer.Trigger className={navMenuTextStyle}>
-                  Collection
-                  <img
-                    src="../../src/assets/chevron.svg"
-                    className="-rotate-90"
-                  />
-                </Drawer.Trigger>
-                <Drawer.Portal>
-                  <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-                  <Drawer.Content className="bg-grey-100 flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
-                    <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
-                      <Drawer.Trigger className="flex items-center py-1 gap-6 border-solid border-b-[1px] border-b-secondary-300">
-                        <img
-                          src="../../src/assets/chevron.svg"
-                          className="rotate-90"
-                        />
-                        <h2 className="font-bold text-2xl">All Collection</h2>
-                      </Drawer.Trigger>
-                      {collections.map((item, id) => {
-                        return (
-                          <Drawer.Trigger
-                            asChild={close}
-                            onClick={() => setOpen(false)}
-                            className="text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center"
-                          >
-                            <Link
-                              key={id + 1}
-                              to={`/Products/${item.name}/${item.permalink}`}
-                              className="flex justify-between"
-                            >
-                              <p className={navMenuTextStyle}>{item.name}</p>
-                              <img
-                                src="../../src/assets/chevron.svg"
-                                className="-rotate-90"
-                              />
-                            </Link>
-                          </Drawer.Trigger>
-                        );
-                      })}
-                    </div>
-                  </Drawer.Content>
-                </Drawer.Portal>
-              </Drawer.NestedRoot>
+              {DrawerRootByGender("men")}
+              {DrawerRootByGender("ladies")}
+              {DrawerRootByCollections("collections")}
             </div>
           </Drawer.Content>
         </Drawer.Portal>
@@ -217,32 +55,13 @@ export default function Navbar() {
 
       {/* DESKTOP */}
       <div className="hidden lg:flex">
-        <Link className="btn btn-ghost rounded-btn" to={"/"}>
-          <h2 className="font-light text-md">Home</h2>
+        <Link className="btn btn-ghost rounded-btn font-light text-md" to={"/"}>
+          Home
         </Link>
 
-        {dropdownRoot("men")}
-        {dropdownRoot("ladies")}
-
-        <div class="dropdown dropdown-start">
-          <div tabindex="0" role="button" class="btn btn-ghost rounded-btn">
-            <h2 className="font-light text-md">All Collection</h2>
-          </div>
-          <ul
-            tabindex="0"
-            class="menu dropdown-content z-[1] p-2 shadow text-secondary bg-base-100 rounded-none w-52 mt-4"
-          >
-            {collections.map((item) => {
-              return (
-                <li>
-                  <a href={`/Products/${item.name}/${item.permalink}`}>
-                    {item.name}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        {DropdownRootByGender("men")}
+        {DropdownRootByGender("ladies")}
+        {DropdownRootByCollections("collections")}
       </div>
 
       <div className={contentStyle}>
