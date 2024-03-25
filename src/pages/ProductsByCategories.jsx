@@ -158,14 +158,14 @@ export default function Products() {
                         className={filterOpen ? "rotate-180" : "rotate-0"}
                       />
                     </summary>
-                    <ul className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white">
+                    <ul className="dropdown-content z-20 p-2 shadow bg-base-100 rounded-none w-60 hover:bg-white active:bg-white focus:bg-white">
                       <li
-                        className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white"
+                        className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white cursor-pointer"
                         onClick={() =>
                           handleFilterSelect("Price - Low to high")
                         }
                       >
-                        <a>
+                        <a className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100">
                           {filterSelect === "Price - Low to high" ? (
                             <img src="../../src/assets/radioSelected.svg" />
                           ) : (
@@ -175,12 +175,12 @@ export default function Products() {
                         </a>
                       </li>
                       <li
-                        className="rounded-none"
+                        className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white cursor-pointer"
                         onClick={() =>
                           handleFilterSelect("Price - High to low")
                         }
                       >
-                        <a>
+                        <a className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100">
                           {filterSelect === "Price - High to low" ? (
                             <img src="../../src/assets/radioSelected.svg" />
                           ) : (
@@ -190,10 +190,10 @@ export default function Products() {
                         </a>
                       </li>
                       <li
-                        className="rounded-none"
+                        className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white cursor-pointer"
                         onClick={() => handleFilterSelect("Rating")}
                       >
-                        <a>
+                        <a className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100">
                           {filterSelect === "Rating" ? (
                             <img src="../../src/assets/radioSelected.svg" />
                           ) : (
