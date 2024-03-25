@@ -1,26 +1,26 @@
 import { Link } from "react-router-dom";
 
+function NavItem({ to, children }) {
+    return (
+        <li className="pb-4">
+            <Link to={to} className="text-white hover:text-gray-400 transition-colors duration-300">
+                {children}
+            </Link>
+        </li>
+    );
+}
+
 function FeatureProduct() {
     return (
-        <div className="text-white py-4 lg:py-8 mx-auto lg:w-1/2 lg:order-2 text-center lg:text-left lg:mx-0 lg:max-w-[900px] lg:ml-40">
+        <nav className="text-white py-4 lg:py-8 mx-auto lg:w-1/2 lg:order-2 text-center lg:text-left lg:mx-0 lg:max-w-[900px] lg:ml-40">
             <h1 className="font-bold text-2xl mb-4 lg:mb-8">Feature Product</h1>
-            <div className="font-semibold space-y-2">
-                <ul>
-                    <li className="pb-4 block">
-                        <Link to="/Products/Men/all-men">Men</Link>
-                    </li>
-                    <li className="pb-4 block">
-                        <Link to="/Products/Ladies/all-ladies">Ladies</Link>
-                    </li>
-                    <li className="pb-4 block">
-                        <Link to="/Products/Shoes/men-shoes">Shoes</Link>
-                    </li>
-                    <li className="pb-4 block">
-                        <Link to="/Products/Accessories/men-accessories">Accessories</Link>
-                    </li>
-                </ul>
-            </div>
-        </div>
+            <ul className="font-semibold space-y-2">
+                <NavItem to="/Products/Men/all-men">Men</NavItem>
+                <NavItem to="/Products/Ladies/all-ladies">Ladies</NavItem>
+                <NavItem to="/Products/Shoes/men-shoes">Shoes</NavItem>
+                <NavItem to="/Products/Accessories/men-accessories">Accessories</NavItem>
+            </ul>
+        </nav>
     );
 }
 
