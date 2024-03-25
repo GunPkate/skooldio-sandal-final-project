@@ -106,7 +106,13 @@ const ProductDetailRight = (data) => {
        await axios.post("https://api.storefront.wdb.skooldio.dev/carts",{"items":mycartBody}).then( res => {
               let data = res.data
               console.log("add new cart data",data)
-              setuserPurhcase(data.items)
+
+              let cartContext = {
+                id: id,
+                items:data.items
+              }
+
+              setuserPurhcase(cartContext)
               localStorage.setItem('id',data.id)
           })
       } catch (error) {
@@ -118,7 +124,13 @@ const ProductDetailRight = (data) => {
         axios.post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`,{"items":mycartBody}).then( res => {
               let data = res.data
               console.log("add old cart data",data)
-              setuserPurhcase(data.items)
+
+              let cartContext = {
+                id: id,
+                items:data.items
+              }
+
+              setuserPurhcase(cartContext)
           })
       } catch (error) {
           console.log(error)
