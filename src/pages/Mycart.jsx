@@ -60,10 +60,14 @@ export default function Mycart(){
 
 
     const handleDelete = (e) => {
-        let tempData = userPurhcase.filter(data=>data !== e)
-        // console.log(tempData)
-        // console.log(e)
-        setuserPurhcase(tempData)
+        //My cart number
+        let contextResult = userPurhcase.filter(x=>x.id!==e.id)
+        setuserPurhcase(contextResult);
+        
+        //Delete from UI
+        let displayResult = displayMycart.filter(x=>x.id!==e.id)
+        setDisplayMycart(displayResult);
+        console.log("display",displayMycart)
         axios.delete(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${e.id}`)
     }
 
