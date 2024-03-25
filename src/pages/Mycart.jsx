@@ -11,7 +11,7 @@ export default function Mycart(){
     const [loading, setLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
-    const [choice,setChoice] =useState('');
+    const [totalPrice,setTotalPrice] =useState(null);
 
 
     // console.log("12345",userPurhcase)
@@ -101,7 +101,8 @@ export default function Mycart(){
                 let contextresult = userPurhcase
                 contextresult.forEach(x=>x.quantity = value)
                 setuserPurhcase(contextresult)
-
+                
+                setTotalPrice(value*tempData[0].price)
                 console.log(tempData)
                 console.log(contextresult)
                 // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
@@ -230,12 +231,16 @@ export default function Mycart(){
                                                 <h1>Qty</h1>
                                                 <select name="quantity" 
                                                 className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" 
-                                                value={item.quantity}
                                                 onChange={(e)=>{handleUpdateCart(item, 'quantity', e.target.value)}}>
-                                                    <option>Qty</option>
+                                                    <option>{item.quantity}</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+                                                    <option>7</option>
+                                                    <option>8</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -278,7 +283,8 @@ export default function Mycart(){
                                                     <h1>{item.name}</h1>
                                                 </td>
                                                 <td>    
-                                                    <h1>{item.quantity * item.price}</h1>
+                                                    {/* <h1>{item.quantity * item.price}</h1>  */}
+                                                    <h1>{totalPrice !== null ? totalPrice :item.quantity * item.price}</h1>
                                                 </td>
                                             </tr> 
                                                 
