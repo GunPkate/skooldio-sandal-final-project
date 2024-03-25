@@ -9,6 +9,7 @@ export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
     const [displayMycart,setDisplayMycart] = useState([])
     const [loading, setLoading] = useState(false);
+    const [quantity, setQuantity] = useState(1);
 
 
     // console.log("12345",userPurhcase)
@@ -42,11 +43,12 @@ export default function Mycart(){
                     skuCode: dataTemp.skuCode,
                     quantity: dataTemp.quantity,
                     variants:  data.variants,
-                    image: data.imageUrls[0]
+                    price: data.price,
+                    image: data.imageUrls[0],
                 }
 
                 
-                // console.log("||| data",data)
+                console.log("||| data",data)
                 dataSet.push(displayBody)
                 // console.log("|||",dataSet)
                 setDisplayMycart(dataSet)
@@ -75,17 +77,14 @@ export default function Mycart(){
 
     // localStorage.setItem('id',1234)
     const handleUpdateCart = (item, name,value) => {
-        let tempData = userPurhcase
+        let tempData = displayMycart
         // console.log("item",item)
         // console.log(name)
         // console.log("value",value)
-        tempData[item.id-1][`${name}`] = value 
 
-        console.log(JSON.stringify(tempData[item.id-1]))
-        const qtyData = { quantity: tempData[item.id-1][`${name}`], skuCode: "123" }
 
-        console.log(qtyData)
-        setuserPurhcase(tempData)
+        console.log("update",JSON.stringify(tempData))
+        // setuserPurhcase(tempData)
 
         switch (name){
             case 'quantity': 
@@ -158,7 +157,7 @@ export default function Mycart(){
 
     
         <>
-                {/* <button onClick={()=>{console.log(displayMycart)}}>1234</button> */}
+                <button onClick={()=>{console.log(displayMycart)}}>1234</button>
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
@@ -184,10 +183,13 @@ export default function Mycart(){
                                     <div className="lg:flex sm:block w-ful">
                                         <div className="lg:mr-[16px]">
                                             <h1>Colors</h1>
+
+   
                                             <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'colors', e.target.value)}}>
                                                 <option disabled>Colors</option>
-                                                <option>Blue</option>
-                                                <option>Green</option>
+                                                {Array.from(
+                                                    new Set(item.variants.map(x=>{ return <option>{x.color}</option> }) ) 
+                                                )}
 
                                             </select>
                                         </div>
@@ -196,15 +198,18 @@ export default function Mycart(){
                                                 <h1>Size</h1>
                                                 <select name="size" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'size', e.target.value)}}>
                                                     <option disabled>Size</option>
-                                                    <option>S</option>
-                                                    <option>M</option>
-                                                    <option>L</option>
+                                                    {Array.from(
+                                                        new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
+                                                    )}
                                                 </select>
                                             </div>
 
                                             <div >
                                                 <h1>Qty</h1>
-                                                <select name="quantity" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'quantity', e.target.value)}}>
+                                                <select name="quantity" 
+                                                className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" 
+                                                value={item.quantity}
+                                                onChange={(e)=>{handleUpdateCart(item, 'quantity', e.target.value)}}>
                                                     <option>Qty</option>
                                                     <option>1</option>
                                                     <option>2</option>
@@ -243,8 +248,8 @@ export default function Mycart(){
                                 // style={{width:"100%",borderCollapse:"separate" ,borderSpacing: "0 1em" }} 
                             className="font-normal text-gray-700 dark:text-gray-400 block">
                                 <tbody>
-                                    {userPurhcase.length >0 ? 
-                                        userPurhcase.map(  item => 
+                                    {displayMycart.length >0 ? 
+                                        displayMycart.map(  item => 
 
                                             <tr height="36px" key={item.id} >
                                                 <td style={{width:"100%" }}>    
@@ -271,11 +276,11 @@ export default function Mycart(){
                                         </td>
                                         <td>
                                             <h1>
-                                            {userPurhcase.length > 1 ? 
-                                                userPurhcase.reduce((accumulator, currentValue) => 
+                                            {displayMycart.length > 1 ? 
+                                                displayMycart.reduce((accumulator, currentValue) => 
                                                     accumulator + ( currentValue.price * currentValue.quantity ), 0, 
                                                 )
-                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].quantity :0 
+                                                : displayMycart.length === 1 ? displayMycart[0].price * displayMycart[0].quantity :0 
                                             }
                                             </h1>
                                         </td>
@@ -295,21 +300,21 @@ export default function Mycart(){
                                         </td>
                                         <td>
                                             <h1>
-                                            {userPurhcase.length > 1 ? 
-                                                userPurhcase.reduce((accumulator, currentValue) => 
+                                            {displayMycart.length > 1 ? 
+                                                displayMycart.reduce((accumulator, currentValue) => 
                                                 accumulator + ( currentValue.price * currentValue.quantity ), 0, 
                                                 )
-                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].quantity :0 
+                                                : displayMycart.length === 1 ? displayMycart[0].price * displayMycart[0].quantity :0 
                                             }
                                             </h1>
                                             </td>
                                         </tr>         
                                     </tbody>
                                 </table>
-                                {userPurhcase.length ==0 ?
+                                {displayMycart.length ==0 ?
                                 <>
-                                    <button disabled={userPurhcase.length ==0} style={{width:"100%"}} className="button h-[54px] bg-[#E1E1E1] text-[#9F9F9F] mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
-                                    <button disabled={userPurhcase.length ==0} style={{width:"100%", border: "1pt solid #9F9F9F"}}  className="button h-[54px] text-[#9F9F9F]">Continue Shoping</button>
+                                    <button disabled={displayMycart.length ==0} style={{width:"100%"}} className="button h-[54px] bg-[#E1E1E1] text-[#9F9F9F] mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
+                                    <button disabled={displayMycart.length ==0} style={{width:"100%", border: "1pt solid #9F9F9F"}}  className="button h-[54px] text-[#9F9F9F]">Continue Shoping</button>
                                 </>
                                 :<>
                                     <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
