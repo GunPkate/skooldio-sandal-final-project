@@ -18,8 +18,7 @@ function Products() {
 
       <div className="2xl:flex h-[100vh] 2xl:max-w-[1600px] justify-between mx-auto">
         {/* accordian */}
-        <div className="hidden 2xl:flex 2xl:flex-col 2xl:w-[280px] 2xl:min-h-max text-secondary font-semibold px-4 gap-0 pt-24 join join-vertical w-full sticky top-0">
-          <h2 className="text-[32px] font-extrabold mt-10 mb-16">Ladies</h2>
+        <div className="hidden 2xl:flex 2xl:flex-col 2xl:w-[280px] 2xl:min-h-max text-secondary font-semibold px-4 gap-0 pt-24 join join-vertical w-full">
           <div className="collapse collapse-arrow join-item">
             <input
               type="radio"
