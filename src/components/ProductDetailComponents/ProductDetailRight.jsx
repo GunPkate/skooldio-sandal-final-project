@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState("");
+  const [selectColor, setSelectColor] = useState("");
   const [quantity, setQuantity] = useState(1);
 
   let description = [];
   if (data) {
     description = data;
   }
+
+  // console.log("dataYOLO", data.variants);
 
   // function to handle size selection
   const handleSizeSelection = (size) => {
@@ -44,7 +47,9 @@ const ProductDetailRight = (data) => {
     );
   };
 
-  const uniqueData = uniqueByKey(data.variants, "color");
+  const uniqueDataColor = uniqueByKey(data.variants, "color");
+  const uniqueDataSize = uniqueByKey(data.variants, "size");
+
   const fetchMycart = async (id) => {
     try {
       if (id !== null || id !== undefined || id !== "") {
@@ -119,6 +124,28 @@ const ProductDetailRight = (data) => {
     }
   };
 
+  const variants = data.variants;
+  console.log("variants>>>>", variants);
+  const getRemains = (size, color) => {
+    const variant = variants.find((v) => {
+      console.log("VVVVV", v.size, v.color, size, color);
+
+      return v.size === size && v.color === color;
+    });
+    return variant ? variant.remains : 0;
+  };
+  // usage
+  const size = "L";
+  const color = "Black";
+  const remains = getRemains(size, color);
+  console.log(`Remains for size ${size} and color ${color}: ${remains}`);
+
+
+  const order = { 'S': 1, 'M': 2, 'L': 3, 'XL': 4 };
+
+uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
+
+
   return (
     <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px] desktop:mt-0  ">
       {/* upper infomation */}
@@ -163,9 +190,9 @@ const ProductDetailRight = (data) => {
           <div className="flex justify-start gap-6 mb-6">
             {/* Color options */}
 
-            {uniqueData.length === 1 ? (
+            {uniqueDataColor.length === 1 ? (
               <>
-                {uniqueData.map((value, index) => (
+                {uniqueDataColor.map((value, index) => (
                   <div key={index}>
                     <div
                       className="w-14 h-14"
@@ -179,7 +206,7 @@ const ProductDetailRight = (data) => {
             ) : (
               <div className="flex justify-evenly gap-6 mb-6">
                 {" "}
-                {uniqueData.map((value, index) => (
+                {uniqueDataColor.map((value, index) => (
                   <div key={index}>
                     <div
                       className="w-14 h-14"
@@ -194,10 +221,8 @@ const ProductDetailRight = (data) => {
           </div>
         </div>
 
-        <div className="font-normal text-base mb-2">Size</div>
-        <div className="flex gap-2 mb-6">
-          {/* Size options */}
-          {["XS", "S", "M", "L", "XL"].map((size) => (
+        {/* Size options */}
+        {/* {["XS", "S", "M", "L", "XL"].map((size) => (
             <button
               key={size}
               className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
@@ -207,16 +232,120 @@ const ProductDetailRight = (data) => {
             >
               {size}
             </button>
-          ))}
-        </div>
+          ))} */}
+
+        {/* size options */}
+
+        {console.log("uniqueDataSize>>>>>", uniqueDataSize[0].size === "")}
+        {uniqueDataSize[0].size != "" && (
+          <>
+            <div className="font-normal text-base mb-2">Size</div>
+            <div className="flex gap-2 mb-6">
+              <div className="flex justify-evenly gap-6 mb-6">
+                {" "}
+                {uniqueDataSize.map((value, index) => (
+                  <div key={index}>
+                    <button
+                    
+                      key={value.size}
+                      className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
+                        selectedSize === value.size ? "bg-yellow-300" : ""
+                      }`}
+                      onClick={() => handleSizeSelection(value.size)}
+                    >
+                      {value.size}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
         <div className="font-normal text-base mb-2">Qty.</div>
-        <input
+        {/* <input
           type="number"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           className="w-full h-14 px-2  border border-gray-300 desktop:w-36"
           min="1"
-        />
+        /> */}
+
+        {/* <form class="max-w-sm mx-auto"> */}
+        {/* <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label> */}
+
+        <form className=" max-w-xs mx-auto">
+          {/* <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose quantity:</label> */}
+          <div class="relative flex items-start max-w-[8rem]">
+            <button
+              type="button"
+              id="decrement-button"
+              data-input-counter-decrement="quantity-input"
+              class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+              onClick={() => {
+                if (quantity > 1) {
+                  setQuantity(quantity - 1);
+                }
+              }}
+            >
+              <svg
+                class="w-3 h-3 text-gray-900 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 18 2"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 1h16"
+                />
+              </svg>
+            </button>
+            <input
+              type="text"
+              id="quantity-input"
+              data-input-counter
+              aria-describedby="helper-text-explanation"
+              class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder={quantity}
+              required
+            />
+            <button
+              type="button"
+              id="increment-button"
+              data-input-counter-increment="quantity-input"
+              class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+              onClick={() => {
+                setQuantity(quantity + 1);
+              }}
+            >
+              <svg
+                class="w-3 h-3 text-gray-900 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 18 18"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 1v16M1 9h16"
+                />
+              </svg>
+            </button>
+          </div>
+          {/* <p
+              id="helper-text-explanation"
+              class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+            >
+              Please select a 5 digit number from 0 to 9.
+            </p> */}
+        </form>
+        {/* </form> */}
       </div>
 
       {/* Add to cart button */}
