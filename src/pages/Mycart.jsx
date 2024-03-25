@@ -11,6 +11,8 @@ export default function Mycart(){
     const [loading, setLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
+    const [choice,setChoice] =useState('');
+
 
     // console.log("12345",userPurhcase)
     
@@ -78,26 +80,32 @@ export default function Mycart(){
     // localStorage.setItem('id',1234)
     const handleUpdateCart = (item, name,value) => {
         let tempData = displayMycart
-        // console.log("item",item)
-        // console.log(name)
-        // console.log("value",value)
+        
+        //Get default colors and size
+        let defaultCode = tempData[0].skuCode;
+        let defaultVariant = tempData[0].variants.filter(x=>x.skuCode===defaultCode)
+        console.log("in cart color",defaultVariant)
+        console.log("in cart color",defaultVariant[0].color)
+        console.log("in cart size",defaultVariant[0].size)
 
+        
 
-        console.log("update",JSON.stringify(tempData))
-        // setuserPurhcase(tempData)
-
+        // tempData.filter(x=>x[`${name}`] === name)
+        
         switch (name){
             case 'quantity': 
                 // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
                 console.log('qty')
                 break;
-            case 'colors': 
+            case 'color': 
                 // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
                 console.log('colors here')
+                console.log(tempData[0].variants.filter(x=>x.color===value))
                 break;
             case 'size': 
                 // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
                 console.log('size 3')
+                console.log(tempData[0].variants.filter(x=>x.size===value))
                 break;
         }
         // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData)
@@ -157,7 +165,7 @@ export default function Mycart(){
 
     
         <>
-                <button onClick={()=>{console.log(displayMycart)}}>1234</button>
+                {/* <button onClick={()=>{console.log(displayMycart)}}>1234</button> */}
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
@@ -184,12 +192,17 @@ export default function Mycart(){
                                         <div className="lg:mr-[16px]">
                                             <h1>Colors</h1>
 
-   
-                                            <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'colors', e.target.value)}}>
+                                            {/* {Array.from(
+                                                    new Set(item.variants.map(x=>{return <option>{x.color}</option>}) ) 
+                                            )}  */}
+    
+                                            <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value)}}>
+                                                
                                                 <option disabled>Colors</option>
                                                 {Array.from(
-                                                    new Set(item.variants.map(x=>{ return <option>{x.color}</option> }) ) 
-                                                )}
+                                                    new Set( item.variants.map(x => <option>{x.color}</option>) )
+                                                    ).map(y=>y)
+                                                }
 
                                             </select>
                                         </div>
