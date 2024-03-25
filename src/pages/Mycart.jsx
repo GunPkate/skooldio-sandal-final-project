@@ -36,16 +36,19 @@ export default function Mycart(){
 
                 let displayBody = {
                     id: dataTemp.id,
+                    name: data.name,
                     skuCode: dataTemp.skuCode,
                     quantity: dataTemp.quantity,
-                    variants:  []
+                    variants:  data.variants,
+                    image: data.imageUrls[0]
                 }
 
-                setLoading(false);
-                displayBody.variants = data.variants
+                
+                console.log("||| data",data)
                 dataSet.push(displayBody)
                 console.log("|||",dataSet)
                 setDisplayMycart(dataSet)
+                setLoading(false);
             })
 
             }
