@@ -112,6 +112,33 @@ export default function Navbar() {
     );
   };
 
+  const dropdownRoot = (input) => {
+    const gender = capitalizeFirstLetter(input);
+    return (
+      <div class="dropdown dropdown-start">
+        <div tabindex="0" role="button" class="btn btn-ghost rounded-btn">
+          <h2 className="font-light text-md">{gender}</h2>
+        </div>
+        <ul
+          tabindex="0"
+          class="menu dropdown-content z-[1] p-2 shadow text-secondary bg-base-100 rounded-none w-52 mt-4"
+        >
+          {categories.map((item, id) => {
+            if (item.permalink.toUpperCase().includes(gender.toUpperCase())) {
+              return (
+                <li>
+                  <a href={`/Products/${item.name}/${item.permalink}`}>
+                    {item.name}
+                  </a>
+                </li>
+              );
+            }
+          })}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div
       className={
@@ -119,90 +146,102 @@ export default function Navbar() {
         contentStyle
       }
     >
-      <div className={`${movePositionY}`}>
-        <Drawer.Root
-          direction="left"
-          open={openDrawer}
-          onOpenChange={setOpenDrawer}
-        >
-          <Drawer.Trigger asChild className="lg:hidden">
-            <img src="../../src/assets/hamburger.svg" />
-          </Drawer.Trigger>
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-            <Drawer.Content className="bg-white flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
-              <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
-                <Link className={navMenuTextStyle} to={"/"}>
-                  Home
-                </Link>
-
-                {drawerRoot("men")}
-                {drawerRoot("ladies")}
-
-                <Drawer.NestedRoot asChild direction="left">
-                  <Drawer.Trigger className={navMenuTextStyle}>
-                    Collection
-                    <img
-                      src="../../src/assets/chevron.svg"
-                      className="-rotate-90"
-                    />
-                  </Drawer.Trigger>
-                  <Drawer.Portal>
-                    <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-                    <Drawer.Content className="bg-grey-100 flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
-                      <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
-                        <Drawer.Trigger className="flex items-center py-1 gap-6 border-solid border-b-[1px] border-b-secondary-300">
-                          <img
-                            src="../../src/assets/chevron.svg"
-                            className="rotate-90"
-                          />
-                          <h2 className="font-bold text-2xl">All Collection</h2>
-                        </Drawer.Trigger>
-                        {collections.map((item, id) => {
-                          return (
-                            <Drawer.Trigger
-                              asChild={close}
-                              onClick={() => setOpen(false)}
-                              className="text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center"
-                            >
-                              <Link
-                                key={id + 1}
-                                to={`/Products/${item.name}/${item.permalink}`}
-                                className="flex justify-between"
-                              >
-                                <p className={navMenuTextStyle}>{item.name}</p>
-                                <img
-                                  src="../../src/assets/chevron.svg"
-                                  className="-rotate-90"
-                                />
-                              </Link>
-                            </Drawer.Trigger>
-                          );
-                        })}
-                      </div>
-                    </Drawer.Content>
-                  </Drawer.Portal>
-                </Drawer.NestedRoot>
-              </div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
-
-        <div className="hidden lg:flex">
-          <Link className={navHomeStyle + " ml-6 md:ml-[0px]"} to={"/"}>
-            Home
-          </Link>
-          {categories.map((item, id) => (
-            <span className={baseMenuStyle + responsiveStyle}>
-              <Link
-                key={id + 1}
-                to={`/Products/${item.name}/${item.permalink}`}
-                className={navItemStyle}
-              >
-                {item.name}
+      {/* MOBILE */}
+      <Drawer.Root
+        direction="left"
+        open={openDrawer}
+        onOpenChange={setOpenDrawer}
+      >
+        <Drawer.Trigger asChild className="lg:hidden">
+          <img src="../../src/assets/hamburger.svg" />
+        </Drawer.Trigger>
+        <Drawer.Portal>
+          <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+          <Drawer.Content className="bg-white flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
+            <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
+              <Link className={navMenuTextStyle} to={"/"}>
+                Home
               </Link>
-            </span>
-          ))}
+
+              {drawerRoot("men")}
+              {drawerRoot("ladies")}
+
+              <Drawer.NestedRoot asChild direction="left">
+                <Drawer.Trigger className={navMenuTextStyle}>
+                  Collection
+                  <img
+                    src="../../src/assets/chevron.svg"
+                    className="-rotate-90"
+                  />
+                </Drawer.Trigger>
+                <Drawer.Portal>
+                  <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+                  <Drawer.Content className="bg-grey-100 flex flex-col rounded-r-xl h-full w-[400px] mt-24 fixed bottom-0 left-0">
+                    <div className="px-8 pt-5 bg-white h-full flex flex-col gap-2 rounded-r-xl">
+                      <Drawer.Trigger className="flex items-center py-1 gap-6 border-solid border-b-[1px] border-b-secondary-300">
+                        <img
+                          src="../../src/assets/chevron.svg"
+                          className="rotate-90"
+                        />
+                        <h2 className="font-bold text-2xl">All Collection</h2>
+                      </Drawer.Trigger>
+                      {collections.map((item, id) => {
+                        return (
+                          <Drawer.Trigger
+                            asChild={close}
+                            onClick={() => setOpen(false)}
+                            className="text-left text-[18px] font-semibold py-3 hover:text-primary-300 active:text-primary flex justify-between items-center"
+                          >
+                            <Link
+                              key={id + 1}
+                              to={`/Products/${item.name}/${item.permalink}`}
+                              className="flex justify-between"
+                            >
+                              <p className={navMenuTextStyle}>{item.name}</p>
+                              <img
+                                src="../../src/assets/chevron.svg"
+                                className="-rotate-90"
+                              />
+                            </Link>
+                          </Drawer.Trigger>
+                        );
+                      })}
+                    </div>
+                  </Drawer.Content>
+                </Drawer.Portal>
+              </Drawer.NestedRoot>
+            </div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
+
+      {/* DESKTOP */}
+      <div className="hidden lg:flex">
+        <Link className="btn btn-ghost rounded-btn" to={"/"}>
+          <h2 className="font-light text-md">Home</h2>
+        </Link>
+
+        {dropdownRoot("men")}
+        {dropdownRoot("ladies")}
+
+        <div class="dropdown dropdown-start">
+          <div tabindex="0" role="button" class="btn btn-ghost rounded-btn">
+            <h2 className="font-light text-md">All Collection</h2>
+          </div>
+          <ul
+            tabindex="0"
+            class="menu dropdown-content z-[1] p-2 shadow text-secondary bg-base-100 rounded-none w-52 mt-4"
+          >
+            {collections.map((item) => {
+              return (
+                <li>
+                  <a href={`/Products/${item.name}/${item.permalink}`}>
+                    {item.name}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
 
