@@ -57,7 +57,7 @@ function Homepage() {
 
         <div className="flex flex-col overflow-hidden relative">
           <img
-            className="object-fit"
+            className="w-full h-full object-cover"
             src="./src/assets/img2.jpg"
             alt=""
           />
@@ -81,7 +81,7 @@ function Homepage() {
 
         <div className="flex flex-col overflow-hidden relative">
           <img
-            className="w-full object-fit"
+            className="w-full h-full object-cover"
             src="./src/assets/img3.jpg"
             alt=""
           />
