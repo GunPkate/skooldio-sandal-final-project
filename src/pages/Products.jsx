@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import { Outlet, useLocation } from "react-router-dom";
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 function Products() {
   const location = useLocation();
   const productsContext = { value: "2" };
