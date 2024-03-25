@@ -11,17 +11,18 @@ export default function Mycart(){
     const [loading, setLoading] = useState(false);
 
 
+
     useEffect(()=>{
         setLoading(true);
         //? fix slow loading
         if(userPurhcase?.length >0){
-            
+            console.log("userPurhcase",userPurhcase)
             let  itemListmapping = []
             for(let i =0; i < userPurhcase?.length; i++){
                 fetchItemsDetails(userPurhcase[i],itemListmapping)
             }
         }
-        else{
+        else if(userPurhcase.length === 0){
             setLoading(false);
         }
     },[])
@@ -44,9 +45,9 @@ export default function Mycart(){
                 }
 
                 
-                console.log("||| data",data)
+                // console.log("||| data",data)
                 dataSet.push(displayBody)
-                console.log("|||",dataSet)
+                // console.log("|||",dataSet)
                 setDisplayMycart(dataSet)
                 setLoading(false);
             })

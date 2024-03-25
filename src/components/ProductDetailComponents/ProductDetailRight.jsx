@@ -81,6 +81,19 @@ const ProductDetailRight = (data) => {
     }
   };
 
+  const fetchMycart = async (id) => {
+    try {
+  
+      if(id !== null || id !== undefined || id !== ""){
+        await axios.get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`).then( res => {
+          console.log(res.data)
+           setuserPurhcase(res.data.items)
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleAddItem = async () => {
     const id = localStorage.getItem('id')
@@ -99,12 +112,16 @@ const ProductDetailRight = (data) => {
     if(mycartBody.length){
       setuserPurhcase(mycartBody)
       console.log(mycartBody)
-      
+    
+    let statusCode  = ""
+
     if(id === null || id === undefined || id === "" ) {
       try {
        await axios.post("https://api.storefront.wdb.skooldio.dev/carts",{"items":mycartBody}).then( res => {
               let data = res.data
+              console.log("add new res",res)
               console.log("add new cart data",data)
+              statusCode = res.status
               localStorage.setItem('id',data.id)
           })
       } catch (error) {
@@ -115,13 +132,18 @@ const ProductDetailRight = (data) => {
       try {
         axios.post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`,{"items":mycartBody}).then( res => {
               let data = res.data
+              statusCode = res.status
               console.log("add old cart data",data)
-
+              console.log("add old res",res)
           })
       } catch (error) {
           console.log(error)
       }
 
+    }
+
+    if(statusCode == 200 || statusCode == 201){
+      fetchMycart(id)
     }
 
     }
