@@ -1,21 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectColor, setSelectColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [remains, setRemains] = useState(0);
 
   let description = [];
   if (data) {
     description = data;
   }
 
-  // console.log("dataYOLO", data.variants);
+useEffect(() => {
+  if (selectColor === "") {
+    setRemains(0); // Reset remains if color is not selected
+  } else {
+    const remains = getRemains(selectedSize, selectColor);
+    setRemains(remains);
+  }
+}, [selectedSize, selectColor]);
+  
 
   // function to handle size selection
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
+    const remains = getRemains(size, selectColor);
+    setRemains(remains);
+
+    console.log(`1)Remains for size ${size} and color ${selectColor}: ${remains}`);
+  };
+
+  const handleColorSelection = (color) => {
+    setSelectedSize("");
+    setRemains(prevState => 0);
+
+    // setRemains((preProv) => getRemains(selectedSize, color  || ''));
+    setSelectColor(color);
+    const remains = getRemains(selectedSize || "", color);
+    setRemains(remains);
+    console.log(`2)Remains for size ${selectedSize} and color ${color}: ${remains}`);
+
   };
 
   // price with commas from k'Ter (product cart)
@@ -56,7 +81,6 @@ const ProductDetailRight = (data) => {
         await axios
           .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
           .then((res) => {
-            console.log(res.data);
             setuserPurhcase(res.data.items);
           });
       }
@@ -125,26 +149,23 @@ const ProductDetailRight = (data) => {
   };
 
   const variants = data.variants;
-  console.log("variants>>>>", variants);
-  const getRemains = (size, color) => {
+  const getRemains = (selectedSize, selectColor) => {
     const variant = variants.find((v) => {
-      console.log("VVVVV", v.size, v.color, size, color);
-
-      return v.size === size && v.color === color;
+      if(uniqueDataSize[0].size?.length > 0){
+        return v.size === selectedSize || null && v.color === selectColor ||'';
+      }else{
+        return  v.color === selectColor ||''; }
     });
     return variant ? variant.remains : 0;
   };
-  // usage
-  const size = "L";
-  const color = "Black";
-  const remains = getRemains(size, color);
-  console.log(`Remains for size ${size} and color ${color}: ${remains}`);
+  
 
+  // const remains = getRemains(selectedSize, selectColor);
+  // console.log(`Remains for size ${selectedSize} and color ${selectColor}: ${remains}`);
 
-  const order = { 'S': 1, 'M': 2, 'L': 3, 'XL': 4 };
+  const order = { S: 1, M: 2, L: 3, XL: 4 };
 
-uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
-
+  uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
 
   return (
     <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px] desktop:mt-0  ">
@@ -195,8 +216,12 @@ uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
                 {uniqueDataColor.map((value, index) => (
                   <div key={index}>
                     <div
-                      className="w-14 h-14"
+                      //comment: เมื่อคลิกอยากขึ้น border ให้ user รู้ว่าเลือกแล้ว
+                      className="w-14 h-14 "
                       style={{ background: value.colorCode }}
+                      onClick={() => {
+                        handleColorSelection(value.color);
+                      }}
                     ></div>
 
                     <div className="text-center mt-[6.5px]">{value.color}</div>
@@ -209,8 +234,19 @@ uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
                 {uniqueDataColor.map((value, index) => (
                   <div key={index}>
                     <div
-                      className="w-14 h-14"
-                      style={{ background: value.colorCode }}
+
+                      className="w-14 h-14 "
+                      style={{
+                        background: value.colorCode,
+                        border:
+                          selectColor === value.color
+                            ? "5px solid black"
+                            : null,
+                      }}
+                      onClick={() => {
+                        setRemains(0);
+                        handleColorSelection(value.color);
+                      }}
                     ></div>
 
                     <div className="text-center mt-[6.5px]">{value.color}</div>
@@ -221,24 +257,13 @@ uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
           </div>
         </div>
 
-        {/* Size options */}
-        {/* {["XS", "S", "M", "L", "XL"].map((size) => (
-            <button
-              key={size}
-              className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
-                selectedSize === size ? "bg-yellow-300" : ""
-              }`}
-              onClick={() => handleSizeSelection(size)}
-            >
-              {size}
-            </button>
-          ))} */}
+        
 
         {/* size options */}
 
-        {console.log("uniqueDataSize>>>>>", uniqueDataSize[0].size === "")}
-        {uniqueDataSize[0].size != "" && (
+        {uniqueDataSize[0].size?.length > 0 && (
           <>
+          
             <div className="font-normal text-base mb-2">Size</div>
             <div className="flex gap-2 mb-6">
               <div className="flex justify-evenly gap-6 mb-6">
@@ -246,12 +271,12 @@ uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
                 {uniqueDataSize.map((value, index) => (
                   <div key={index}>
                     <button
-                    
                       key={value.size}
+                      disabled={selectColor === "" ? true : false}
                       className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
                         selectedSize === value.size ? "bg-yellow-300" : ""
                       }`}
-                      onClick={() => handleSizeSelection(value.size)}
+                      onClick={() => selectColor!=''?handleSizeSelection(value.size):null}
                     >
                       {value.size}
                     </button>
@@ -261,24 +286,14 @@ uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
             </div>
           </>
         )}
-        <div className="font-normal text-base mb-2">Qty.</div>
-        {/* <input
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          className="w-full h-14 px-2  border border-gray-300 desktop:w-36"
-          min="1"
-        /> */}
-
-        {/* <form class="max-w-sm mx-auto"> */}
-        {/* <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label> */}
+        <div className="font-normal text-base mb-2">Qty. <text className="text-red-500 font-semibold text-xl">{`In stock : ${remains}`}</text></div>
 
         <form className=" max-w-xs mx-auto">
-          {/* <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose quantity:</label> */}
           <div class="relative flex items-start max-w-[8rem]">
             <button
               type="button"
               id="decrement-button"
+              disabled={remains === 0 ? true : false || quantity === 1 ? true : false}
               data-input-counter-decrement="quantity-input"
               class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
               onClick={() => {
@@ -310,15 +325,19 @@ uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
               aria-describedby="helper-text-explanation"
               class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder={quantity}
+             disabled
               required
             />
             <button
               type="button"
               id="increment-button"
+              disabled={remains === 0 ? true : false || quantity >= remains ? true : false}
               data-input-counter-increment="quantity-input"
               class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
               onClick={() => {
+                if (quantity < remains) {
                 setQuantity(quantity + 1);
+                }
               }}
             >
               <svg
@@ -338,14 +357,8 @@ uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
               </svg>
             </button>
           </div>
-          {/* <p
-              id="helper-text-explanation"
-              class="mt-2 text-sm text-gray-500 dark:text-gray-400"
-            >
-              Please select a 5 digit number from 0 to 9.
-            </p> */}
+          
         </form>
-        {/* </form> */}
       </div>
 
       {/* Add to cart button */}

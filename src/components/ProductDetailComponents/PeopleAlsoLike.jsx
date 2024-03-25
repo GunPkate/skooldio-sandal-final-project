@@ -5,8 +5,6 @@ const PeopleAlsoLike = (data) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-console.log("Hello")
-console.log(data, "dataXXXX");
 
 //   curl --request GET \
   const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
