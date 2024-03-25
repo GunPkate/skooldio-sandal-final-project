@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function numberWithCommas(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -6,10 +8,10 @@ const createStars = (rating) => {
   const amount = Math.floor(rating);
   if (amount) {
     const fill = [...Array(amount)].map(() => (
-      <img src="../src/assets/star-fill.svg" key={Math.random()} />
+      <img src="../../src/assets/star-fill.svg" key={Math.random()} />
     ));
     const unstar = [...Array(5 - amount)].map(() => (
-      <img src="../src/assets/star-grey.svg" key={Math.random()} />
+      <img src="../../src/assets/star-grey.svg" key={Math.random()} />
     ));
     return [...fill, ...unstar];
   } else {
@@ -29,8 +31,8 @@ function ProductCard({
 }) {
   const discount = promotionalPrice < price ? true : false;
   return (
-    <a
-      href={`/productDetail/${permalink}`}
+    <Link
+      to={`/ProductDetail/${permalink}`}
       className="mb-10 p-2 transition-all 2xl:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg"
       key={id}
     >
@@ -42,11 +44,11 @@ function ProductCard({
         )}
         <img
           src={imageUrls[0]}
-          className="h-[370px] mx-[-8px] min-w-[340px] 2xl:min-w-[386px] object-cover mb-6 hover:rounded-t-xl"
+          className="h-[370px] mx-[-8px] min-w-[370px] lg:min-w-[386px] object-cover mb-6 hover:rounded-t-xl"
           alt={`${name}`}
         />
       </div>
-      <div className="grid grid-cols-1 gap-2 w-[340px] 2xl:w-[370px]">
+      <div className="grid grid-cols-1 gap-2 w-[340px] lg:w-[370px]">
         <h2 className="font-bold text-2xl text-secondary whitespace-nowrap text-ellipsis overflow-hidden">
           {name}
         </h2>
@@ -73,7 +75,7 @@ function ProductCard({
           )}
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 
