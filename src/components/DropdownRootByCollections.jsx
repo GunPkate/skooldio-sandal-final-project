@@ -26,11 +26,7 @@ export default function DropdownRootByCollections(input) {
   return (
     <div className="dropdown dropdown-start">
       <div tabIndex="0" role="button" className="btn btn-ghost rounded-btn">
-<<<<<<< HEAD
-        <h2 className="font-light text-md">All {title}</h2>
-=======
         <h2 className={"font-light text-md" + checkCurrPage()}>All {title}</h2>
->>>>>>> leftsideDrawer
       </div>
       <ul
         tabIndex="0"
