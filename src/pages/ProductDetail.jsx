@@ -4,6 +4,7 @@ import Carousel from "../components/ProductDetailComponents/Carousel";
 import ProductDetailRight from "../components/ProductDetailComponents/ProductDetailRight";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PeopleAlsoLike from "../components/ProductDetailComponents/PeopleAlsoLike";
 
 // import Modal from "../components/ProductDetailComponents/Modal/Modal";
 
@@ -31,9 +32,12 @@ export default function ProductDetail() {
   return (
     <div className="section ">
       <Navbar />
-      <div className="flex flex-col min-w-[375px]  mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-row desktop:mx-40  desktop:justify-around ">
-        <Carousel {...products} />
-        <ProductDetailRight {...products} />
+      <div className="flex flex-col min-w-[375px]  mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-col desktop:mx-40  desktop:justify-around ">
+        <div className="flex flex-col desktop:flex-row">
+          <Carousel {...products} />
+          <ProductDetailRight {...products} />
+        </div>
+        <PeopleAlsoLike {...products}/>
       </div>
       <Footer />
     </div>
