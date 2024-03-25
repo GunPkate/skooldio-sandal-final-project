@@ -94,8 +94,17 @@ export default function Mycart(){
         
         switch (name){
             case 'quantity': 
+
+                tempData.forEach(x=>x.quantity = value)
+                setDisplayMycart(tempData)
+
+                let contextresult = userPurhcase
+                contextresult.forEach(x=>x.quantity = value)
+                setuserPurhcase(contextresult)
+
+                console.log(tempData)
+                console.log(contextresult)
                 // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
-                console.log('qty')
                 break;
             case 'color': 
                 // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
@@ -201,7 +210,7 @@ export default function Mycart(){
                                                 <option disabled>Colors</option>
                                                 {Array.from(
                                                     new Set( item.variants.map(x => <option>{x.color}</option>) )
-                                                    ).map(y=>y)
+                                                    )
                                                 }
 
                                             </select>
