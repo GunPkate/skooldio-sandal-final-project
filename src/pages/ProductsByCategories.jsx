@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import Navbar from "../components/Navbar/Navbar";
 import { Drawer } from "vaul";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -155,10 +154,14 @@ export default function Products() {
                       Sort By
                       <img
                         src="../../src/assets/chevron.svg"
-                        className={filterOpen ? "rotate-180" : "rotate-0"}
+                        className={
+                          filterOpen
+                            ? "rotate-180 transition ease-in-out"
+                            : "rotate-0 transition ease-in-out"
+                        }
                       />
                     </summary>
-                    <ul className="dropdown-content z-20 p-2 shadow bg-base-100 rounded-none w-60 hover:bg-white active:bg-white focus:bg-white">
+                    <ul className="dropdown-content z-[1] p-2 shadow bg-base-100 rounded-none w-60 hover:bg-white active:bg-white focus:bg-white">
                       <li
                         className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white cursor-pointer"
                         onClick={() =>

@@ -10,7 +10,7 @@ function Products() {
   const location = useLocation();
   const productsContext = { value: "2" };
 
-  const [accordianOpen, setAccordianOpen] = useState("");
+  const [accordianOpen, setAccordianOpen] = useState("shirt");
 
   return (
     <>
