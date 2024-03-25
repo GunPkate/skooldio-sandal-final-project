@@ -11,7 +11,7 @@ export default function DropdownRootByGender(input) {
     const highlight = " text-primary-700";
     const location = useLocation();
     const currPage = location.pathname.split("/")[3];
-    if (currPage.includes(input)) {
+    if (currPage !== undefined && currPage.includes(input)) {
       return highlight;
     }
   };

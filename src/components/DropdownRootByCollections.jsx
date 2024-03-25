@@ -12,9 +12,10 @@ export default function DropdownRootByCollections(input) {
     const location = useLocation();
     const currPage = location.pathname.split("/")[3];
     if (
-      currPage.includes("price-down") ||
-      currPage.includes("new-arrivals") ||
-      currPage.includes("spring-2024")
+      currPage !== undefined &&
+      (currPage.includes("price-down") ||
+        currPage.includes("new-arrivals") ||
+        currPage.includes("spring-2024"))
     ) {
       return highlight;
     }
