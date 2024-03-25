@@ -29,6 +29,8 @@ export default function Mycart(){
     async function fetchItemsDetails(dataTemp,dataSet){
 
         try {
+            if(dataTemp !== null || dataTemp !== undefined){
+                
             await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+dataTemp.productPermalink).then(res=>{
                 const data = res.data
 
@@ -45,6 +47,8 @@ export default function Mycart(){
                 console.log("|||",dataSet)
                 setDisplayMycart(dataSet)
             })
+
+            }
         } catch (error) {
             console.log(error)
         }
