@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import Navbar from "../components/Navbar/Navbar";
 import { Drawer } from "vaul";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -60,9 +59,9 @@ export default function Products() {
   return (
     <>
       {!loading ? (
-        <div className="flex justify-center">
-          <div className="lg:flex lg:h-fit lg:max-w-[1600px] 2xl:justify-between mx-auto pt-24">
-            <div className="font-poppins flex flex-col items-center w-full lg:w-fit">
+        <div className="flex flex-1 justify-center lg:max-w-[1238px] mx-auto">
+          <div className="lg:flex lg:h-fit lg:w-full lg:justify-center 2xl:justify-between px-auto pt-24">
+            <div className="flex flex-col items-center w-fit xl:w-full lg:max-w-[1238px]">
               <header className="lg:w-full">
                 <div className="my-6 mb-[22px] w-[370px] lg:flex lg:items-center lg:justify-between lg:mb-16 lg:w-full ">
                   <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
@@ -155,17 +154,21 @@ export default function Products() {
                       Sort By
                       <img
                         src="../../src/assets/chevron.svg"
-                        className={filterOpen ? "rotate-180" : "rotate-0"}
+                        className={
+                          filterOpen
+                            ? "rotate-180 transition ease-in-out"
+                            : "rotate-0 transition ease-in-out"
+                        }
                       />
                     </summary>
-                    <ul className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-none w-52 hover:bg-white active:bg-white focus:bg-white">
+                    <ul className="dropdown-content z-[1] p-2 shadow bg-base-100 rounded-none w-60 hover:bg-white active:bg-white focus:bg-white">
                       <li
-                        className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white"
+                        className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white cursor-pointer"
                         onClick={() =>
                           handleFilterSelect("Price - Low to high")
                         }
                       >
-                        <a>
+                        <a className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100">
                           {filterSelect === "Price - Low to high" ? (
                             <img src="../../src/assets/radioSelected.svg" />
                           ) : (
@@ -175,12 +178,12 @@ export default function Products() {
                         </a>
                       </li>
                       <li
-                        className="rounded-none"
+                        className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white cursor-pointer"
                         onClick={() =>
                           handleFilterSelect("Price - High to low")
                         }
                       >
-                        <a>
+                        <a className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100">
                           {filterSelect === "Price - High to low" ? (
                             <img src="../../src/assets/radioSelected.svg" />
                           ) : (
@@ -190,10 +193,10 @@ export default function Products() {
                         </a>
                       </li>
                       <li
-                        className="rounded-none"
+                        className="rounded-none bg-white hover:bg-white active:bg-white focus:bg-white cursor-pointer"
                         onClick={() => handleFilterSelect("Rating")}
                       >
-                        <a>
+                        <a className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100">
                           {filterSelect === "Rating" ? (
                             <img src="../../src/assets/radioSelected.svg" />
                           ) : (
