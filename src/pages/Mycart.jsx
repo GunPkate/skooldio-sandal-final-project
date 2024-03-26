@@ -210,15 +210,6 @@ export default function Mycart(){
                                     <div className="lg:flex sm:block w-ful">
                                         <div className="lg:mr-[16px]">
                                             <h1>Colors</h1>
-                                            {/* {item.id} */}
-                                            {/* {  selectedColor.filter(x=>x.id == item.id)
-                                                .map(y=>{ return (
-
-                                                    <div>
-                                                        {y.size}
-                                                    </div>
-                                                ) } )
-                                            } */}
 
                                             <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value)}}>
                                                 
@@ -228,14 +219,9 @@ export default function Mycart(){
                                                     )
                                                 } */}
 
-                                                {  selectedColor.filter(x=>x.id == item.id)
-                                                .map(y=>{ return (
-                                                    <option>
-                                                        {y.size}
-                                                    </option>
-                                                ) } )
-                                            }
-
+                                                {  selectedColor?.filter(x=>x.id==item.id).length > 0 ? selectedColor?.filter(x=>x.id==item.id)[0].color
+                                                    .map(y=><option className="bg-black text-white">{y}</option>)  : <></>
+                                                }
                                             </select>
                                         </div>
                                         <div className="flex justify-between w-full">
@@ -243,9 +229,12 @@ export default function Mycart(){
                                                 <h1>Size</h1>
                                                 <select name="size" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'size', e.target.value)}}>
                                                     <option disabled>Size</option>
-                                                    {Array.from(
+                                                    {/* {Array.from(
                                                         new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
-                                                    )}
+                                                    )} */}
+                                                    {  selectedColor?.filter(x=>x.id==item.id).length > 0 ? selectedColor?.filter(x=>x.id==item.id)[0].size
+                                                            .map(y=><option className="bg-black text-white">{y}</option>)  : <></>
+                                                    }
                                                 </select>
                                             </div>
 
