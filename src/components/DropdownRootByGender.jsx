@@ -38,7 +38,9 @@ export default function DropdownRootByGender(input) {
                   "py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100"
                 }
               >
-                {item.name}
+                {item.name === "Men" || item.name === "Ladies"
+                  ? "All Items"
+                  : item.name}
               </Link>
             );
           }

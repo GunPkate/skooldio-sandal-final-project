@@ -43,7 +43,11 @@ export default function DrawerRootByGender(input) {
                       to={`/Products/${item.name}/${item.permalink}`}
                       className="flex justify-between active:text-primary-300"
                     >
-                      <p className={navMenuTextStyle}>{item.name}</p>
+                      <p className={navMenuTextStyle}>
+                        {item.name === "Men" || item.name === "Ladies"
+                          ? "All Items"
+                          : item.name}
+                      </p>
                       <img
                         src="../../src/assets/chevron.svg"
                         className="-rotate-90"
