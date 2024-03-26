@@ -211,7 +211,7 @@ const ProductDetailRight = (data) => {
         <div className="font-normal text-base mb-2">Size {activeSize !== null || activeSize !== ""? activeSize : "X"}</div>
         <div className="flex gap-2 mb-6">
           {/* Size options */}
-          {data.variants.map(x=>x.size)[0] !== undefined || null ? Array.from( new Set(data.variants.map(x=>x.size)) ).map((size) => (
+          {data.variants.map(x=>x.size)[0] !== undefined || null ? Array.from( new Set(data.variants.map(x=>x.size)) ).sort().map((size) => (
             <button
               key={size}
               className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
