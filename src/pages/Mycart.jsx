@@ -11,7 +11,7 @@ export default function Mycart(){
     const [loading, setLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
-    const [totalPrice,setTotalPrice] =useState(null);
+    const [selectedColor,setSelectedColor] = useState([])
 
 
     // console.log("12345",userPurhcase)
@@ -22,8 +22,9 @@ export default function Mycart(){
         if(userPurhcase?.length >0){
             console.log("userPurhcase",userPurhcase)
             let  itemListmapping = []
+            let  selectedListmapping = []
             for(let i =0; i < userPurhcase?.length; i++){
-                fetchItemsDetails(userPurhcase[i],itemListmapping)
+                fetchItemsDetails( userPurhcase[i], itemListmapping, selectedListmapping)
             }
         }
         else if(userPurhcase.length === 0){
@@ -31,7 +32,7 @@ export default function Mycart(){
         }
     },[])
 
-    async function fetchItemsDetails(dataTemp,dataSet){
+    async function fetchItemsDetails( dataTemp, dataSet, selectedList){
 
         try {
             if(dataTemp !== null || dataTemp !== undefined){
@@ -49,11 +50,19 @@ export default function Mycart(){
                     image: data.imageUrls[0],
                 }
 
+                let selectedColorBody = {
+                    id: dataTemp.id,
+                    color: Array.from( new Set(data.variants.map(x=>x.color)) ).sort(),
+                    size: Array.from( new Set(data.variants.map(x=>x.size)) ).sort(),
+                }
                 
                 console.log("||| data",data)
                 dataSet.push(displayBody)
-                // console.log("|||",dataSet)
                 setDisplayMycart(dataSet)
+
+                selectedList.push(selectedColorBody)
+                setSelectedColor(selectedList)
+                // console.log("|||",dataSet)
                 setLoading(false);
             })
 
@@ -102,9 +111,9 @@ export default function Mycart(){
                 contextresult.forEach(x=>x.quantity = value)
                 setuserPurhcase(contextresult)
                 
-                setTotalPrice(value*tempData[0].price)
                 console.log(tempData)
                 console.log(contextresult)
+                console.log(item.price * item.quantity)
                 // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
                 break;
             case 'color': 
@@ -175,7 +184,7 @@ export default function Mycart(){
 
     
         <>
-                {/* <button onClick={()=>{console.log(displayMycart)}}>1234</button> */}
+                <button onClick={()=>{console.log(JSON.stringify(selectedColor))}}>1234</button>
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
@@ -201,18 +210,31 @@ export default function Mycart(){
                                     <div className="lg:flex sm:block w-ful">
                                         <div className="lg:mr-[16px]">
                                             <h1>Colors</h1>
+                                            {/* {item.id} */}
+                                            {/* {  selectedColor.filter(x=>x.id == item.id)
+                                                .map(y=>{ return (
 
-                                            {/* {Array.from(
-                                                    new Set(item.variants.map(x=>{return <option>{x.color}</option>}) ) 
-                                            )}  */}
-    
+                                                    <div>
+                                                        {y.size}
+                                                    </div>
+                                                ) } )
+                                            } */}
+
                                             <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value)}}>
                                                 
                                                 <option disabled>Colors</option>
-                                                {Array.from(
+                                                {/* {Array.from(
                                                     new Set( item.variants.map(x => <option>{x.color}</option>) )
                                                     )
-                                                }
+                                                } */}
+
+                                                {  selectedColor.filter(x=>x.id == item.id)
+                                                .map(y=>{ return (
+                                                    <option>
+                                                        {y.size}
+                                                    </option>
+                                                ) } )
+                                            }
 
                                             </select>
                                         </div>
@@ -283,8 +305,8 @@ export default function Mycart(){
                                                     <h1>{item.name}</h1>
                                                 </td>
                                                 <td>    
-                                                    {/* <h1>{item.quantity * item.price}</h1>  */}
-                                                    <h1>{totalPrice !== null ? totalPrice :item.quantity * item.price}</h1>
+                                                    <h1>{item.quantity * item.price}</h1> 
+                                                    {/* <h1>{totalPrice !== null ? totalPrice :item.quantity * item.price}</h1> */}
                                                 </td>
                                             </tr> 
                                                 
