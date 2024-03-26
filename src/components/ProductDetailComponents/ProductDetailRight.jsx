@@ -22,21 +22,16 @@ const ProductDetailRight = (data) => {
     }
   }, [selectedSize, selectColor]);
 
-
-
-
   useEffect(() => {
     const sum = sumRemains(data.variants);
-    if (sum === 0 ) { // If all variants are out of stock
+    if (sum === 0) {
+      // If all variants are out of stock
       setReadOnly(true);
-    }else{ // If all variants are in stock }
+    } else {
+      // If all variants are in stock }
       setReadOnly(false);
     }
   }, []);
-
-
-
-  
 
   // Function to calculate the sum of "remains" values
   function sumRemains(variants) {
@@ -51,9 +46,9 @@ const ProductDetailRight = (data) => {
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
     const remains = getRemains(size, selectColor);
-    if(remains === 0){
+    if (remains === 0) {
       data.sendDataToParent(true);
-    }else{
+    } else {
       data.sendDataToParent(false);
     }
     setRemains(remains);
@@ -70,13 +65,13 @@ const ProductDetailRight = (data) => {
     setSelectColor(color);
     const remains = getRemains(selectedSize || "", color);
     if (uniqueDataSize[0].size?.length == 0) {
-      if(remains === 0){
+      if (remains === 0) {
         data.sendDataToParent(true);
-      }else{
+      } else {
         data.sendDataToParent(false);
       }
     }
-    
+
     setRemains(remains);
     console.log(
       `2)Remains for size ${selectedSize} and color ${color}: ${remains}`
@@ -201,7 +196,6 @@ const ProductDetailRight = (data) => {
     });
     return variant ? variant.remains : 0;
   };
-  
 
   // const remains = getRemains(selectedSize, selectColor);
   // console.log(`Remains for size ${selectedSize} and color ${selectColor}: ${remains}`);
@@ -242,9 +236,13 @@ const ProductDetailRight = (data) => {
               {" " + " THB " + numberWithCommas(data.price) + ".00"}
             </div>
           )}
-
-          <div className="flex gap-[10px]">{createStars(data.ratings)}</div>
         </div>
+        {console.log("readOnlyYYY", readOnly)}
+        <div className="text-danger text-2xl">
+          TEXT{readOnly===true ? <>Out of stock</> : null}
+        </div>
+        {/* {readOnly ? <div className="text-danger text-2xl">Out of stock</div> : null} */}
+        <div className="flex gap-[10px]">{createStars(data.ratings)}</div>
       </div>
 
       {/* lower information from color below*/}
@@ -300,11 +298,10 @@ const ProductDetailRight = (data) => {
         </div>
 
         {/* size options */}
-        
 
         {uniqueDataSize[0].size?.length > 0 && (
           <>
-            <div className="font-normal text-base mb-2">Size</div>
+            <div className="font-normal text-base mb-4">Size</div>
             <div className="flex gap-2 mb-6">
               <div className="flex justify-evenly gap-6 mb-6">
                 {" "}
@@ -330,13 +327,12 @@ const ProductDetailRight = (data) => {
             </div>
           </>
         )}
-        <div className="font-normal text-base mb-2">
+        <div className="font-normal text-base mb-4">
           Qty.{" "}
           <text className="text-red-500 font-semibold text-xl">{`In stock : ${remains}`}</text>
         </div>
-        
 
-        <form className=" max-w-xs mx-auto">
+        <form className=" max-w-xs flex justify-start">
           <div class="relative flex items-start max-w-[8rem]">
             <button
               type="button"

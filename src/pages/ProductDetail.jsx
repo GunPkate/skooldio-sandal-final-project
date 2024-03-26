@@ -31,7 +31,6 @@ export default function ProductDetail() {
   }
 
   const handleDataFromChild = (data) => {
-    console.log("________",data);
     setReceiveData(data);}
 
   return (
@@ -40,7 +39,7 @@ export default function ProductDetail() {
       <div className="flex flex-col min-w-[375px]  mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-col desktop:mx-40  desktop:justify-around ">
         <div className="flex flex-col desktop:flex-row">
           <Carousel {...products} readOnly={receiveData}/>
-          <ProductDetailRight {...products} sendDataToParent={handleDataFromChild}/>
+          <ProductDetailRight {...products}  sendDataToParent={handleDataFromChild}/>
         </div>
         <PeopleAlsoLike {...products}/>
       </div>

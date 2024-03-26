@@ -61,13 +61,13 @@ const Carousel = (data) => {
           src={images[currentImageIndex]}
           alt="Product"
           className={`w-full h-full object-cover ${
-            readOnly ? "opacity-50" : ""
+            readOnly ? "brightness-50" : ""
           }`}
         />
         {data.promotionalPrice < data.price ? (
           <div
             className={`absolute -right-1 top-8 w-24 h-14 ${
-              readOnly ? "bg-black" : "bg-[#FF000D]"
+              readOnly ? "bg-black w-48 h-14" : "bg-[#FF000D]"
             } text-center text-2xl text-white flex justify-center items-center `}
           >
             {readOnly ? "Out Of Stock" : "Sale"}
@@ -140,7 +140,7 @@ const Carousel = (data) => {
               src={image}
               alt={`Thumbnail ${index}`}
               className={`w-full h-full object-cover ${
-                readOnly ? "opacity-50" : ""
+                readOnly ? "brightness-50" : ""
               }`}
             />
           </div>
