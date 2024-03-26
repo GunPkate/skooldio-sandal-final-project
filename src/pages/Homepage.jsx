@@ -98,7 +98,7 @@ function Homepage() {
                 collection invites you to indulge in the allure of winter
                 fashion.
               </p>
-              <Link to="/ProductDetail/shirts-premium-linen-long-sleeve-shirt"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
+              <Link to="/Products/Spring%202024/spring-2024"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
                 View more
               </button>
               </Link>
@@ -121,7 +121,7 @@ function Homepage() {
                 the perfect fusion of style and comfort, our curated selection
                 of sneakers is a celebration of urban chic.
               </p>
-              <Link to="/ProductDetail/shoes-athletic-mesh-slip-on-sneakers"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
+              <Link to="/Products/Spring%202024/spring-2024"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
                 View more
               </button>
               </Link>
