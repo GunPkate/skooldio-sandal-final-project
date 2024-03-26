@@ -54,6 +54,7 @@ export default function Mycart(){
                 let selectedColorBody = {
                     id: dataTemp.id,
                     color: Array.from( new Set(data.variants.map(x=>x.color)) ).sort(),
+                    // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
                     size: Array.from( new Set(data.variants.map(x=>x.size)) ).sort(),
                 }
                 
@@ -129,7 +130,7 @@ export default function Mycart(){
         }
         // }
         console.log("check Select",JSON.stringify(SelectNewList))
-        console.log("check Select",SelectNewList)
+        console.log("check Select",selectedNewItem)
         console.log("check count",count)
 
         setSelectedNewItem(SelectNewList)
@@ -153,8 +154,13 @@ export default function Mycart(){
                 // console.log('colors here',JSON.stringify(tempData[0].variants))
                 firstFilter = tempData[0].variants.filter(x=> x.color ===value )
                 console.log("firstFilter",firstFilter)
-                
-                SecondFilter = firstFilter.filter(x=>x.size==defaultSize)
+
+                SecondFilter = firstFilter;
+                if(firstFilter.length !== 1){
+                    SecondFilter = firstFilter.filter(x=>x.size==defaultSize)
+                }
+
+
                 validateMessage = "Please Select Size";
                 break;
             case 'size': 
@@ -164,7 +170,11 @@ export default function Mycart(){
 
                 console.log("firstFilter",firstFilter)
 
-                SecondFilter = firstFilter.filter(x=>x.size==defaultCode)
+                SecondFilter = firstFilter;
+                if(firstFilter.length !== 1){
+                    SecondFilter = firstFilter.filter(x=>x.size==defaultCode)
+                }
+
                 validateMessage = "Please Select Color";
                 break;
         }
