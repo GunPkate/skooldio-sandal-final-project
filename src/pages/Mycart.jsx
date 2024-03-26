@@ -138,13 +138,17 @@ export default function Mycart(){
         switch (name){
             case 'quantity': 
 
-                tempData.forEach(x=>x.quantity = value)
+                tempData.forEach(x=>
+                     { if(x.id === item.id) x.quantity = value}
+                )
                 setDisplayMycart(tempData)
 
                 let contextresult = userPurhcase
-                contextresult.forEach(x=>x.quantity = value)
+                contextresult.forEach(x=>
+                    { if(x.id === item.id) x.quantity = value}    
+                )
                 setuserPurhcase(contextresult)
-                
+                SecondFilter = tempData.filter(x => x.id === item.id);
                 console.log(tempData)
                 console.log(contextresult)
                 // console.log(item.price * item.quantity)
