@@ -10,7 +10,6 @@ export default function Mycart(){
     const [myCart, setMyCart] = useState([]);
 
     const [loading, setLoading] = useState(false);
-    const [quantity, setQuantity] = useState(1);
 
     const [selectedDefault,setSelectedDefault] = useState([])
     const [selectedNewItem,setSelectedNewItem] = useState([])
@@ -273,10 +272,9 @@ export default function Mycart(){
                                                     new Set( item.variants.map(x => <option>{x.color}</option>) )
                                                     )
                                                 } */}
-
-                                                {  selectedDefault?.filter(x=>x.id==item.id).length > 0 ? selectedDefault?.filter(x=>x.id==item.id)[0].color
-                                                    .map(y=><option className="bg-black text-white">{y}</option>)  : <></>
-                                                }
+                                                {  userPurhcase?.filter(x=>x.id==item.id).length > 0 ? userPurhcase?.filter(x=>x.id==item.id)[0].color
+                                                            .map(y=><option >{y}</option>)  : <></>
+                                                    }
                                             </select>
                                         </div>
                                         <div className="flex justify-between w-full">
@@ -287,8 +285,8 @@ export default function Mycart(){
                                                     {/* {Array.from(
                                                         new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
                                                     )} */}
-                                                    {  selectedDefault?.filter(x=>x.id==item.id).length > 0 ? selectedDefault?.filter(x=>x.id==item.id)[0].size
-                                                            .map(y=><option className="bg-black text-white">{y}</option>)  : <></>
+                                                    {  userPurhcase?.filter(x=>x.id==item.id).length > 0 ? userPurhcase?.filter(x=>x.id==item.id)[0].size
+                                                            .map(y=><option >{y}</option>)  : <></>
                                                     }
                                                 </select>
                                             </div>
