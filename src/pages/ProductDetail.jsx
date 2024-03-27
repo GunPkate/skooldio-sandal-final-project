@@ -5,6 +5,7 @@ import ProductDetailRight from "../components/ProductDetailComponents/ProductDet
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PeopleAlsoLike from "../components/ProductDetailComponents/PeopleAlsoLike";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 // import Modal from "../components/ProductDetailComponents/Modal/Modal";
 

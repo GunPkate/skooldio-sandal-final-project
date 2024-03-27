@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../ProductCard";
+import LoadingSpinner from "../LoadingSpinner";
 
 const PeopleAlsoLike = (data) => {
   const [products, setProducts] = useState([]);
