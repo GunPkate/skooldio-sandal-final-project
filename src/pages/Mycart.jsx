@@ -102,15 +102,22 @@ export default function Mycart(){
         console.log("xxxx",selectedNewItem)
         selectedNewItem.forEach(x=>x.skuCode === item.skuCode ? count+=1 : count += 0) 
 
+
+        let selectTemp = selectedNewItem
+        console.log("1234",JSON.stringify(selectTemp))
+        selectTemp.forEach(x=>{ if(x.skuCode === item.skuCode){
+                if(name == 'color') x.color = value;
+                if(name == 'size') x.size = value;
+            }  
+            console.log("1234",JSON.stringify(selectTemp))
+        })
         if(count > 1){
-            // let tempDataBody = tempData.filter(x=>x.skuCode === item.skuCode)[0]
-            // SelectNewListBody.color = name === 'color'? value : tempDataBody.color
-            // SelectNewListBody.size = name === 'size'? value :tempDataBody.size
+
         }else if(count == 0){
-            // SelectNewList.push(SelectNewListBody)
+            SelectNewList.push(SelectNewListBody)
         }
-        SelectNewList.push(SelectNewListBody)
-        // }
+
+        
         console.log("check Select",JSON.stringify(SelectNewListBody))
 
         console.log("check count SelectNewListBody",count)
@@ -248,6 +255,7 @@ export default function Mycart(){
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart </h1>
                 {selectedNewItem.map(x=><>{x.size} {x.color}</>)}
+                <button onClick={()=>{console.log(selectedNewItem)}}>46879</button>
             </div>
             <div className="section section-mycart lg:flex md:flex:none md:block">
 
