@@ -30,7 +30,9 @@ export default function AccordianRoot(input) {
                       key={id + 1}
                       to={`/Products/${item.name}/${item.permalink}`}
                     >
-                      {item.name}
+                      {item.name === "Men" || item.name === "Ladies"
+                        ? "All Items"
+                        : item.name}
                     </Link>
                   </div>
                 );
