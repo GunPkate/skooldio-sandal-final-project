@@ -7,6 +7,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
+    const {myCart, setMyCart} = useContext(UserContext)
     const [displayMycart,setDisplayMycart] = useState([])
     const [loading, setLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
@@ -15,65 +16,9 @@ export default function Mycart(){
     const [selectedNewItem,setSelectedNewItem] = useState([])
 
 
-    // console.log("12345",userPurhcase)
+    console.log("myCart",userPurhcase)    
     
-    useEffect(()=>{
-        setLoading(true);
-        //? fix slow loading
-        if(userPurhcase?.length >0){
-            console.log("userPurhcase",userPurhcase)
-            let  itemListmapping = []
-            let  selectedListmapping = []
-            for(let i =0; i < userPurhcase?.length; i++){
-                fetchItemsDetails( userPurhcase[i], itemListmapping, selectedListmapping)
-            }
-        }
-        else if(userPurhcase.length === 0){
-            setLoading(false);
-        }
-    },[])
 
-    async function fetchItemsDetails( dataTemp, dataSet, selectedList){
-
-        try {
-            if(dataTemp !== null || dataTemp !== undefined){
-                
-            await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+dataTemp.productPermalink).then(res=>{
-                const data = res.data
-
-                let displayBody = {
-                    id: dataTemp.id,
-                    name: data.name,
-                    skuCode: dataTemp.skuCode,
-                    quantity: dataTemp.quantity,
-                    variants:  data.variants,
-                    price: data.price,
-                    image: data.imageUrls[0],
-                }
-
-                let selectedColorBody = {
-                    id: dataTemp.id,
-                    color: Array.from( new Set(data.variants.map(x=>x.color)) ).sort(),
-                    // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
-                    size: Array.from( new Set(data.variants.map(x=>x.size)) ).sort(),
-                }
-                
-                console.log("||| data",data)
-                dataSet.push(displayBody)
-                setDisplayMycart(dataSet)
-
-                selectedList.push(selectedColorBody)
-                setSelectedDefault(selectedList)
-                // console.log("|||",dataSet)
-                setLoading(false);
-            })
-
-            }
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
 
 
     const handleDelete = (e) => {
@@ -262,7 +207,7 @@ export default function Mycart(){
 
                 <CardTemplate title={"Items"} width={"min-w-[49.16%]"} height={"  "}  ml = {" mx-[max(16px,16px)] lg:ml-[max(8.34%,16px)] "} mr = {" mr-[20px] mb-[40px] "}>
 
-                    {displayMycart.length >0 ? displayMycart.map( (item,id) =>                
+                    {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
                         <div key={id} className="lg:flex lg:inline-block md:block">
                             <div className="flex justify-center">
                                 <img className={"lg:px-[24px] pb-[24px] " + "object-cover  h-[209px] w-[209px] "} src={item.image} alt=""/>

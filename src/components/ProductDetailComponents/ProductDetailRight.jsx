@@ -11,7 +11,8 @@ const ProductDetailRight = (data) => {
   const [readOnly, setReadOnly] = useState(false);
   const { permalink } = useParams();
   const { userPurhcase, setuserPurhcase} = useContext(UserContext);
-  
+  const { myCart, setMyCart} = useContext(UserContext);
+
   let description = [];
   if (data) {
     description = data;
@@ -116,18 +117,44 @@ const ProductDetailRight = (data) => {
 
   const fetchMycart = async (id) => {
     try {
-      if (id !== null || id !== undefined || id !== "") {
-        await axios
-          .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
-          .then((res) => {
-            console.log(res.data.items)
-            setuserPurhcase(res.data.items);
-          });
+  
+      if(id !== null || id !== undefined || id !== ""){
+        await axios.get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`).then( res => {
+        let itemCart =  res.data;
+        // console.log("Navbar get",itemCart)
+          let myCartTemp = myCart
+          res.data.items.forEach(async x=>{
+            await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+x.productPermalink).then(resDetail=>{
+              const dataDetail = resDetail.data
+            
+              let displayBody = {
+                  id: x.id,
+                  name: dataDetail.name,
+                  skuCode: x.skuCode,
+                  quantity: x.quantity,
+                  variants:  dataDetail.variants,
+                  price: dataDetail.price,
+                  image: dataDetail.imageUrls[0],
+                  color: Array.from( new Set(dataDetail.variants.map(x=>x.color)) ).sort(),
+                  // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
+                  size: Array.from( new Set(dataDetail.variants.map(x=>x.size)) ).sort(),
+              }
+              let b = Object.create(displayBody)
+              
+              // console.log(displayBody)
+              myCartTemp.push(displayBody)
+              
+              setMyCart(Array.from( new Set(myCartTemp.map(x=>x)) ))
+              setuserPurhcase(myCartTemp)
+            })
+          })
+
+        })
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   const handleAddItem = async () => {
     const id = localStorage.getItem("id");
