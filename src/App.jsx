@@ -54,12 +54,16 @@ function App() {
   }, []);
 
   const getCategories = async () => {
+    let categoriesGroup = [];
     try {
       await axios
         .get("https://api.storefront.wdb.skooldio.dev/categories")
         .then((res) => {
           let data = res.data;
-          setCategories(data);
+          categoriesGroup = data.sort((a, b) =>
+            a.permalink.localeCompare(b.name)
+          );
+          setCategories(categoriesGroup);
         });
     } catch (error) {
       console.log(error);
