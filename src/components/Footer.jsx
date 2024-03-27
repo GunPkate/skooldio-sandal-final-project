@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SkooldioLogo from "../assets/skooldiowdb.svg";
 
 function NavItem({ to, children }) {
     return (
@@ -55,7 +56,7 @@ function Footer() {
                 <Copyright />
                 <div className="flex items-center" style={{ maxWidth: "300px" }}>
                     <p className="text-gray-400 text-xs mr-2">Powered By</p>
-                    <img src="src/assets/skooldiowdb.svg" alt="Skooldio" className="w-32" />
+                    <img src={SkooldioLogo} alt="Skooldio" className="w-32" />
                 </div>
             </div>
         </footer>
