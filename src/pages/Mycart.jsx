@@ -67,15 +67,15 @@ export default function Mycart(){
     }
 
     // localStorage.setItem('id',1234)
-    const handleUpdateCart = (item, name,value) => {
+    const handleUpdateCart = (item, name,value, itemNo) => {
         let tempData = userPurhcase
-        
+        console.log("sss",itemNo)
         if(name == 'color') setColor(value);
         if(name == 'size') setSize(value);
 
         //Get default colors and size
-        let defaultCode = tempData[0].skuCode;
-        let defaultVariant = tempData[0].variants.filter(x=>x.skuCode===defaultCode)
+        let defaultCode = tempData[itemNo].skuCode;
+        let defaultVariant = tempData[itemNo].variants.filter(x=>x.skuCode===defaultCode)
         let defaultColor = defaultVariant[0].color
         let defaultSize = defaultVariant[0].size
 
@@ -94,9 +94,10 @@ export default function Mycart(){
         //add new data when no previous data || replace new data
         // if(SelectNewList){
          let   SelectNewListBody = {
-                skuCode: item.skuCode,
-                color:  name === 'color'? value : '',
-                size:  name === 'size'? value : '',
+                id: item.id,
+                skuCode: item.skuCode, //???? here change color and filter 
+                color:  name === 'color'? value : null,
+                size:  name === 'size'? value : null,
             }
         let count = 0;
         console.log("xxxx",selectedNewItem)
@@ -123,7 +124,7 @@ export default function Mycart(){
         console.log("check count SelectNewListBody",count)
 
         setSelectedNewItem(SelectNewList)
-        
+        let newItem = []
         switch (name){
             case 'quantity': 
 
@@ -139,37 +140,68 @@ export default function Mycart(){
                 console.log(tempData)
 
                 // console.log(item.price * item.quantity)
-                axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
-                    console.log(resUpdate)
-                    await fetchMycart(localStorage.getItem('id'))
-                });
                 break;
             case 'color': 
-                // console.log('colors here',JSON.stringify(tempData[0].variants))
-                firstFilter = tempData[0].variants.filter(x=> x.color ===value )
+                console.log('item here',(item))
+                console.log('colors here',(tempData[itemNo].variants))
+                //GEt new Variant 
+                newItem = selectedNewItem.filter(x=>x.skuCode === item.skuCode && x.id === item.id)
+                console.log(12345,newItem)
+                if(newItem.length > 0 && ( newItem[0].size !== null &&  newItem[0].size !== undefined ) ){
+                    let result = tempData[itemNo].variants.filter(x=>x.color === newItem.color && x.size === newItem.size)
+                    console.log("color 2 select",firstFilter)
+                    if(result.length == 1){
+                        SecondFilter = result
+                        console.log("SecondFilter.skuCode",SecondFilter.skuCode)
+                        console.log("D .skuCode",defaultCode)
+                    }
+                }else{
+
+                
+                firstFilter = tempData[itemNo].variants.filter(x=> x.color ===value )
                 console.log("firstFilter",firstFilter)
 
+                }
                 SecondFilter = firstFilter;
                 if(firstFilter.length !== 1){
                     SecondFilter = firstFilter.filter(x=>x.size==defaultSize)
+                    validateMessage = "Please Select Size";               
+                    alert(validateMessage)
                 }
 
 
-                validateMessage = "Please Select Size";
+
                 break;
             case 'size': 
-                // console.log('size here',JSON.stringify(tempData[0].variants))
-                // console.log('size here',value)
-                firstFilter = tempData[0].variants.filter(x=> x.size===value )
+
+            console.log('size here',(tempData[itemNo].variants))
+            //GEt new Variant 
+            newItem = selectedNewItem.filter(x=>x.size === item.size && x.id === item.id)
+            console.log(12345,"size",newItem)
+            if(newItem.length > 0 && ( newItem[0].color !== null &&  newItem[0].color !== undefined ) ){
+                let result = tempData[itemNo].variants.filter(x=>x.color === newItem.color && x.size === newItem.size)
+                console.log("size 2 select",result)
+                if(result.length == 1){
+                    SecondFilter = result
+                    console.log("SecondFilter.skuCode",SecondFilter.skuCode)
+                    console.log("D .skuCode",defaultCode)
+                }
+            }else{
+
+                firstFilter = tempData[itemNo].variants.filter(x=> x.size===value )
 
                 console.log("firstFilter",firstFilter)
 
                 SecondFilter = firstFilter;
                 if(firstFilter.length !== 1){
                     SecondFilter = firstFilter.filter(x=>x.size==defaultCode)
+                    validateMessage = "Please Select Color";
+                    alert(validateMessage)
                 }
 
-                validateMessage = "Please Select Color";
+            }
+
+
                 break;
         }
 
@@ -188,7 +220,6 @@ export default function Mycart(){
         }
 
         console.log("SecondFilter xxx",SecondFilter)
-        alert(1234,`${validateMessage}`)
         // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData)
 
         // update UI SetDisplay with SecondFilter
@@ -279,7 +310,7 @@ export default function Mycart(){
                                         <div className="lg:mr-[16px]">
                                             <h1>Colors</h1>
 
-                                            <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value)}}>
+                                            <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value, id)}}>
                                                 
                                                 <option disabled>Colors</option>
                                                 {/* {Array.from(
@@ -294,7 +325,7 @@ export default function Mycart(){
                                         <div className="flex justify-between w-full">
                                             <div className="mr-[16px]">
                                                 <h1>Size</h1>
-                                                <select name="size" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'size', e.target.value)}}>
+                                                <select name="size" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'size', e.target.value, id)}}>
                                                     <option disabled>Size</option>
                                                     {/* {Array.from(
                                                         new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
@@ -309,7 +340,7 @@ export default function Mycart(){
                                                 <h1>Qty</h1>
                                                 <select name="quantity" 
                                                 className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" 
-                                                onChange={(e)=>{handleUpdateCart(item, 'quantity', e.target.value)}}>
+                                                onChange={(e)=>{handleUpdateCart(item, 'quantity', e.target.value, id)}}>
                                                     <option>{item.quantity}</option>
                                                     <option>1</option>
                                                     <option>2</option>
