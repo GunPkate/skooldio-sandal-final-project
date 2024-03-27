@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 function numberWithCommas(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -31,7 +31,7 @@ function ProductCard({
 }) {
   const discount = promotionalPrice < price ? true : false;
   return (
-    <Link 
+    <Link
       to={`/ProductDetail/${permalink}`}
       className="mb-10 transition-all 2xl:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg min-w-[370px] lg:min-w-[300px]"
       key={id}
@@ -48,11 +48,11 @@ function ProductCard({
           alt={`${name}`}
         />
       </div>
-      <div className="grid grid-cols-1 gap-2 w-[340px] lg:w-[300px] p-2">
+      <div className="grid grid-cols-1 gap-2 w-[340px] lg:w-full p-2">
         <h2 className="font-bold text-2xl text-secondary whitespace-nowrap text-ellipsis overflow-hidden">
           {name}
         </h2>
-        <p className="font-light text-secondary-700 text-base h-24 line-clamp-3">
+        <p className="font-light text-secondary-700 text-base truncate">
           {description}
         </p>
         <div className="flex gap-[10px]">{createStars(ratings)}</div>
