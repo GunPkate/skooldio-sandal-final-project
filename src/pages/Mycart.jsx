@@ -7,7 +7,8 @@ import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
-    const [displayMycart,setDisplayMycart] = useState([])
+    const {myCart, setMyCart} = useContext(UserContext)
+
     const [loading, setLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
@@ -15,65 +16,9 @@ export default function Mycart(){
     const [selectedNewItem,setSelectedNewItem] = useState([])
 
 
-    // console.log("12345",userPurhcase)
+    console.log("myCart",userPurhcase)    
     
-    useEffect(()=>{
-        setLoading(true);
-        //? fix slow loading
-        if(userPurhcase?.length >0){
-            console.log("userPurhcase",userPurhcase)
-            let  itemListmapping = []
-            let  selectedListmapping = []
-            for(let i =0; i < userPurhcase?.length; i++){
-                fetchItemsDetails( userPurhcase[i], itemListmapping, selectedListmapping)
-            }
-        }
-        else if(userPurhcase.length === 0){
-            setLoading(false);
-        }
-    },[])
 
-    async function fetchItemsDetails( dataTemp, dataSet, selectedList){
-
-        try {
-            if(dataTemp !== null || dataTemp !== undefined){
-                
-            await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+dataTemp.productPermalink).then(res=>{
-                const data = res.data
-
-                let displayBody = {
-                    id: dataTemp.id,
-                    name: data.name,
-                    skuCode: dataTemp.skuCode,
-                    quantity: dataTemp.quantity,
-                    variants:  data.variants,
-                    price: data.price,
-                    image: data.imageUrls[0],
-                }
-
-                let selectedColorBody = {
-                    id: dataTemp.id,
-                    color: Array.from( new Set(data.variants.map(x=>x.color)) ).sort(),
-                    // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
-                    size: Array.from( new Set(data.variants.map(x=>x.size)) ).sort(),
-                }
-                
-                console.log("||| data",data)
-                dataSet.push(displayBody)
-                setDisplayMycart(dataSet)
-
-                selectedList.push(selectedColorBody)
-                setSelectedDefault(selectedList)
-                // console.log("|||",dataSet)
-                setLoading(false);
-            })
-
-            }
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
 
 
     const handleDelete = (e) => {
@@ -81,16 +26,13 @@ export default function Mycart(){
         let contextResult = userPurhcase.filter(x=>x.id!==e.id)
         setuserPurhcase(contextResult);
         
-        //Delete from UI
-        let displayResult = displayMycart.filter(x=>x.id!==e.id)
-        setDisplayMycart(displayResult);
-        console.log("display",displayMycart)
+
         axios.delete(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${e.id}`)
     }
 
     // localStorage.setItem('id',1234)
     const handleUpdateCart = (item, name,value) => {
-        let tempData = displayMycart
+        let tempData = userPurhcase
         
         //Get default colors and size
         let defaultCode = tempData[0].skuCode;
@@ -141,7 +83,6 @@ export default function Mycart(){
                 tempData.forEach(x=>
                      { if(x.id === item.id) x.quantity = value}
                 )
-                setDisplayMycart(tempData)
 
                 let contextresult = userPurhcase
                 contextresult.forEach(x=>
@@ -262,7 +203,7 @@ export default function Mycart(){
 
                 <CardTemplate title={"Items"} width={"min-w-[49.16%]"} height={"  "}  ml = {" mx-[max(16px,16px)] lg:ml-[max(8.34%,16px)] "} mr = {" mr-[20px] mb-[40px] "}>
 
-                    {displayMycart.length >0 ? displayMycart.map( (item,id) =>                
+                    {userPurhcase.length >0 ? userPurhcase.map( (item,id) =>                
                         <div key={id} className="lg:flex lg:inline-block md:block">
                             <div className="flex justify-center">
                                 <img className={"lg:px-[24px] pb-[24px] " + "object-cover  h-[209px] w-[209px] "} src={item.image} alt=""/>
@@ -355,8 +296,8 @@ export default function Mycart(){
                                 // style={{width:"100%",borderCollapse:"separate" ,borderSpacing: "0 1em" }} 
                             className="font-normal text-gray-700 dark:text-gray-400 block">
                                 <tbody>
-                                    {displayMycart.length >0 ? 
-                                        displayMycart.map(  item => 
+                                    {userPurhcase.length >0 ? 
+                                        userPurhcase.map(  item => 
 
                                             <tr height="36px" key={item.id} >
                                                 <td style={{width:"100%" }}>    
@@ -384,11 +325,11 @@ export default function Mycart(){
                                         </td>
                                         <td>
                                             <h1>
-                                            {displayMycart.length > 1 ? 
-                                                displayMycart.reduce((accumulator, currentValue) => 
+                                            {userPurhcase.length > 1 ? 
+                                                userPurhcase.reduce((accumulator, currentValue) => 
                                                     accumulator + ( currentValue.price * currentValue.quantity ), 0, 
                                                 )
-                                                : displayMycart.length === 1 ? displayMycart[0].price * displayMycart[0].quantity :0 
+                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].quantity :0 
                                             }
                                             </h1>
                                         </td>
@@ -408,21 +349,21 @@ export default function Mycart(){
                                         </td>
                                         <td>
                                             <h1>
-                                            {displayMycart.length > 1 ? 
-                                                displayMycart.reduce((accumulator, currentValue) => 
+                                            {userPurhcase.length > 1 ? 
+                                                userPurhcase.reduce((accumulator, currentValue) => 
                                                 accumulator + ( currentValue.price * currentValue.quantity ), 0, 
                                                 )
-                                                : displayMycart.length === 1 ? displayMycart[0].price * displayMycart[0].quantity :0 
+                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].quantity :0 
                                             }
                                             </h1>
                                             </td>
                                         </tr>         
                                     </tbody>
                                 </table>
-                                {displayMycart.length ==0 ?
+                                {userPurhcase.length ==0 ?
                                 <>
-                                    <button disabled={displayMycart.length ==0} style={{width:"100%"}} className="button h-[54px] bg-[#E1E1E1] text-[#9F9F9F] mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
-                                    <button disabled={displayMycart.length ==0} style={{width:"100%", border: "1pt solid #9F9F9F"}}  className="button h-[54px] text-[#9F9F9F]">Continue Shoping</button>
+                                    <button disabled={userPurhcase.length ==0} style={{width:"100%"}} className="button h-[54px] bg-[#E1E1E1] text-[#9F9F9F] mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
+                                    <button disabled={userPurhcase.length ==0} style={{width:"100%", border: "1pt solid #9F9F9F"}}  className="button h-[54px] text-[#9F9F9F]">Continue Shoping</button>
                                 </>
                                 :<>
                                     <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>

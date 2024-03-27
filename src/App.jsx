@@ -42,6 +42,7 @@ function App() {
   // const [userInfo,setUserInfo] = useState({user:""});
 
   const [userPurhcase, setuserPurhcase] = useState(items);
+  const [myCart, setMyCart] = useState([]);
   const [categories, setCategories] = useState([]);
   const [collections, setCollections] = useState([]);
 
@@ -53,12 +54,16 @@ function App() {
   }, []);
 
   const getCategories = async () => {
+    let categoriesGroup = [];
     try {
       await axios
         .get("https://api.storefront.wdb.skooldio.dev/categories")
         .then((res) => {
           let data = res.data;
-          setCategories(data);
+          categoriesGroup = data.sort((a, b) =>
+            a.permalink.localeCompare(b.name)
+          );
+          setCategories(categoriesGroup);
         });
     } catch (error) {
       console.log(error);
@@ -83,8 +88,36 @@ function App() {
   
       if(id !== null || id !== undefined || id !== ""){
         await axios.get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`).then( res => {
-          console.log(res.data)
-           setuserPurhcase(res.data.items)
+        let itemCart =  res.data;
+        // console.log("Navbar get",itemCart)
+          let myCartTemp = myCart
+          res.data.items.forEach(async x=>{
+            await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+x.productPermalink).then(resDetail=>{
+              const dataDetail = resDetail.data
+            
+              let displayBody = {
+                  id: x.id,
+                  name: dataDetail.name,
+                  skuCode: x.skuCode,
+                  quantity: x.quantity,
+                  variants:  dataDetail.variants,
+                  price: dataDetail.price,
+                  image: dataDetail.imageUrls[0],
+                  color: Array.from( new Set(dataDetail.variants.map(x=>x.color)) ).sort(),
+                  // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
+                  size: Array.from( new Set(dataDetail.variants.map(x=>x.size)) ).sort(),
+              }
+              let b = Object.create(displayBody)
+              
+              // console.log(displayBody)
+              myCartTemp.push(displayBody)
+              
+              setMyCart(Array.from( new Set(myCartTemp.map(x=>x)) ))
+              setuserPurhcase(myCartTemp)
+            })
+          })
+
+          console.log("Navbar myCartTemp",myCartTemp)
         })
       }
     } catch (error) {
