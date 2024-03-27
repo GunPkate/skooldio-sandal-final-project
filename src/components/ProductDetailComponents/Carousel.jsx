@@ -68,9 +68,9 @@ const Carousel = (data) => {
         />
         {data.promotionalPrice < data.price ? (
           <div
-            className={`absolute -right-1 top-8 w-24 h-14 ${
+            className={`absolute right-0 top-8 px-2 py-1 ${
               readOnly ? "bg-black w-48 h-14" : "bg-[#FF000D]"
-            } text-center text-2xl text-white flex justify-center items-center `}
+            } text-center text-sm lg:text-2xl text-white flex justify-center items-center `}
           >
             {readOnly ? "Out Of Stock" : "Sale"}
           </div>
