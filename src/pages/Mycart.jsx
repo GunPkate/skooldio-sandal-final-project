@@ -11,14 +11,11 @@ export default function Mycart(){
 
     const [loading, setLoading] = useState(false);
 
-    const [selectedDefault,setSelectedDefault] = useState([])
     const [selectedNewItem,setSelectedNewItem] = useState([])
 
     const [color,setColor] = useState('')
     const [size,setSize] = useState('')
 
-
-    console.log("myCart",userPurhcase) 
     
     const fetchMycart = async (id) => {
         try {
@@ -82,10 +79,10 @@ export default function Mycart(){
         let defaultColor = defaultVariant[0].color
         let defaultSize = defaultVariant[0].size
 
-        console.log("item",item)
-        console.log("in cart Variant",defaultVariant)
-        console.log("in cart color",defaultColor)
-        console.log("in cart size",defaultSize)
+        // console.log("item",item)
+        // console.log("in cart Variant",defaultVariant)
+        // console.log("in cart color",defaultColor)
+        // console.log("in cart size",defaultSize)
 
         let firstFilter = [];
         let SecondFilter = [];
@@ -97,25 +94,26 @@ export default function Mycart(){
         //add new data when no previous data || replace new data
         // if(SelectNewList){
          let   SelectNewListBody = {
-                id: item.id,
+                skuCode: item.skuCode,
                 color:  name === 'color'? value : '',
                 size:  name === 'size'? value : '',
             }
         let count = 0;
-
-            tempData.forEach(x=>x.skuCode === item.skuCode ? count+=1 : count += 0) 
+        console.log("xxxx",selectedNewItem)
+        selectedNewItem.forEach(x=>x.skuCode === item.skuCode ? count+=1 : count += 0) 
 
         if(count > 1){
-            let tempDataBody = tempData.filter(x=>x.skuCode === item.skuCode)[0]
-            SelectNewListBody.color = name === 'color'? value : tempDataBody.color
-            SelectNewListBody.size = name === 'size'? value :tempDataBody.size
+            // let tempDataBody = tempData.filter(x=>x.skuCode === item.skuCode)[0]
+            // SelectNewListBody.color = name === 'color'? value : tempDataBody.color
+            // SelectNewListBody.size = name === 'size'? value :tempDataBody.size
         }else if(count == 0){
-            SelectNewList.push(SelectNewListBody)
+            // SelectNewList.push(SelectNewListBody)
         }
+        SelectNewList.push(SelectNewListBody)
         // }
-        console.log("check Select",JSON.stringify(SelectNewList))
-        console.log("check Select",selectedNewItem)
-        console.log("check count",count)
+        console.log("check Select",JSON.stringify(SelectNewListBody))
+
+        console.log("check count SelectNewListBody",count)
 
         setSelectedNewItem(SelectNewList)
         
@@ -170,13 +168,20 @@ export default function Mycart(){
 
         if(SecondFilter.length == 1){
             validateMessage = ""
+            let qtyData = {
+                skuCode: SecondFilter[0].skuCode,
+                quantity: SecondFilter[0].quantity,
+            }
             //Update Data
-            console.log("only 1")
-            axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
+            console.log("only 1",SecondFilter)
+            axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
+                console.log(resUpdate)
+                await fetchMycart(localStorage.getItem('id'))
+            });
         }
 
         console.log("SecondFilter xxx",SecondFilter)
-        console.log("SecondFilter xxx",validateMessage)
+        alert(1234,`${validateMessage}`)
         // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData)
 
         // update UI SetDisplay with SecondFilter
@@ -241,7 +246,8 @@ export default function Mycart(){
                 {/* <button onClick={()=>{console.log(JSON.stringify(selectedDefault))}}>1234</button> */}
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
-                <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart</h1>
+                <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart </h1>
+                {selectedNewItem.map(x=><>{x.size} {x.color}</>)}
             </div>
             <div className="section section-mycart lg:flex md:flex:none md:block">
 
