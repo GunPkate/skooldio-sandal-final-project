@@ -95,7 +95,9 @@ export default function Mycart(){
             }
         let count = 0;
         console.log("xxxx",selectedNewItem)
-        selectedNewItem.forEach(x=>x.skuCode === item.skuCode ? count+=1 : count += 0) 
+        if(selectedNewItem.length > 0){
+            selectedNewItem.forEach(x=>x.skuCode === item.skuCode ? count+=1 : count += 0) 
+       
 
 
         let selectTemp = selectedNewItem
@@ -106,6 +108,7 @@ export default function Mycart(){
             }  
             console.log("1234",JSON.stringify(selectTemp))
         })
+        }
         if(count > 1){
 
         }else if(count == 0){
@@ -284,8 +287,6 @@ export default function Mycart(){
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart </h1>
-                {selectedNewItem.map(x=><>{x.size} {x.color}</>)}
-
             </div>
             <div className="section section-mycart lg:flex md:flex:none md:block">
 
@@ -311,7 +312,7 @@ export default function Mycart(){
 
                                             <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value, id)}}>
                                                 
-                                                <option disabled>{userPurhcase[id].variants.filter(x=>x.skuCode == userPurhcase[id].skuCode)[0].color }</option>
+                                                <option >{userPurhcase[id].variants.filter(x=>x.skuCode == userPurhcase[id].skuCode)[0].color }</option>
                                                 {/* {Array.from(
                                                     new Set( item.variants.map(x => <option>{x.color}</option>) )
                                                     )
