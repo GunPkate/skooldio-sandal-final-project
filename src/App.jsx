@@ -90,7 +90,7 @@ function App() {
         await axios.get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`).then( res => {
         let itemCart =  res.data;
         // console.log("Navbar get",itemCart)
-          let myCartTemp = myCart
+        let myCartTemp = []
           res.data.items.forEach(async x=>{
             await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+x.productPermalink).then(resDetail=>{
               const dataDetail = resDetail.data

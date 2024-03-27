@@ -126,7 +126,7 @@ const ProductDetailRight = (data) => {
           .then((res) => {
             let itemCart = res.data;
             // console.log("Navbar get",itemCart)
-            let myCartTemp = myCart;
+            let myCartTemp = []
             res.data.items.forEach(async (x) => {
               await axios
                 .get(
