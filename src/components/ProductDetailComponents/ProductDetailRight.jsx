@@ -469,7 +469,7 @@ const ProductDetailRight = (data) => {
           handleAddItem();
         }}
       >
-        <button className="w-full h-[54px] bg-black ">Add to cart</button>
+        <button className="w-full h-[54px] bg-black text-white">Add to cart</button>
       </Link>
     </div>
   );
