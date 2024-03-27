@@ -24,7 +24,7 @@ export default function ProductDetail() {
         setLoading(false);
       })
       .catch((err) => console.log("error ", err));
-  }, []);
+  }, [`${BASE_URL}products/${permalink}`]);
 
   if (loading && products.length === 0) {
     return <LoadingSpinner />;
@@ -37,16 +37,20 @@ export default function ProductDetail() {
   return (
     <div className="section ">
       <Navbar />
-      <div className="flex flex-col min-w-[343px] mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-col desktop:mx-40  desktop:justify-around ">
-        <div className="flex flex-col lg:flex-row">
-          <Carousel {...products} readOnly={receiveData} />
-          <ProductDetailRight
-            {...products}
-            sendDataToParent={handleDataFromChild}
-          />
+      {!loading ? (
+        <div className="flex flex-col min-w-[343px] mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-col desktop:mx-40  desktop:justify-around ">
+          <div className="flex flex-col lg:flex-row">
+            <Carousel {...products} readOnly={receiveData} />
+            <ProductDetailRight
+              {...products}
+              sendDataToParent={handleDataFromChild}
+            />
+          </div>
+          <PeopleAlsoLike {...products} />
         </div>
-        <PeopleAlsoLike {...products} />
-      </div>
+      ) : (
+        <LoadingSpinner />
+      )}
       <Footer />
     </div>
   );
