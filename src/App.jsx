@@ -48,6 +48,8 @@ function App() {
   useEffect(() => {
     getCategories();
     getCollection();
+    let id = localStorage.getItem('id')
+    fetchMycart(id);
   }, []);
 
   const getCategories = async () => {
@@ -75,6 +77,20 @@ function App() {
       console.log(error);
     }
   };
+
+  const fetchMycart = async (id) => {
+    try {
+  
+      if(id !== null || id !== undefined || id !== ""){
+        await axios.get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`).then( res => {
+          console.log(res.data)
+           setuserPurhcase(res.data.items)
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <UserContext.Provider
