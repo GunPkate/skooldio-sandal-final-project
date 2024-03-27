@@ -10,7 +10,7 @@ const ProductDetailRight = (data) => {
   const [remains, setRemains] = useState(0);
   const [readOnly, setReadOnly] = useState(false);
   const { permalink } = useParams();
-  const { userPurhcase, setuserPurhcase} = useContext(UserContext);
+  const { userPurhcase, setuserPurhcase } = useContext(UserContext);
   const [myCart, setMyCart] = useState([]);
 
   let description = [];
@@ -60,9 +60,7 @@ const ProductDetailRight = (data) => {
     }
     setRemains(remains);
 
-    console.log(
-      `1)Remains for size ${size} and color ${selectColor}: ${remains}`
-    );
+   
   };
 
   const handleColorSelection = (color) => {
@@ -85,9 +83,7 @@ const ProductDetailRight = (data) => {
     }
 
     setRemains(remains);
-    console.log(
-      `2)Remains for size ${selectedSize} and color ${color}: ${remains}`
-    );
+    
   };
 
   // price with commas from k'Ter (product cart)
@@ -325,7 +321,7 @@ const ProductDetailRight = (data) => {
                 ))}
               </>
             ) : (
-              <div className="flex justify-evenly gap-6 mb-6">
+              <div className="flex justify-evenly gap-6 mb-6"  >
                 {" "}
                 {uniqueDataColor.map((value, index) => (
                   <div key={index}>
@@ -335,7 +331,7 @@ const ProductDetailRight = (data) => {
                         background: value.colorCode,
                         border:
                           selectColor === value.color
-                            ? "5px solid black"
+                            ? "4px solid lightgrey"
                             : null,
                       }}
                       onClick={() => {
@@ -384,7 +380,7 @@ const ProductDetailRight = (data) => {
         )}
         <div className="font-normal text-base mb-4">
           Qty.{" "}
-          <h1 className="text-red-500 font-semibold text-xl">{`In stock : ${remains}`}</h1>
+          <span className="text-red-500 font-semibold text-xl">{`(In stock : ${remains})`}</span>
         </div>
 
         <form className=" max-w-xs flex justify-start">
@@ -396,7 +392,7 @@ const ProductDetailRight = (data) => {
                 remains === 0 ? true : false || quantity === 1 ? true : false
               }
               data-input-counter-decrement="quantity-input"
-              className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+              className="bg-gray-100  hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
               onClick={() => {
                 if (quantity > 1) {
                   setQuantity(quantity - 1);
@@ -424,7 +420,7 @@ const ProductDetailRight = (data) => {
               id="quantity-input"
               data-input-counter
               aria-describedby="helper-text-explanation"
-              className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 "
               placeholder={quantity}
               disabled
               required
@@ -448,7 +444,7 @@ const ProductDetailRight = (data) => {
               }}
             >
               <svg
-                className="w-3 h-3 text-gray-900 dark:text-white"
+                className="w-3 h-3 text-gray-900 "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -474,9 +470,7 @@ const ProductDetailRight = (data) => {
           handleAddItem();
         }}
       >
-        <button className="w-full h-[54px] bg-black text-white py-2 ">
-          Add to cart
-        </button>
+        <button className="w-full h-[54px] bg-black ">Add to cart</button>
       </Link>
     </div>
   );
