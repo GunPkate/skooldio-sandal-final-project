@@ -33,7 +33,7 @@ function ProductCard({
   return (
     <Link
       to={`/ProductDetail/${permalink}`}
-      className="mb-10 transition-all 2xl:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg min-w-[370px] lg:min-w-[300px]"
+      className="transition-all 2xl:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg min-w-[370px] lg:min-w-[300px]"
       key={id}
     >
       <div className="relative">

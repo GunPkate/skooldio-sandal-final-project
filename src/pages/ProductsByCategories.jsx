@@ -62,7 +62,7 @@ export default function Products() {
         <div className="flex flex-1 justify-center lg:max-w-[1238px] mx-auto">
           <div className="lg:flex lg:h-fit lg:w-full lg:justify-center 2xl:justify-between px-auto pt-24">
             <div className="flex flex-col items-center w-fit xl:w-full lg:max-w-[1238px]">
-              <header className="lg:w-full">
+              <header className="lg:w-full px-2">
                 <div className="my-6 mb-[22px] w-[370px] lg:flex lg:items-center lg:justify-between lg:mb-16 lg:w-full ">
                   <h1 className="text-[32px] font-bold w-full text-center mb-10 lg:my-0 lg:text-4xl lg:mr-auto lg:w-fit">
                     {Name}
@@ -210,7 +210,7 @@ export default function Products() {
                 </div>
               </header>
               {products.length > 0 ? (
-                <section className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 md:gap-x-10 md:gap-y-[60px] mb-40">
+                <section className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 md:gap-x-10 lg:gap-y-[60px] mb-40 px-2">
                   {products.map((items, index) => {
                     return <ProductCard key={index} {...items} />;
                   })}
