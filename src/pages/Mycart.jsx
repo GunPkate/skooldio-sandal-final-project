@@ -94,7 +94,6 @@ export default function Mycart(){
         //add new data when no previous data || replace new data
         // if(SelectNewList){
          let   SelectNewListBody = {
-                id: item.id,
                 skuCode: item.skuCode, //???? here change color and filter 
                 color:  name === 'color'? value : null,
                 size:  name === 'size'? value : null,
@@ -212,7 +211,7 @@ export default function Mycart(){
             validateMessage = ""
             let qtyData = {
                 skuCode: SecondFilter[0].skuCode,
-                quantity: SecondFilter[0].quantity,
+                quantity: item.quantity,
             }
             //Update Data
             console.log("only 1",SecondFilter)
