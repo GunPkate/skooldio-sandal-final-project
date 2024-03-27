@@ -233,7 +233,7 @@ export default function Mycart(){
     const marginStyle = " p-[16px] "
     const CardTemplate = ({ title, width, height, children, ml, mr}) => (<>
         <div id={title} className={"itemList bg-white min-h-[80vh] "+ width + height + ml + mr}>
-            <h5 className={marginLgStyle+ " text-2xl font-bold tracking-tight text-gray-900 dark:text-white"}> {title} </h5>
+            <h5 className={marginLgStyle+ " text-2xl font-bold tracking-tight text-gray-900"}> {title} </h5>
                 {children}
         </div>
     </>)
@@ -300,7 +300,7 @@ export default function Mycart(){
                             <div style={{width: "100%"}} className={"pb-[24px] pl-[16px] pr-[24px] " + "flex flex-col justify-between leading-normal mx-auto"}>
 
                                 <div className="flex justify-between">
-                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.name}</h5>
+                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{item.name}</h5>
                                 <button onClick={(e)=>{handleDelete(item)}}>
                                 <img src="src/assets/delete.svg"></img>
                                 </button>
@@ -310,7 +310,7 @@ export default function Mycart(){
                                    
                                     <div className="lg:flex sm:block w-ful">
                                         <div className="lg:mr-[16px]">
-                                            <h1>Colors</h1>
+                                            <h1 className="text-gray-700 font-normal">Colors</h1>
 
                                             <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value, id)}}>
                                                 
@@ -326,7 +326,7 @@ export default function Mycart(){
                                         </div>
                                         <div className="flex justify-between w-full">
                                             <div className="mr-[16px]">
-                                                <h1>Size</h1>
+                                                <h1 className="text-gray-700 font-normal">Size</h1>
                                                 <select name="size" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'size', e.target.value, id)}}>
                                                     <option >{userPurhcase[id].variants.filter(x=>x.skuCode == userPurhcase[id].skuCode)[0].size }</option>
                                                     {/* {Array.from(
@@ -339,7 +339,7 @@ export default function Mycart(){
                                             </div>
 
                                             <div >
-                                                <h1>Qty</h1>
+                                                <h1 className="text-gray-700 font-normal">Qty</h1>
                                                 <select name="quantity" 
                                                 className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" 
                                                 onChange={(e)=>{handleUpdateCart(item, 'quantity', e.target.value, id)}}>
