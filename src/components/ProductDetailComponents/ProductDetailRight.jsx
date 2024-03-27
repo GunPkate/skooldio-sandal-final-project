@@ -10,8 +10,8 @@ const ProductDetailRight = (data) => {
   const [remains, setRemains] = useState(0);
   const [readOnly, setReadOnly] = useState(false);
   const { permalink } = useParams();
-  const { userPurhcase, setuserPurhcase } = useContext(UserContext);
-  const { myCart, setMyCart } = useContext(UserContext);
+  const { userPurhcase, setuserPurhcase} = useContext(UserContext);
+  const [myCart, setMyCart] = useState([]);
 
   let description = [];
   if (data) {
