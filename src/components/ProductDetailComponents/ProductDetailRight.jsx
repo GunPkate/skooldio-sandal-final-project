@@ -156,7 +156,6 @@ const ProductDetailRight = (data) => {
                       new Set(dataDetail.variants.map((x) => x.size))
                     ).sort(),
                   };
-                  let b = Object.create(displayBody);
 
                   // console.log(displayBody)
                   myCartTemp.push(displayBody);

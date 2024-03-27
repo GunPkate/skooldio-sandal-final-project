@@ -41,7 +41,6 @@ export default function Mycart(){
                       // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
                       size: Array.from( new Set(dataDetail.variants.map(x=>x.size)) ).sort(),
                   }
-                  let b = Object.create(displayBody)
                   
                   // console.log(displayBody)
                   myCartTemp.push(displayBody)
