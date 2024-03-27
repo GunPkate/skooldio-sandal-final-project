@@ -31,24 +31,24 @@ function ProductCard({
 }) {
   const discount = promotionalPrice < price ? true : false;
   return (
-    <Link
+    <Link 
       to={`/ProductDetail/${permalink}`}
-      className="mb-10 p-2 transition-all 2xl:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg"
+      className="mb-10 transition-all 2xl:mb-0 hover:scale-105 hover:rounded-xl hover:bg-white hover:z-10 hover:shadow-lg min-w-[370px] lg:min-w-[300px]"
       key={id}
     >
       <div className="relative">
         {discount && (
-          <p className="font-light text-white py-1 px-[10px] bg-danger w-fit absolute top-6 right-[-8px]">
+          <p className="font-light text-white py-1 px-[10px] bg-danger w-fit absolute top-6 right-0">
             -{Math.round(((price - promotionalPrice) / price) * 100)}%
           </p>
         )}
         <img
           src={imageUrls[0]}
-          className="h-[370px] mx-[-8px] min-w-[370px] lg:min-w-[386px] object-cover mb-6 hover:rounded-t-xl"
+          className="h-[370px] w-full object-cover mb-6 hover:rounded-t-xl"
           alt={`${name}`}
         />
       </div>
-      <div className="grid grid-cols-1 gap-2 w-[340px] lg:w-[370px]">
+      <div className="grid grid-cols-1 gap-2 w-[340px] lg:w-[300px] p-2">
         <h2 className="font-bold text-2xl text-secondary whitespace-nowrap text-ellipsis overflow-hidden">
           {name}
         </h2>
