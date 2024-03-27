@@ -26,7 +26,7 @@ export default function ProductDetail() {
   }, []);
 
   if (loading && products.length === 0) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   const handleDataFromChild = (data) => {

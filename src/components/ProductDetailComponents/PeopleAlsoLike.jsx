@@ -26,7 +26,7 @@ const PeopleAlsoLike = (data) => {
     <div className="mt-20 flex flex-col gap-8">
       <h1 className="text-4xl font-bold">People Also Like</h1>
       {loading ? (
-        <p>Loading...</p>
+        <LoadingSpinner />
       ) : (
         <div className="flex flex-col items-center gap-8 justify-around desktop:flex-row">
           {" "}
