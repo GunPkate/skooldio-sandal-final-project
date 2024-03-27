@@ -139,7 +139,7 @@ export default function Mycart(){
                 axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
                     console.log(resUpdate)
                     await fetchMycart(localStorage.getItem('id'))
-                    setSelectedNewItem('')
+                    setSelectedNewItem([])
                 });
                 // console.log(item.price * item.quantity)
                 break;
@@ -218,7 +218,7 @@ export default function Mycart(){
             axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
                 console.log(resUpdate)
                 await fetchMycart(localStorage.getItem('id'))
-                setSelectedNewItem('')
+                setSelectedNewItem([])
             });
         }
 
