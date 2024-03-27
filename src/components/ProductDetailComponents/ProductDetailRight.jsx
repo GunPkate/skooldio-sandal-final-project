@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { UserContext } from "../../App";
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState("");
@@ -7,7 +8,9 @@ const ProductDetailRight = (data) => {
   const [quantity, setQuantity] = useState(1);
   const [remains, setRemains] = useState(0);
   const [readOnly, setReadOnly] = useState(false);
-
+  const { permalink } = useParams();
+  const { userPurhcase, setuserPurhcase} = useContext(UserContext);
+  
   let description = [];
   if (data) {
     description = data;
@@ -126,15 +129,15 @@ const ProductDetailRight = (data) => {
 
   const handleAddItem = async () => {
     const id = localStorage.getItem("id");
-    console.log("Add Item", id);
+    console.log("Add Item ID", id);
 
     let addItem = {
-      skuCode: myItem[0].skuCode,
+      skuCode: uniqueDataSize[0].skuCode,
       quantity: quantity,
       productPermalink: permalink,
     };
 
-    let mycartBody = [];
+    let mycartBody = userPur;
     mycartBody.push(addItem);
 
     console.log("Add Item", addItem);
@@ -142,7 +145,7 @@ const ProductDetailRight = (data) => {
       setuserPurhcase(mycartBody);
       console.log(mycartBody);
 
-      let statusCode = "";
+
 
       if (id === null || id === undefined || id === "") {
         try {
@@ -414,7 +417,10 @@ const ProductDetailRight = (data) => {
 
       {/* Add to cart button */}
       <button className="w-full h-[54px] bg-black text-white py-2 ">
-        <Link to="/Mycart/">Add to cart</Link>
+        <Link 
+          to="#"
+          onClick={()=>{handleAddItem()}}
+        >Add to cart</Link>
       </button>
     </div>
   );
