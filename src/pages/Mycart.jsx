@@ -284,7 +284,7 @@ export default function Mycart(){
         
         <>
                 {/* <button onClick={()=>{console.log(JSON.stringify(selectedDefault))}}>1234</button> */}
-            <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
+            <div className="lg:mx-auto bg-gray-50"> 
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart </h1>
             </div>
@@ -301,7 +301,9 @@ export default function Mycart(){
 
                                 <div className="flex justify-between">
                                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.name}</h5>
-                                <button className="bg-red-300" onClick={(e)=>{handleDelete(item)}}> delete </button>
+                                <button onClick={(e)=>{handleDelete(item)}}>
+                                <img src="src/assets/delete.svg"></img>
+                                </button>
                                 </div>
 
                                 <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex  w-ful">
