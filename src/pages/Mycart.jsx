@@ -360,7 +360,7 @@ export default function Mycart(){
 
                                     
                                     <div style={{width: "100%"}} className={ "align-baseline " + "mt-auto text-2xl font-bold  text-gray-900 dark:text-white flex w-ful"} >
-                                        <h5 className="ml-auto"> {item.price * item.quantity} THB </h5>
+                                        <h5 className="ml-auto text-black"> {item.price * item.quantity} THB </h5>
                                     </div>
 
                                 </div>
