@@ -17,6 +17,7 @@ export default function ProductDetail() {
   const [receiveData, setReceiveData] = useState(null);
 
   useEffect(() => {
+    setLoading(true)
     fetch(`${BASE_URL}products/${permalink}`)
       .then(async (res) => {
         let data = await res.json();
