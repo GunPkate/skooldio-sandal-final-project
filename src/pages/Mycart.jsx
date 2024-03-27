@@ -7,7 +7,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
-    const {myCart, setMyCart} = useContext(UserContext)
+    const [myCart, setMyCart] = useState([]);
 
     const [loading, setLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
@@ -16,11 +16,49 @@ export default function Mycart(){
     const [selectedNewItem,setSelectedNewItem] = useState([])
 
 
-    console.log("myCart",userPurhcase)    
+    console.log("myCart",userPurhcase) 
     
-
-
-
+    const fetchMycart = async (id) => {
+        try {
+      
+          if(id !== null || id !== undefined || id !== ""){
+            await axios.get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`).then( res => {
+            let itemCart =  res.data;
+            // console.log("Navbar get",itemCart)
+              let myCartTemp = myCart
+              res.data.items.forEach(async x=>{
+                await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+x.productPermalink).then(resDetail=>{
+                  const dataDetail = resDetail.data
+                
+                  let displayBody = {
+                      id: x.id,
+                      name: dataDetail.name,
+                      skuCode: x.skuCode,
+                      quantity: x.quantity,
+                      variants:  dataDetail.variants,
+                      price: dataDetail.price,
+                      image: dataDetail.imageUrls[0],
+                      color: Array.from( new Set(dataDetail.variants.map(x=>x.color)) ).sort(),
+                      // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
+                      size: Array.from( new Set(dataDetail.variants.map(x=>x.size)) ).sort(),
+                  }
+                  let b = Object.create(displayBody)
+                  
+                  // console.log(displayBody)
+                  myCartTemp.push(displayBody)
+                  
+                  setMyCart(Array.from( new Set(myCartTemp.map(x=>x)) ))
+                  setuserPurhcase(myCartTemp)
+                })
+              })
+    
+            })
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    
     const handleDelete = (e) => {
         //My cart number
         let contextResult = userPurhcase.filter(x=>x.id!==e.id)
@@ -90,10 +128,17 @@ export default function Mycart(){
                 )
                 setuserPurhcase(contextresult)
                 SecondFilter = tempData.filter(x => x.id === item.id);
+                let qtyData = {
+                    skuCode: SecondFilter[0].skuCode,
+                    quantity: SecondFilter[0].quantity,
+                }
                 console.log(tempData)
                 console.log(contextresult)
                 // console.log(item.price * item.quantity)
-                // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData);
+                axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
+                    console.log(resUpdate)
+                    await fetchMycart(localStorage.getItem('id'))
+                });
                 break;
             case 'color': 
                 // console.log('colors here',JSON.stringify(tempData[0].variants))
