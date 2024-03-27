@@ -138,7 +138,10 @@ export default function Mycart(){
                     quantity: SecondFilter[0].quantity,
                 }
                 console.log(tempData)
-
+                axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
+                    console.log(resUpdate)
+                    await fetchMycart(localStorage.getItem('id'))
+                });
                 // console.log(item.price * item.quantity)
                 break;
             case 'color': 
@@ -205,7 +208,7 @@ export default function Mycart(){
                 break;
         }
 
-        if(SecondFilter.length == 1){
+        if(SecondFilter.length == 1 &&name !== 'quantity'){
             validateMessage = ""
             let qtyData = {
                 skuCode: SecondFilter[0].skuCode,
