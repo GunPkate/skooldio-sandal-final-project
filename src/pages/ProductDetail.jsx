@@ -17,7 +17,7 @@ export default function ProductDetail() {
   const [receiveData, setReceiveData] = useState(null);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     fetch(`${BASE_URL}products/${permalink}`)
       .then(async (res) => {
         let data = await res.json();
@@ -39,8 +39,8 @@ export default function ProductDetail() {
     <div className="section ">
       <Navbar />
       {!loading ? (
-        <div className="flex flex-col min-w-[343px] mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-col desktop:mx-40  desktop:justify-around ">
-          <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col min-w-[343px] mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-col lg:mx-auto lg:max-w-[1600px]">
+          <div className="flex flex-col lg:flex-row px-2">
             <Carousel {...products} readOnly={receiveData} />
             <ProductDetailRight
               {...products}

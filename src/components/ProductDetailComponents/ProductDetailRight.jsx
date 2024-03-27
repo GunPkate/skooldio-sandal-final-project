@@ -59,8 +59,6 @@ const ProductDetailRight = (data) => {
       setReadOnly(false);
     }
     setRemains(remains);
-
-   
   };
 
   const handleColorSelection = (color) => {
@@ -83,7 +81,6 @@ const ProductDetailRight = (data) => {
     }
 
     setRemains(remains);
-    
   };
 
   // price with commas from k'Ter (product cart)
@@ -126,7 +123,7 @@ const ProductDetailRight = (data) => {
           .then((res) => {
             let itemCart = res.data;
             // console.log("Navbar get",itemCart)
-            let myCartTemp = []
+            let myCartTemp = [];
             res.data.items.forEach(async (x) => {
               await axios
                 .get(
@@ -253,7 +250,7 @@ const ProductDetailRight = (data) => {
   uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
 
   return (
-    <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[343px] desktop:mt-0  ">
+    <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[343px] lg:mt-0  ">
       {/* upper infomation */}
       <div>
         <div className="text-lg font-semibold mb-1 desktop:text-2xl desktop:bold">
@@ -268,7 +265,7 @@ const ProductDetailRight = (data) => {
         <div className="flex flex-col justify-center">
           {data.promotionalPrice < data.price ? (
             <>
-              <div className="flex justify-center items-center text-3xl font-bold mb-2 w-56 h-16 bg-[#FF000D] text-white w-16 h-10 ">
+              <div className="flex justify-center items-center text-3xl font-bold mb-2 bg-[#FF000D] text-white w-fit px-[10px] py-2 ">
                 THB {numberWithCommas(data.promotionalPrice) + ".00"}
               </div>
 
@@ -320,7 +317,7 @@ const ProductDetailRight = (data) => {
                 ))}
               </>
             ) : (
-              <div className="flex justify-evenly gap-6 mb-6"  >
+              <div className="flex justify-evenly gap-6 mb-6">
                 {" "}
                 {uniqueDataColor.map((value, index) => (
                   <div key={index}>
@@ -469,7 +466,9 @@ const ProductDetailRight = (data) => {
           handleAddItem();
         }}
       >
-        <button className="w-full h-[54px] bg-black text-white">Add to cart</button>
+        <button className="w-full h-[54px] bg-black text-white">
+          Add to cart
+        </button>
       </Link>
     </div>
   );
