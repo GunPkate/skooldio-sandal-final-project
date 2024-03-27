@@ -5,39 +5,45 @@ import LoadingSpinner from "../LoadingSpinner";
 const PeopleAlsoLike = (data) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-
-//   curl --request GET \
+  const [error, setError] = useState(null);
   const BASE_URL = "https://api.storefront.wdb.skooldio.dev/";
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`${BASE_URL}products?categories=${data.categories[data.categories.length-1]}`)
-      .then((res) => res.json())
+    fetch(`${BASE_URL}products`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch products. Please try again later.");
+        }
+        return res.json();
+      })
       .then((data) => {
-        
-        // Randomly select 4 products
-        const shuffled = [...data.data].sort(() => 0.5 - Math.random());
-        setProducts(shuffled.slice(0, 4));
+        setProducts(data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
         setLoading(false);
       });
   }, []);
 
+  if (loading) {
+    return <div><LoadingSpinner /></div>;
+  }
+
+  const shuffledProducts = [...products].sort(() => Math.random() - 0.5);
+
+  const topProducts = shuffledProducts.slice(0, 4);
+  const items = topProducts.map((item) => <ProductCard key={item.id} {...item} />);
+
   return (
-    <div className="mt-20 flex flex-col gap-8">
-      <h1 className="text-4xl font-bold">People Also Like</h1>
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <div className="flex flex-col items-center gap-8 justify-around desktop:flex-row">
-          {" "}
-          {/* Use flexbox to arrange cards in a row */}
-          {products.map((item, index) => (
-            <ProductCard key={index} {...item} />
-          ))}
+    <>
+      <div className="flex flex-col px-2 font-bold mx-auto mt-10">
+        <p className="text-[32px] font-bold mb-16">People also like these</p>
+        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-4 md:gap-x-10 md:gap-y-[60px]">
+          {items}
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 
