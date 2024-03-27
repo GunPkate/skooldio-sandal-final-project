@@ -10,8 +10,8 @@ const ProductDetailRight = (data) => {
   const [remains, setRemains] = useState(0);
   const [readOnly, setReadOnly] = useState(false);
   const { permalink } = useParams();
-  const { userPurhcase, setuserPurhcase} = useContext(UserContext);
-  const { myCart, setMyCart} = useContext(UserContext);
+  const { userPurhcase, setuserPurhcase } = useContext(UserContext);
+  const { myCart, setMyCart } = useContext(UserContext);
 
   let description = [];
   if (data) {
@@ -53,8 +53,10 @@ const ProductDetailRight = (data) => {
     const remains = getRemains(size, selectColor);
     if (remains === 0) {
       data.sendDataToParent(true);
+      setReadOnly(true);
     } else {
       data.sendDataToParent(false);
+      setReadOnly(false);
     }
     setRemains(remains);
 
@@ -72,9 +74,14 @@ const ProductDetailRight = (data) => {
     if (uniqueDataSize[0].size?.length == 0) {
       if (remains === 0) {
         data.sendDataToParent(true);
+        setReadOnly(true);
       } else {
         data.sendDataToParent(false);
+        setReadOnly(false);
       }
+    } else {
+      data.sendDataToParent(false);
+      setReadOnly(false);
     }
 
     setRemains(remains);
@@ -117,44 +124,53 @@ const ProductDetailRight = (data) => {
 
   const fetchMycart = async (id) => {
     try {
-  
-      if(id !== null || id !== undefined || id !== ""){
-        await axios.get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`).then( res => {
-        let itemCart =  res.data;
-        // console.log("Navbar get",itemCart)
-          let myCartTemp = myCart
-          res.data.items.forEach(async x=>{
-            await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+x.productPermalink).then(resDetail=>{
-              const dataDetail = resDetail.data
-            
-              let displayBody = {
-                  id: x.id,
-                  name: dataDetail.name,
-                  skuCode: x.skuCode,
-                  quantity: x.quantity,
-                  variants:  dataDetail.variants,
-                  price: dataDetail.price,
-                  image: dataDetail.imageUrls[0],
-                  color: Array.from( new Set(dataDetail.variants.map(x=>x.color)) ).sort(),
-                  // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
-                  size: Array.from( new Set(dataDetail.variants.map(x=>x.size)) ).sort(),
-              }
-              let b = Object.create(displayBody)
-              
-              // console.log(displayBody)
-              myCartTemp.push(displayBody)
-              
-              setMyCart(Array.from( new Set(myCartTemp.map(x=>x)) ))
-              setuserPurhcase(myCartTemp)
-            })
-          })
+      if (id !== null || id !== undefined || id !== "") {
+        await axios
+          .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
+          .then((res) => {
+            let itemCart = res.data;
+            // console.log("Navbar get",itemCart)
+            let myCartTemp = myCart;
+            res.data.items.forEach(async (x) => {
+              await axios
+                .get(
+                  "https://api.storefront.wdb.skooldio.dev/products/" +
+                    x.productPermalink
+                )
+                .then((resDetail) => {
+                  const dataDetail = resDetail.data;
 
-        })
+                  let displayBody = {
+                    id: x.id,
+                    name: dataDetail.name,
+                    skuCode: x.skuCode,
+                    quantity: x.quantity,
+                    variants: dataDetail.variants,
+                    price: dataDetail.price,
+                    image: dataDetail.imageUrls[0],
+                    color: Array.from(
+                      new Set(dataDetail.variants.map((x) => x.color))
+                    ).sort(),
+                    // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
+                    size: Array.from(
+                      new Set(dataDetail.variants.map((x) => x.size))
+                    ).sort(),
+                  };
+                  let b = Object.create(displayBody);
+
+                  // console.log(displayBody)
+                  myCartTemp.push(displayBody);
+
+                  setMyCart(Array.from(new Set(myCartTemp.map((x) => x))));
+                  setuserPurhcase(myCartTemp);
+                });
+            });
+          });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleAddItem = async () => {
     const id = localStorage.getItem("id");
@@ -276,7 +292,9 @@ const ProductDetailRight = (data) => {
         </div>
         {console.log("readOnlyYYY", readOnly)}
         <div className="text-danger text-2xl">
-          TEXT{readOnly===true ? <>Out of stock</> : null}
+          {readOnly === true ? (
+            <div className="text-xl font-bold mb-6">Out of stock</div>
+          ) : null}
         </div>
         {/* {readOnly ? <div className="text-danger text-2xl">Out of stock</div> : null} */}
         <div className="flex gap-[10px]">{createStars(data.ratings)}</div>
@@ -451,9 +469,11 @@ const ProductDetailRight = (data) => {
 
       {/* Add to cart button */}
       <Link
-          to="/Mycart/"
-          onClick={()=>{handleAddItem()}}
-      > 
+        to="/Mycart/"
+        onClick={() => {
+          handleAddItem();
+        }}
+      >
         <button className="w-full h-[54px] bg-black text-white py-2 ">
           Add to cart
         </button>

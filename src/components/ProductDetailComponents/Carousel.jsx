@@ -52,6 +52,8 @@ const Carousel = (data) => {
     (_, index) => index !== currentImageIndex
   );
 
+  console.log("readOnly (Carousel)",readOnly );
+
   return (
     <div className="flex flex-col gap-4 mx-auto relative flex-1 min-w-[375px]">
       <div className="relative w-[343px] h-[343px] laptop:w-[514.5px] laptop:h-[514.5px] desktop:w-[780px] desktop:h-[780px] desktop:mb-4">
