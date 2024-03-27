@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar/Navbar";
 import { UserContext } from "../App"
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
+import DeleteLogo from "../assets/delete.svg"
 
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
@@ -302,7 +303,7 @@ export default function Mycart(){
                                 <div className="flex justify-between">
                                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{item.name}</h5>
                                 <button onClick={(e)=>{handleDelete(item)}}>
-                                <img src="src/assets/delete.svg"></img>
+                                <img src={DeleteLogo}></img>
                                 </button>
                                 </div>
 
