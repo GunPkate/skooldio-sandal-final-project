@@ -52,11 +52,11 @@ const Carousel = (data) => {
     (_, index) => index !== currentImageIndex
   );
 
-  console.log("readOnly (Carousel)",readOnly );
+  console.log("readOnly (Carousel)", readOnly);
 
   return (
-    <div className="flex flex-col gap-4 mx-auto relative flex-1 min-w-[375px]">
-      <div className="relative w-[343px] h-[343px] laptop:w-[514.5px] laptop:h-[514.5px] desktop:w-[780px] desktop:h-[780px] desktop:mb-4">
+    <div className="flex flex-col gap-4 mx-auto relative flex-1 w-[343px] md:w-[514.5px] 2xl:max-w-[780px] lg:mr-10">
+      <div className="relative aspect-square w-full">
         {/* main image */}
 
         <img
@@ -132,11 +132,11 @@ const Carousel = (data) => {
       </div>
 
       {/* 4 pictures below the main pic */}
-      <div className=" flex gap-2 laptop:gap-3 desktop:gap-[30.7px]">
+      <div className="flex w-full justify-between">
         {thumbnailImages.map((image, index) => (
           <div
             key={index}
-            className=" w-20 h-20 laptop:w-[120px] laptop:h-[120px] desktop:w-[172.21px] desktop:h-[172.21px]"
+            className="w-20 h-20 md:w-[100px] md:h-[100px] lg:w-[140px] lg:h-[140px]"
           >
             <img
               src={image}

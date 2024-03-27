@@ -253,7 +253,7 @@ const ProductDetailRight = (data) => {
   uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
 
   return (
-    <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[375px] desktop:mt-0  ">
+    <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[343px] desktop:mt-0  ">
       {/* upper infomation */}
       <div>
         <div className="text-lg font-semibold mb-1 desktop:text-2xl desktop:bold">
