@@ -312,7 +312,7 @@ export default function Mycart(){
                                         <div className="lg:mr-[16px]">
                                             <h1 className="text-gray-700 font-normal">Colors</h1>
 
-                                            <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value, id)}}>
+                                            <select name="colors" className="lg:w-[7.24vw] w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value, id)}}>
                                                 
                                                 <option >{userPurhcase[id].variants.filter(x=>x.skuCode == userPurhcase[id].skuCode)[0].color }</option>
                                                 {/* {Array.from(
@@ -327,7 +327,7 @@ export default function Mycart(){
                                         <div className="flex justify-between w-full">
                                             <div className="mr-[16px]">
                                                 <h1 className="text-gray-700 font-normal">Size</h1>
-                                                <select name="size" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'size', e.target.value, id)}}>
+                                                <select name="size" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px] border-gray-300 rounded-none border-[1px] text-black" onChange={(e)=>{handleUpdateCart(item, 'size', e.target.value, id)}}>
                                                     <option >{userPurhcase[id].variants.filter(x=>x.skuCode == userPurhcase[id].skuCode)[0].size }</option>
                                                     {/* {Array.from(
                                                         new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
@@ -341,7 +341,7 @@ export default function Mycart(){
                                             <div >
                                                 <h1 className="text-gray-700 font-normal">Qty</h1>
                                                 <select name="quantity" 
-                                                className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" 
+                                                className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px] border-gray-300 rounded-none border-[1px] text-black" 
                                                 onChange={(e)=>{handleUpdateCart(item, 'quantity', e.target.value, id)}}>
                                                     <option>{item.quantity}</option>
                                                     <option>1</option>
