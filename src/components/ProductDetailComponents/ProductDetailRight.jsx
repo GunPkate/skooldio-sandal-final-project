@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
+import axios from "axios";
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState("");
@@ -119,6 +120,7 @@ const ProductDetailRight = (data) => {
         await axios
           .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
           .then((res) => {
+            console.log(res.data.items)
             setuserPurhcase(res.data.items);
           });
       }
@@ -137,15 +139,15 @@ const ProductDetailRight = (data) => {
       productPermalink: permalink,
     };
 
-    let mycartBody = userPur;
+    let mycartBody = [];
     mycartBody.push(addItem);
 
     console.log("Add Item", addItem);
     if (mycartBody.length) {
-      setuserPurhcase(mycartBody);
+      // setuserPurhcase(mycartBody);
       console.log(mycartBody);
 
-
+      let statusCode = "";
 
       if (id === null || id === undefined || id === "") {
         try {
@@ -159,6 +161,10 @@ const ProductDetailRight = (data) => {
               console.log("add new cart data", data);
               statusCode = res.status;
               localStorage.setItem("id", data.id);
+
+              if (statusCode == 200 || statusCode == 201) {
+                fetchMycart(data.id);
+              }
             });
         } catch (error) {
           console.log(error);
@@ -172,16 +178,17 @@ const ProductDetailRight = (data) => {
             .then((res) => {
               let data = res.data;
               statusCode = res.status;
+              console.log("add old cart statusCode", statusCode);
               console.log("add old cart data", data);
               console.log("add old res", res);
+
+              if (statusCode == 200 || statusCode == 201) {
+                fetchMycart(id);
+              }
             });
         } catch (error) {
           console.log(error);
         }
-      }
-
-      if (statusCode == 200 || statusCode == 201) {
-        fetchMycart(id);
       }
     }
   };
@@ -416,12 +423,14 @@ const ProductDetailRight = (data) => {
       </div>
 
       {/* Add to cart button */}
-      <button className="w-full h-[54px] bg-black text-white py-2 ">
-        <Link 
-          to="#"
+      <Link
+          to="/Mycart/"
           onClick={()=>{handleAddItem()}}
-        >Add to cart</Link>
-      </button>
+      > 
+        <button className="w-full h-[54px] bg-black text-white py-2 ">
+          Add to cart
+        </button>
+      </Link>
     </div>
   );
 };
