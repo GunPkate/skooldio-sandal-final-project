@@ -66,8 +66,7 @@ export default function Mycart(){
     const handleUpdateCart = (item, name,value, itemNo) => {
         let tempData = userPurhcase
         console.log("sss",itemNo)
-        if(name == 'color') setColor(value);
-        if(name == 'size') setSize(value);
+
 
         //Get default colors and size
         let defaultCode = tempData[itemNo].skuCode;
@@ -286,7 +285,7 @@ export default function Mycart(){
             <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
                 <h1 className={ marginLgStyle + marginStyle + " text-2xl font-bold"}>My Cart </h1>
                 {selectedNewItem.map(x=><>{x.size} {x.color}</>)}
-                <button onClick={()=>{console.log(selectedNewItem)}}>46879</button>
+
             </div>
             <div className="section section-mycart lg:flex md:flex:none md:block">
 
