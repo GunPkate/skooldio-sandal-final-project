@@ -62,7 +62,7 @@ const Carousel = (data) => {
         <img
           src={images[currentImageIndex]}
           alt="Product"
-          className={`w-full h-full object-cover ${
+          className={`w-full h-full aspect-square object-cover ${
             readOnly ? "brightness-50" : ""
           }`}
         />
