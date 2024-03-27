@@ -58,8 +58,8 @@ function Homepage() {
         />
       </div>
 
-  <div className="relative bg-white px-6 pb-20 lg:px-8 lg:pb-28">
-    <div className="mx-auto max-w-7xl">
+  <div className="relative bg-white pb-20 lg:pb-[118px]">
+    <div className="mx-auto max-w-[1600px]">
       <div className="mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3">
         <div className="flex flex-col overflow-hidden rounded-lg">
           <div className="flex flex-1 flex-col justify-between bg-white p-6">
@@ -133,7 +133,7 @@ function Homepage() {
   </div>
 
 
-      <div className="flex flex-col items-center px-4 font-bold mx-auto">
+      <div className="flex flex-col items-center font-bold mx-auto max-w-[1600px] mb-[176px]">
         <p className="text-[32px] mb-16">Feature Products</p>
         <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-4 md:gap-x-10 md:gap-y-[60px]">
           {items}
