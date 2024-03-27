@@ -13,29 +13,6 @@ export default function Mycart(){
 
     const [selectedNewItem,setSelectedNewItem] = useState([])
 
-    const [color,setColor] = useState('')
-    const [size,setSize] = useState('')
-
-    const [displayColor,setDisplayColor] = useState([])
-
-    useEffect(()=>{
-        setDisplay()
-    },[])
-
-    const setDisplay = () => {
-        let choice = []
-        for(let i =0; i < userPurhcase.length  ;i++){
-            let bodyColor = {
-                id: userPurhcase[i].id , 
-                color: userPurhcase[i].variants.filter(x=>x.skuCode == userPurhcase[i].skuCode)[0].color , 
-                size: userPurhcase[i].variants.filter(x=>x.skuCode == userPurhcase[i].skuCode)[0].size , 
-                qty : userPurhcase[i].quantity , 
-            }
-            choice.push(bodyColor)
-        }
-        setDisplayColor(choice)
-    }
-
     const fetchMycart = async (id) => {
         try {
       
@@ -300,7 +277,6 @@ export default function Mycart(){
 
     return <>
     <Navbar/>
-    {displayColor.length}
      {!loading && userPurhcase.length >0 ?
 
         
