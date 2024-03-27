@@ -8,7 +8,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
     const {myCart, setMyCart} = useContext(UserContext)
-    const [displayMycart,setDisplayMycart] = useState([])
+
     const [loading, setLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
@@ -26,16 +26,13 @@ export default function Mycart(){
         let contextResult = userPurhcase.filter(x=>x.id!==e.id)
         setuserPurhcase(contextResult);
         
-        //Delete from UI
-        let displayResult = displayMycart.filter(x=>x.id!==e.id)
-        setDisplayMycart(displayResult);
-        console.log("display",displayMycart)
+
         axios.delete(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${e.id}`)
     }
 
     // localStorage.setItem('id',1234)
     const handleUpdateCart = (item, name,value) => {
-        let tempData = displayMycart
+        let tempData = userPurhcase
         
         //Get default colors and size
         let defaultCode = tempData[0].skuCode;
@@ -86,7 +83,6 @@ export default function Mycart(){
                 tempData.forEach(x=>
                      { if(x.id === item.id) x.quantity = value}
                 )
-                setDisplayMycart(tempData)
 
                 let contextresult = userPurhcase
                 contextresult.forEach(x=>
@@ -300,8 +296,8 @@ export default function Mycart(){
                                 // style={{width:"100%",borderCollapse:"separate" ,borderSpacing: "0 1em" }} 
                             className="font-normal text-gray-700 dark:text-gray-400 block">
                                 <tbody>
-                                    {displayMycart.length >0 ? 
-                                        displayMycart.map(  item => 
+                                    {userPurhcase.length >0 ? 
+                                        userPurhcase.map(  item => 
 
                                             <tr height="36px" key={item.id} >
                                                 <td style={{width:"100%" }}>    
@@ -329,11 +325,11 @@ export default function Mycart(){
                                         </td>
                                         <td>
                                             <h1>
-                                            {displayMycart.length > 1 ? 
-                                                displayMycart.reduce((accumulator, currentValue) => 
+                                            {userPurhcase.length > 1 ? 
+                                                userPurhcase.reduce((accumulator, currentValue) => 
                                                     accumulator + ( currentValue.price * currentValue.quantity ), 0, 
                                                 )
-                                                : displayMycart.length === 1 ? displayMycart[0].price * displayMycart[0].quantity :0 
+                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].quantity :0 
                                             }
                                             </h1>
                                         </td>
@@ -353,21 +349,21 @@ export default function Mycart(){
                                         </td>
                                         <td>
                                             <h1>
-                                            {displayMycart.length > 1 ? 
-                                                displayMycart.reduce((accumulator, currentValue) => 
+                                            {userPurhcase.length > 1 ? 
+                                                userPurhcase.reduce((accumulator, currentValue) => 
                                                 accumulator + ( currentValue.price * currentValue.quantity ), 0, 
                                                 )
-                                                : displayMycart.length === 1 ? displayMycart[0].price * displayMycart[0].quantity :0 
+                                                : userPurhcase.length === 1 ? userPurhcase[0].price * userPurhcase[0].quantity :0 
                                             }
                                             </h1>
                                             </td>
                                         </tr>         
                                     </tbody>
                                 </table>
-                                {displayMycart.length ==0 ?
+                                {userPurhcase.length ==0 ?
                                 <>
-                                    <button disabled={displayMycart.length ==0} style={{width:"100%"}} className="button h-[54px] bg-[#E1E1E1] text-[#9F9F9F] mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
-                                    <button disabled={displayMycart.length ==0} style={{width:"100%", border: "1pt solid #9F9F9F"}}  className="button h-[54px] text-[#9F9F9F]">Continue Shoping</button>
+                                    <button disabled={userPurhcase.length ==0} style={{width:"100%"}} className="button h-[54px] bg-[#E1E1E1] text-[#9F9F9F] mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
+                                    <button disabled={userPurhcase.length ==0} style={{width:"100%", border: "1pt solid #9F9F9F"}}  className="button h-[54px] text-[#9F9F9F]">Continue Shoping</button>
                                 </>
                                 :<>
                                     <button style={{width:"100%"}} className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]" onClick={(e)=>{printInvoice("Summary")}} >Check Out</button>
