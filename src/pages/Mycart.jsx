@@ -14,6 +14,9 @@ export default function Mycart(){
     const [selectedDefault,setSelectedDefault] = useState([])
     const [selectedNewItem,setSelectedNewItem] = useState([])
 
+    const [color,setColor] = useState('')
+    const [size,setSize] = useState('')
+
 
     console.log("myCart",userPurhcase) 
     
@@ -70,6 +73,9 @@ export default function Mycart(){
     const handleUpdateCart = (item, name,value) => {
         let tempData = userPurhcase
         
+        if(name == 'color') setColor(value);
+        if(name == 'size') setSize(value);
+
         //Get default colors and size
         let defaultCode = tempData[0].skuCode;
         let defaultVariant = tempData[0].variants.filter(x=>x.skuCode===defaultCode)
@@ -120,18 +126,13 @@ export default function Mycart(){
                      { if(x.id === item.id) x.quantity = value}
                 )
 
-                let contextresult = userPurhcase
-                contextresult.forEach(x=>
-                    { if(x.id === item.id) x.quantity = value}    
-                )
-                setuserPurhcase(contextresult)
                 SecondFilter = tempData.filter(x => x.id === item.id);
                 let qtyData = {
                     skuCode: SecondFilter[0].skuCode,
                     quantity: SecondFilter[0].quantity,
                 }
                 console.log(tempData)
-                console.log(contextresult)
+
                 // console.log(item.price * item.quantity)
                 axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
                     console.log(resUpdate)
@@ -233,7 +234,7 @@ export default function Mycart(){
 
     return <>
     <Navbar/>
-     {!loading ?
+     {!loading && userPurhcase.length >0 ?
 
     
         <>
