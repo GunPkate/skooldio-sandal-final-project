@@ -5,9 +5,11 @@ const Modal = () => {
     //back shadow
     <div className="flex justify-center items-center  w-full h-screen fixed top-0 left-0 bg-black/50">
       {/*custom modal  */}
-      <div className="w-[900px] h-[374px] rounded-2xl bg-white p-6">
-        <div className="flex justify-between items-center w-[852px] h-10 mb-6">
-          <h1 className="text-2xl font-bold">Items added to your cart</h1>
+      <div className="w-[343px] h-[518px] rounded-2xl bg-white p-6 lg:w-[900px] lg:h-[374px]">
+        <div className="flex justify-between items-center w-[295px] h-10 mb-4 lg:w-[852px]">
+          <h1 className="text-lg font-semibold lg:text-2xl">
+            Items added to your cart
+          </h1>
           <button>
             <svg
               width="40"
@@ -31,24 +33,29 @@ const Modal = () => {
             </svg>
           </button>
         </div>
-        <div className="flex justify-between py-6 gap-x-10 ">
+        <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:py-6 lg:gap-x-10">
           <img
+            className="w-40 h-40 mb-4 lg:mb-0"
             src="https://fastly.picsum.photos/id/1003/160/160.jpg?hmac=E2JDyHeevPoJ7onoYYBQwmFvDmm3vZLdqJ4Z8L_pUdA"
             alt="mock-img"
           />
-          <div className="flex justify-between items-center w-[652px] h-40 ">
-            <div className="flex flex-col  ">
-              <h2 className="text-2xl font-bold">Product Name: Rayon</h2>
-              <p className="text-lg font-semibold text-[#222222]">Qty: 2</p>
+          <div className="flex flex-col item-start w-full h-[82px] mb-6 lg:flex-row lg:justify-between lg:w-[652px] lg:h-40 lg:mb-0 ">
+            <div className="flex flex-col justify-center  ">
+              <h2 className="text-lg font-bold lg:text-2xl">
+                Product Name: Rayon
+              </h2>
+              <p className=" text-[#222222] font-normal">Qty : 2</p>
             </div>
-            <div className="text-2xl font-bold">THB 2,000</div>
+            <div className="text-lg font-bold flex justify-end lg:flex-col lg:justify-center lg:text-2xl ">
+              THB 2,000
+            </div>
           </div>
         </div>
-        <div className="flex gap-4 justify-center items-center h-[54px] ">
-          <button className="w-1/2 h-full bg-[#222222]  text-white">
+        <div className="flex flex-col gap-4 justify-center items-center lg:flex-row">
+          <button className="w-full h-14 bg-[#222222]  text-white lg:w-1/2">
             View Cart
           </button>
-          <button className="w-1/2 h-full bg-white border-[#E1E1E1] border">
+          <button className="w-full h-14 bg-white border-[#E1E1E1] border lg:w-1/2">
             Continue Shopping
           </button>
         </div>
