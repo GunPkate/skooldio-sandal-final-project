@@ -16,7 +16,26 @@ export default function Mycart(){
     const [color,setColor] = useState('')
     const [size,setSize] = useState('')
 
-    
+    const [displayColor,setDisplayColor] = useState([])
+
+    useEffect(()=>{
+        setDisplay()
+    },[])
+
+    const setDisplay = () => {
+        let choice = []
+        for(let i =0; i < userPurhcase.length  ;i++){
+            let bodyColor = {
+                id: userPurhcase[i].id , 
+                color: userPurhcase[i].variants.filter(x=>x.skuCode == userPurhcase[i].skuCode)[0].color , 
+                size: userPurhcase[i].variants.filter(x=>x.skuCode == userPurhcase[i].skuCode)[0].size , 
+                qty : userPurhcase[i].quantity , 
+            }
+            choice.push(bodyColor)
+        }
+        setDisplayColor(choice)
+    }
+
     const fetchMycart = async (id) => {
         try {
       
@@ -140,6 +159,7 @@ export default function Mycart(){
                 axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
                     console.log(resUpdate)
                     await fetchMycart(localStorage.getItem('id'))
+                    setSelectedNewItem('')
                 });
                 // console.log(item.price * item.quantity)
                 break;
@@ -218,6 +238,7 @@ export default function Mycart(){
             axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
                 console.log(resUpdate)
                 await fetchMycart(localStorage.getItem('id'))
+                setSelectedNewItem('')
             });
         }
 
@@ -279,9 +300,10 @@ export default function Mycart(){
 
     return <>
     <Navbar/>
+    {displayColor.length}
      {!loading && userPurhcase.length >0 ?
 
-    
+        
         <>
                 {/* <button onClick={()=>{console.log(JSON.stringify(selectedDefault))}}>1234</button> */}
             <div style={{backgroundColor: "azure"}} className="lg:mx-auto"> 
@@ -314,7 +336,7 @@ export default function Mycart(){
 
                                             <select name="colors" className="lg:w-[7.24vw] w-full h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'color', e.target.value, id)}}>
                                                 
-                                                <option disabled>Colors</option>
+                                                <option disabled>{userPurhcase[id].variants.filter(x=>x.skuCode == userPurhcase[id].skuCode)[0].color }</option>
                                                 {/* {Array.from(
                                                     new Set( item.variants.map(x => <option>{x.color}</option>) )
                                                     )
@@ -328,7 +350,7 @@ export default function Mycart(){
                                             <div className="mr-[16px]">
                                                 <h1>Size</h1>
                                                 <select name="size" className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px]" onChange={(e)=>{handleUpdateCart(item, 'size', e.target.value, id)}}>
-                                                    <option disabled>Size</option>
+                                                    <option >{userPurhcase[id].variants.filter(x=>x.skuCode == userPurhcase[id].skuCode)[0].size }</option>
                                                     {/* {Array.from(
                                                         new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
                                                     )} */}
