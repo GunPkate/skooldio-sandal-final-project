@@ -401,7 +401,7 @@ const ProductDetailRight = (data) => {
           <span className="text-red-500 font-semibold text-xl">{`(In stock : ${remains})`}</span>
         </div>
         {/* dropdown to select Qty */}
-        <Dropdown onQuantityChange={onQuantityChange} />
+        <Dropdown onQuantityChange={onQuantityChange} remains={remains}/>
       </div>
 
       {/* Add to cart button */}
@@ -422,7 +422,8 @@ const ProductDetailRight = (data) => {
         </Link>
       )} */}
       <button
-        className="flex justify-center items-center w-full h-[54px] bg-black text-white"
+        className={`flex justify-center items-center w-full h-[54px] ${remains === 0 && readOnly === true ? "bg-secondary opacity-50" : "bg-black"} text-white`}
+        disabled={remains === 0 && readOnly === true ? true : false}
         onClick={(event) => {
           event.preventDefault();
           // handleAddItem();

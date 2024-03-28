@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Dropdown = ({onQuantityChange}) => {
+const Dropdown = ({onQuantityChange,remains}) => {
   const [quantity, setQuantity] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -11,6 +11,10 @@ const Dropdown = ({onQuantityChange}) => {
     setIsOpen(false); // Close the dropdown
     onQuantityChange(value); // Call function with the new quantity value
   };
+
+  const numberDropdown = remains<10?remains:10;
+
+  console.log(numberDropdown,"numberDropdownNNNNN");
 
   return (
     <div className="dropdown dropdown-bottom dropdown-end">
@@ -44,7 +48,7 @@ const Dropdown = ({onQuantityChange}) => {
           tabIndex={0}
           className="dropdown-content z-[500] flex flex-col items-center shadow bg-base-100 rounded-none w-full relative"
         >
-          {[...Array(10).keys()].map((number) => (
+          {[...Array(numberDropdown).keys()].map((number) => (
             <li
               key={number + 1}
               className={`flex justify-start items-center w-full text-center py-1 cursor-pointer h-[54px] px-[10px] hover:bg-secondary-100 ${
@@ -52,7 +56,8 @@ const Dropdown = ({onQuantityChange}) => {
               }`} // border between 1-9
               onClick={() => selectItem(number + 1)}
             >
-              {number + 1}
+              {numberDropdown===0?"out of stock":number + 1}
+              
             </li>
           ))}
         </ul>
