@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
 import axios from "axios";
+import Dropdown from "./Dropdown";
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState("");
@@ -379,7 +380,7 @@ const ProductDetailRight = (data) => {
           <span className="text-red-500 font-semibold text-xl">{`(In stock : ${remains})`}</span>
         </div>
 
-        <form className=" max-w-xs flex justify-start">
+        {/* <form className=" max-w-xs flex justify-start">
           <div className="relative flex items-start max-w-[8rem]">
             <button
               type="button"
@@ -456,7 +457,9 @@ const ProductDetailRight = (data) => {
               </svg>
             </button>
           </div>
-        </form>
+        </form> */}
+        <Dropdown />
+        
       </div>
 
       {/* Add to cart button */}

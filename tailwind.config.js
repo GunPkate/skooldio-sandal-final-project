@@ -26,13 +26,10 @@ export default {
       },
       screens: {
         tablet: "640px",
-        // => @media (min-width: 640px) { ... }
 
         laptop: "768px",
-        // => @media (min-width: 1024px) { ... }
 
         desktop: "1920px",
-        // => @media (min-width: 1920px) { ... }
       },
     },
   },
