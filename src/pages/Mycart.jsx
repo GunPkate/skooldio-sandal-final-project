@@ -211,7 +211,7 @@ export default function Mycart() {
     <>
       <div
         id={title}
-        className={"itemList bg-white mb-10 " + width + height + ml + mr}
+        className={"itemList bg-white mb-10 pb-10 " + width + height + ml + mr}
       >
         <h5
           className={
@@ -298,7 +298,7 @@ export default function Mycart() {
             <CardTemplate
               title={"Items"}
               width={"w-full"}
-              height={"  "}
+              height={" h-fit"}
               ml={" ml-0 "}
               mr={" mr-0"}
             >
@@ -334,7 +334,7 @@ export default function Mycart() {
                         </button>
                       </div>
 
-                      <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex w-full gap-10">
+                      <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex w-full justify-between">
                         <div className="gap-4 grid grid-cols-2 grid-rows-2 xl:grid-cols-3 xl:grid-rows-1 w-[450px]">
                           <div className="col-span-2 xl:col-span-1">
                             <h1 className="text-gray-700 text-[16px] p-0 m-0">
@@ -481,7 +481,7 @@ export default function Mycart() {
             <CardTemplate
               title={"Summary"}
               width={"min-w-[32.08%]"}
-              height={" max-h-[500px] "}
+              height={" h-fit "}
               mr={""}
               ml={""}
             >
