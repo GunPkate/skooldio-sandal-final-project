@@ -15,7 +15,7 @@ function numberWithCommas(num) {
 }
 
 export default function Mycart() {
-  setTimeout(()=>{setLoading(false)},5000)
+  setTimeout(()=>{setLoading(false)},2000)
   const { userPurhcase, setuserPurhcase } = useContext(UserContext);
   const [myCart, setMyCart] = useState([]);
 
