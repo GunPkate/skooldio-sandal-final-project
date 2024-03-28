@@ -17,14 +17,14 @@ const Dropdown = ({ onQuantityChange, remains, readOnly }) => {
   console.log(numberDropdown, "numberDropdownNNNNN");
 
   return (
-    <div className="dropdown dropdown-bottom dropdown-end">
+    <div className="dropdown dropdown-bottom dropdown-end w-full">
       <div
         tabIndex={0}
         role="button"
-        className={`btn flex justify-between px-2.5 rounded-none w-[343px] h-[54px] lg:w-[139px] lg:h-[54px]${
+        className={`btn flex justify-between px-2.5 rounded-none w-full lg:w-[139px] h-[54px] lg:h-[54px]${
           remains === 0 && readOnly === true
             ? "bg-secondary opacity-20 -z-10"
-            : "bg-white"
+            : " bg-white"
         } border-secondary-300`}
         onClick={toggleDropdown}
       >

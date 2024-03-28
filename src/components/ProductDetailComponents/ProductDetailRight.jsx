@@ -164,13 +164,13 @@ const ProductDetailRight = (data) => {
           {data.promotionalPrice < data.price ? (
             <>
               <div className="flex justify-center items-center text-[40px] font-bold mb-2 bg-[#FF000D] text-white w-fit  px-[10px] py-2 ">
-                THB {numberWithCommas(data.promotionalPrice) + ".00"}
+                THB {numberWithCommas(data.promotionalPrice)}
               </div>
 
               <div className="text-lg font-semibold mb-6 ">
                 From
                 <span className="line-through">
-                  {" " + " THB " + numberWithCommas(data.price) + ".00"}
+                  {" " + " THB " + numberWithCommas(data.price)}
                 </span>
               </div>
             </>
