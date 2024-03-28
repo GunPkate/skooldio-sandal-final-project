@@ -16,9 +16,6 @@ const ProductDetailRight = (data) => {
   const [quantity, setQuantity] = useState(1);
   const [remains, setRemains] = useState(0);
   const [readOnly, setReadOnly] = useState(false);
-  const { permalink } = useParams();
-  const { userPurhcase, setuserPurhcase } = useContext(UserContext);
-  const [myCart, setMyCart] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   let description = [];
@@ -120,119 +117,6 @@ const ProductDetailRight = (data) => {
 
   const uniqueDataColor = uniqueByKey(data.variants, "color");
   const uniqueDataSize = uniqueByKey(data.variants, "size");
-
-  const fetchMycart = async (id) => {
-    try {
-      if (id !== null || id !== undefined || id !== "") {
-        await axios
-          .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
-          .then((res) => {
-            let itemCart = res.data;
-            console.log("Navbar get", itemCart);
-            let myCartTemp = [];
-            res.data.items.forEach(async (x) => {
-              await axios
-                .get(
-                  "https://api.storefront.wdb.skooldio.dev/products/" +
-                    x.productPermalink
-                )
-                .then((resDetail) => {
-                  const dataDetail = resDetail.data;
-
-                  let displayBody = {
-                    id: x.id,
-                    name: dataDetail.name,
-                    skuCode: x.skuCode,
-                    quantity: x.quantity,
-                    variants: dataDetail.variants,
-                    price: dataDetail.price,
-                    image: dataDetail.imageUrls[0],
-                    color: Array.from(
-                      new Set(dataDetail.variants.map((x) => x.color))
-                    ).sort(),
-                    size: Array.from(
-                      new Set(dataDetail.variants.map((x) => x.size))
-                    ).sort(),
-                  };
-
-                  myCartTemp.push(displayBody);
-
-                  setMyCart(Array.from(new Set(myCartTemp.map((x) => x))));
-                  setuserPurhcase(myCartTemp);
-                });
-            });
-          });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleAddItem = async () => {
-    const id = localStorage.getItem("id");
-    console.log("Add Item ID", id);
-
-    let addItem = {
-      skuCode: uniqueDataSize[0].skuCode,
-      quantity: quantity,
-      productPermalink: permalink,
-    };
-
-    let mycartBody = [];
-    mycartBody.push(addItem);
-
-    console.log("Add Item", addItem);
-    if (mycartBody.length) {
-      console.log(mycartBody);
-
-      let statusCode = "";
-
-      if (id === null || id === undefined || id === "") {
-        try {
-          await axios
-            .post("https://api.storefront.wdb.skooldio.dev/carts", {
-              items: mycartBody,
-            })
-            .then((res) => {
-              let data = res.data;
-              console.log("add new res", res);
-              console.log("add new cart data", data);
-              statusCode = res.status;
-              localStorage.setItem("id", data.id);
-
-              if (statusCode == 200 || statusCode == 201) {
-                fetchMycart(data.id);
-              }
-            });
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        try {
-          axios
-            .post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`, {
-              items: mycartBody,
-            })
-            .then((res) => {
-              let data = res.data;
-              statusCode = res.status;
-              console.log("add old cart statusCode", statusCode);
-              console.log("add old cart data", data);
-              console.log("add old res", res);
-
-              if (statusCode == 200 || statusCode == 201) {
-                fetchMycart(id);
-              }
-              setTimeout(() => {
-                window.location.reload();
-              }, 500);
-            });
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    }
-  };
 
   const variants = data.variants;
   const getRemains = (selectedSize, selectColor) => {
@@ -426,7 +310,6 @@ const ProductDetailRight = (data) => {
         disabled={remains === 0 && readOnly === true ? true : false}
         onClick={(event) => {
           event.preventDefault();
-          // handleAddItem();
           setIsModalOpen(true);
         }}
       >
@@ -434,7 +317,7 @@ const ProductDetailRight = (data) => {
       </button>
 
         
-      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} modalItems={{quantity:quantity, selectColor:selectColor, selectedSize:selectedSize, nameModal:data.name ,imgModal:data.imageUrls[0], priceModal:data.promotionalPrice<data.price? data.promotionalPrice : data.price}}/>}
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} selectedData={uniqueDataSize}   modalItems={{quantity:quantity, selectColor:selectColor, selectedSize:selectedSize, nameModal:data.name ,imgModal:data.imageUrls[0], priceModal:data.promotionalPrice<data.price? data.promotionalPrice : data.price}}/>}
     </div>
   );
 };
