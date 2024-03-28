@@ -1,85 +1,53 @@
 import React, { useEffect, useState } from "react";
 
-const Carousel = (data) => {
-  const [readOnly, setReadOnly] = useState(false);
+const Carousel = ({ imageUrls, variants, readOnly: initialReadOnly, promotionalPrice, price }) => {
+  const [readOnly, setReadOnly] = useState(initialReadOnly);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  console.log("dataZOZOZOZO", data);
-
-  let images = [];
-  if (data && data?.imageUrls) {
-    images = data?.imageUrls;
-  }
+  const [selectedImage, setSelectedImage] = useState(imageUrls[0]);
 
   useEffect(() => {
-    const sum = sumRemains(data.variants);
+    const sum = sumRemains(variants);
+    setReadOnly(sum === 0 || initialReadOnly);
+  }, [variants, initialReadOnly]);
 
-    if (sum === 0 || data.readOnly === true) {
-      // If all variants are out of stock
-      setReadOnly(true);
-    } else {
-      setReadOnly(false);
-    }
-  }, [data]);
-  useEffect(() => {
-    if (data.readOnly === true) {
-      setReadOnly(true);
-    } else {
-      setReadOnly(false);
-    }
-  }, [data.readOnly]);
-
-  // Function to calculate the sum of "remains" values
+  // calculate the sum of "remains" 
   function sumRemains(variants) {
-    let sum = 0;
-    for (const variant of variants) {
-      sum += variant.remains;
-    }
-    return sum;
+    return variants.reduce((sum, variant) => sum + variant.remains, 0);
   }
 
   const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    const newIndex = (currentImageIndex + 1) % imageUrls.length;
+    setCurrentImageIndex(newIndex);
+    setSelectedImage(imageUrls[newIndex]);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
+    const newIndex = (currentImageIndex - 1 + imageUrls.length) % imageUrls.length;
+    setCurrentImageIndex(newIndex);
+    setSelectedImage(imageUrls[newIndex]);
   };
 
-  const thumbnailImages = images.filter(
-    (_, index) => index !== currentImageIndex
-  );
-
-  console.log("readOnly (Carousel)", readOnly);
+  const selectImage = (index) => {
+    setCurrentImageIndex(index);
+    setSelectedImage(imageUrls[index]);
+  };
 
   return (
-    <div className="flex flex-col gap-4 mx-auto relative flex-1 w-[343px] md:w-[514.5px] 2xl:max-w-[780px] lg:mr-10">
-      <div className="relative aspect-square w-full">
+    <div className=" flex flex-col justify-center items-center gap-2 min-w-[343px]">
+      <div className=" relative w-[343px] h-[343px] laptop:w-[514.5px] laptop:h-[514.5px] desktop:w-[780px] desktop:h-[780px] desktop:mb-4">
         {/* main image */}
-
         <img
-          src={images[currentImageIndex]}
+          src={selectedImage}
           alt="Product"
-          className={`w-full h-full aspect-square object-cover ${
-            readOnly ? "brightness-50" : ""
-          }`}
+          className={`w-full h-full object-cover ${readOnly ? "brightness-50" : ""}`}
         />
-        {data.promotionalPrice < data.price ? (
-          <div
-            className={`absolute right-0 top-8 px-2 py-1 ${
-              readOnly ? "bg-black w-48 h-14" : "bg-[#FF000D]"
-            } text-center text-sm lg:text-2xl text-white flex justify-center items-center `}
-          >
-            {readOnly ? "Out Of Stock" : "Sale"}
-          </div>
-        ) : null}
-
+        
+        {/* Left arrow */}
         <button
           onClick={prevImage}
           className="absolute left-[16px] top-1/2 transform -translate-y-1/2  w-8 h-8"
         >
+          {/*left arrow SVG */}
           <svg
             width="41"
             height="41"
@@ -102,10 +70,12 @@ const Carousel = (data) => {
             />
           </svg>
         </button>
+        {/* Right arrow */}
         <button
           onClick={nextImage}
-          className="absolute right-[26px] top-1/2 transform -translate-y-1/2 w-8 h-8 "
+          className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-8 h-8"
         >
+          {/*right arrow SVG */}
           <svg
             width="41"
             height="41"
@@ -129,23 +99,29 @@ const Carousel = (data) => {
             />
           </svg>
         </button>
-      </div>
-
-      {/* 4 pictures below the main pic */}
-      <div className="flex w-full justify-between">
-        {thumbnailImages.map((image, index) => (
+        {/* promotional price */}
+        {promotionalPrice < price ? (
           <div
-            key={index}
-            className="w-20 h-20 md:w-[100px] md:h-[100px] lg:w-[140px] lg:h-[140px]"
+            className={`absolute right-0 top-8  ${
+              readOnly ? "bg-black w-[85px] h-[25px] laptop:w-44 laptop:h-10 desktop:w-48 desktop:h-14" : "bg-[#FF000D] w-10 h-6 laptop:w-14 laptop:h-10 desktop:w-[91.5px] desktop:h-[57px]"
+            } text-center text-xs laptop:text-xl desktop:text-2xl text-white flex justify-center items-center `}
           >
-            <img
-              src={image}
-              alt={`Thumbnail ${index}`}
-              className={`w-full h-full object-cover ${
-                readOnly ? "brightness-50" : ""
-              }`}
-            />
+            {readOnly ? "Out Of Stock" : "Sale"}
           </div>
+        ) : null}
+      </div>
+      {/* Thumbnails */}
+      <div className=" flex justify-center gap-2 w-full ">
+        {imageUrls.map((image, index) => (
+          <img
+            key={index}
+            src={image}
+            alt={`Thumbnail ${index}`}
+            onClick={() => selectImage(index)}
+            className={`w-[62px] h-[62px] laptop:w-24 laptop:h-24 desktop:w-[149px] desktop:h-[149px] object-cover ${
+                readOnly ? "brightness-50" : ""
+              } ${index === currentImageIndex ? "border-2 border-black" : ""}`}
+          />
         ))}
       </div>
     </div>
