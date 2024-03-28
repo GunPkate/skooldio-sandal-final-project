@@ -12,7 +12,7 @@ export default function AccordianRoot(input) {
   const gender = capitalizeFirstLetter(input);
 
   return (
-    <div className="collapse collapse-arrow join-item">
+    <div className="collapse collapse-arrow join-item z-100">
       <input
         type="radio"
         name="my-accordion-4"

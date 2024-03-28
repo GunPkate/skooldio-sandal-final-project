@@ -76,7 +76,9 @@ export default function Products() {
                       <Drawer.Content className="bg-zinc-100 flex flex-col rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
                         <div className="flex flex-col w-full bg-white items-center px-[18px] pb-8 rounded-xl">
                           <div className="flex justify-between w-full py-8 text-info text-[16px]">
-                            <Drawer.Trigger>Cancel</Drawer.Trigger>
+                            <Drawer.Trigger className="active:text-info/50">
+                              Cancel
+                            </Drawer.Trigger>
                             <h2 className="font-semibold text-lg text-black">
                               Sort By
                             </h2>
@@ -84,6 +86,7 @@ export default function Products() {
                               onClick={() =>
                                 handleFilterSelect("Price - Low to high")
                               }
+                              className="active:text-info/50"
                             >
                               Reset
                             </button>
@@ -134,7 +137,7 @@ export default function Products() {
                             </li>
                           </ul>
                           <button
-                            className="bg-black text-white py-[17px] px-auto w-full"
+                            className="bg-secondary text-white py-[17px] px-auto w-full active:bg-secondary-700"
                             onClick={() => handleFilterSelect(filterOptions)}
                           >
                             Apply
