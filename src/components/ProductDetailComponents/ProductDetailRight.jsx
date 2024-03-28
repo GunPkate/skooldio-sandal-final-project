@@ -48,6 +48,7 @@ const ProductDetailRight = (data) => {
     return sum;
   }
 
+
   // function to handle size selection
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
@@ -228,15 +229,17 @@ const ProductDetailRight = (data) => {
     }
   };
 
+
+
   const variants = data.variants;
   const getRemains = (selectedSize, selectColor) => {
+    const hasSize = uniqueDataSize[0].size?.length > 0;
+  
     const variant = variants.find((v) => {
-      if (uniqueDataSize[0].size?.length > 0) {
-        return (
-          v.size === selectedSize || (null && v.color === selectColor) || ""
-        );
+      if (hasSize) {
+        return v.size === selectedSize && v.color === selectColor;
       } else {
-        return v.color === selectColor || "";
+        return v.color === selectColor;
       }
     });
     return variant ? variant.remains : 0;
@@ -304,7 +307,7 @@ const ProductDetailRight = (data) => {
 
       {/* lower information from color below*/}
       <div className="mb-6 mt-14">
-        <div className="laptop:w-72 desktop:w-80">
+        <div className="laptop:w-72 desktop:w-80 mb-6">
           <div className="font-normal text-secondary-700 mb-2">Color</div>
           <div className="w-full flex ">
             {/* Color options */}

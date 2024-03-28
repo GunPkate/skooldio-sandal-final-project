@@ -115,9 +115,18 @@ const Carousel = ({
                 : "bg-[#FF000D] w-10 h-6 laptop:w-14 laptop:h-10 lg:w-[91.5px] lg:h-[57px]"
             } text-center text-xs laptop:text-xl desktop:text-2xl text-white flex justify-center items-center `}
           >
+            {console.log("readOnlyCarousel", readOnly)}
             {readOnly ? "Out Of Stock" : "Sale"}
           </div>
-        ) : null}
+        ) : <div
+            className={`absolute right-0 top-[14px] lg:top-8  ${
+              readOnly
+                ? "bg-black w-[85px] h-[25px] laptop:w-44 laptop:h-10 desktop:w-48 desktop:h-14"
+                : null
+            } text-center text-xs laptop:text-xl desktop:text-2xl text-white flex justify-center items-center `}
+          >
+            {readOnly ? "Out Of Stock" : null}
+          </div>}
       </div>
       {/* Thumbnails */}
       <div className=" flex justify-center gap-2 w-full ">
