@@ -145,13 +145,11 @@ const ProductDetailRight = (data) => {
                     color: Array.from(
                       new Set(dataDetail.variants.map((x) => x.color))
                     ).sort(),
-                    // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
                     size: Array.from(
                       new Set(dataDetail.variants.map((x) => x.size))
                     ).sort(),
                   };
 
-                  // console.log(displayBody)
                   myCartTemp.push(displayBody);
 
                   setMyCart(Array.from(new Set(myCartTemp.map((x) => x))));
@@ -261,6 +259,11 @@ const ProductDetailRight = (data) => {
     }
   });
 
+  const onQuantityChange = (newQuantity) => {
+    setQuantity(newQuantity);
+    console.log(`Quantity updated to: ${newQuantity}`);
+  };
+
   return (
     <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[343px] lg:mt-0  ">
       {/* upper infomation */}
@@ -294,7 +297,6 @@ const ProductDetailRight = (data) => {
             </div>
           )}
         </div>
-        {console.log("readOnlyYYY", readOnly)}
         <div className="text-danger text-2xl">
           {readOnly === true ? (
             <div className="text-xl font-bold mb-6">Out of stock</div>
@@ -391,7 +393,7 @@ const ProductDetailRight = (data) => {
           <span className="text-red-500 font-semibold text-xl">{`(In stock : ${remains})`}</span>
         </div>
         {/* dropdown to select Qty */}
-        <Dropdown />
+        <Dropdown onQuantityChange={onQuantityChange} />
       </div>
 
       {/* Add to cart button */}

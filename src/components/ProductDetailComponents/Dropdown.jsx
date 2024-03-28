@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Dropdown = () => {
+const Dropdown = ({onQuantityChange}) => {
   const [quantity, setQuantity] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -9,6 +9,7 @@ const Dropdown = () => {
   const selectItem = (value) => {
     setQuantity(value);
     setIsOpen(false); // Close the dropdown
+    onQuantityChange(value); // Call function with the new quantity value
   };
 
   return (
