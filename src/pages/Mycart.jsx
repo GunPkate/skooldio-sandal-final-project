@@ -295,7 +295,7 @@ export default function Mycart() {
               My Cart{" "}
             </h1>
           </div>
-          <div className="section section-mycart lg:flex md:flex:none md:block max-w-[1600px] mx-auto lg:gap-10 md:px-10">
+          <div className="section section-mycart xl:flex md:flex:none md:block max-w-[1600px] mx-auto lg:gap-10 md:px-10">
             <CardTemplate
               title={"Items"}
               width={"w-full"}
