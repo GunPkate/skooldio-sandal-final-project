@@ -1,6 +1,7 @@
 import React from "react";
+import { numberWithCommas } from './ProductDetailRight';
 
-const Modal = ({modalItems}) => {
+const Modal = ({ modalItems, onClose }) => {
   return (
     //back shadow
     <div className="flex justify-center items-center  w-full h-screen fixed top-0 left-0 bg-black/50">
@@ -10,7 +11,7 @@ const Modal = ({modalItems}) => {
           <h1 className="text-lg font-semibold lg:text-2xl">
             Items added to your cart
           </h1>
-          <button>
+          <button onClick={onClose}>
             <svg
               width="40"
               height="40"
@@ -47,7 +48,7 @@ const Modal = ({modalItems}) => {
               <p className=" text-[#222222] font-normal">Qty: {modalItems.quantity}</p>
             </div>
             <div className="text-lg font-bold flex justify-end lg:flex-col lg:justify-center lg:text-2xl ">
-              {modalItems.priceModal}
+              {numberWithCommas(modalItems.priceModal * modalItems.quantity)}
             </div>
           </div>
         </div>

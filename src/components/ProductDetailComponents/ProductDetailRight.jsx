@@ -5,6 +5,11 @@ import axios from "axios";
 import Dropdown from "./Dropdown";
 import Modal from "./Modal";
 
+// price with commas from k'Ter (product cart)
+export function numberWithCommas(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectColor, setSelectColor] = useState(null);
@@ -40,6 +45,7 @@ const ProductDetailRight = (data) => {
       setReadOnly(false);
     }
   }, []);
+  
 
   // Function to calculate the sum of "remains" values
   function sumRemains(variants) {
@@ -49,6 +55,7 @@ const ProductDetailRight = (data) => {
     }
     return sum;
   }
+  
 
   // function to handle size selection
   const handleSizeSelection = (size) => {
@@ -85,10 +92,7 @@ const ProductDetailRight = (data) => {
     setRemains(remains);
   };
 
-  // price with commas from k'Ter (product cart)
-  function numberWithCommas(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+  
 
   //rating section from k'Ter (product cart)
   const createStars = (rating) => {
@@ -434,5 +438,5 @@ const ProductDetailRight = (data) => {
   );
 };
 
-export default ProductDetailRight;
+export default  ProductDetailRight;
 
