@@ -6,6 +6,7 @@ import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
 import DeleteLogo from "../assets/delete.svg";
 import logo from "../../src/assets/Logo/Storefront.svg";
+import noItem from "../../src/assets/Logo/noItem.svg"
 
 function numberWithCommas(num) {
   const number = (Math.round(num * 100) / 100).toFixed(2);
@@ -275,12 +276,12 @@ export default function Mycart() {
     WinPrint.close();
   };
 
-  const noItemImg = "https://picsum.photos/200/300";
+  const noItemImg = noItem;
 
   return (
     <>
       <Navbar />
-      {!loading && userPurhcase.length > 0 ? (
+
         <>
           {/* <button onClick={()=>{console.log(JSON.stringify(selectedDefault))}}>1234</button> */}
           <div className="lg:mx-auto bg-gray-50">
@@ -635,11 +636,6 @@ export default function Mycart() {
             </div>
           </div>
         </>
-      ) : (
-        <div className="h-[80vh]">
-          <LoadingSpinner />
-        </div>
-      )}
       <Footer />
     </>
   );
