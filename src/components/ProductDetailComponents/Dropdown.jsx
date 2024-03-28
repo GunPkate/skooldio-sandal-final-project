@@ -42,7 +42,7 @@ const Dropdown = ({onQuantityChange}) => {
       {isOpen && (
         <ul
           tabIndex={0}
-          className="dropdown-content z-[1] flex flex-col items-center shadow bg-base-100 rounded-none w-full"
+          className="dropdown-content z-[500] flex flex-col items-center shadow bg-base-100 rounded-none w-full relative"
         >
           {[...Array(10).keys()].map((number) => (
             <li

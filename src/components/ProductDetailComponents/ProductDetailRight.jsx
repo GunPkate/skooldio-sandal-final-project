@@ -65,7 +65,6 @@ const ProductDetailRight = (data) => {
   const handleColorSelection = (color) => {
     setSelectedSize("");
 
-    // setRemains((preProv) => getRemains(selectedSize, color  || ''));
     setSelectColor(color);
     const remains = getRemains(selectedSize || "", color);
     if (uniqueDataSize[0].size?.length == 0) {
@@ -178,7 +177,6 @@ const ProductDetailRight = (data) => {
 
     console.log("Add Item", addItem);
     if (mycartBody.length) {
-      // setuserPurhcase(mycartBody);
       console.log(mycartBody);
 
       let statusCode = "";
@@ -242,11 +240,8 @@ const ProductDetailRight = (data) => {
     return variant ? variant.remains : 0;
   };
 
-  // const remains = getRemains(selectedSize, selectColor);
-  // console.log(`Remains for size ${selectedSize} and color ${selectColor}: ${remains}`);
 
   const sizeOrder = { S: 1, M: 2, L: 3, XL: 4 };
-
   uniqueDataSize.sort((a, b) => {
     // for number case
     if (!isNaN(a.size) && !isNaN(b.size)) {
