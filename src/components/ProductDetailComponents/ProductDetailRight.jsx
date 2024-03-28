@@ -246,9 +246,21 @@ const ProductDetailRight = (data) => {
   // const remains = getRemains(selectedSize, selectColor);
   // console.log(`Remains for size ${selectedSize} and color ${selectColor}: ${remains}`);
 
-  const order = { S: 1, M: 2, L: 3, XL: 4 };
+  const sizeOrder = { S: 1, M: 2, L: 3, XL: 4 };
 
-  uniqueDataSize.sort((a, b) => order[a.size] - order[b.size]);
+  uniqueDataSize.sort((a, b) => {
+    // for number case
+    if (!isNaN(a.size) && !isNaN(b.size)) {
+      return parseInt(a.size) - parseInt(b.size);
+    }
+
+    // letters (S, M, L, XL)
+    if (isNaN(a.size) && isNaN(b.size)) {
+      return sizeOrder[a.size] - sizeOrder[b.size];
+    }
+
+    
+  });
 
   return (
     <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[343px] lg:mt-0  ">
@@ -379,87 +391,8 @@ const ProductDetailRight = (data) => {
           Qty.{" "}
           <span className="text-red-500 font-semibold text-xl">{`(In stock : ${remains})`}</span>
         </div>
-
-        {/* <form className=" max-w-xs flex justify-start">
-          <div className="relative flex items-start max-w-[8rem]">
-            <button
-              type="button"
-              id="decrement-button"
-              disabled={
-                remains === 0 ? true : false || quantity === 1 ? true : false
-              }
-              data-input-counter-decrement="quantity-input"
-              className="bg-gray-100  hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
-              onClick={() => {
-                if (quantity > 1) {
-                  setQuantity(quantity - 1);
-                }
-              }}
-            >
-              <svg
-                className="w-3 h-3 text-gray-900 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 2"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 1h16"
-                />
-              </svg>
-            </button>
-            <input
-              type="text"
-              id="quantity-input"
-              data-input-counter
-              aria-describedby="helper-text-explanation"
-              className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 "
-              placeholder={quantity}
-              disabled
-              required
-            />
-            <button
-              type="button"
-              id="increment-button"
-              disabled={
-                remains === 0
-                  ? true
-                  : false || quantity >= remains
-                  ? true
-                  : false
-              }
-              data-input-counter-increment="quantity-input"
-              className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
-              onClick={() => {
-                if (quantity < remains) {
-                  setQuantity(quantity + 1);
-                }
-              }}
-            >
-              <svg
-                className="w-3 h-3 text-gray-900 "
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 18"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 1v16M1 9h16"
-                />
-              </svg>
-            </button>
-          </div>
-        </form> */}
+        {/* dropdown to select Qty */}
         <Dropdown />
-        
       </div>
 
       {/* Add to cart button */}
