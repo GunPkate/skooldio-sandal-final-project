@@ -334,7 +334,6 @@ export default function Mycart() {
                         </div>
 
                         <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex w-full gap-10">
-                          {colorBtn[1]} {sizeBtn[1]}
                           <div className="gap-4 w-full grid grid-cols-2 grid-rows-2 xl:grid-cols-3 xl:grid-rows-1">
                             <div className="col-span-2 xl:col-span-1">
                               <h1 className="text-gray-700 font-normal p-0 m-0">
