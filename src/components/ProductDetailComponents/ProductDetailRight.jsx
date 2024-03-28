@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
 import axios from "axios";
 import Dropdown from "./Dropdown";
+import Modal from "./Modal";
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -13,6 +14,7 @@ const ProductDetailRight = (data) => {
   const { permalink } = useParams();
   const { userPurhcase, setuserPurhcase } = useContext(UserContext);
   const [myCart, setMyCart] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   let description = [];
   if (data) {
@@ -399,99 +401,38 @@ const ProductDetailRight = (data) => {
       </div>
 
       {/* Add to cart button */}
-      {remains === 0 && readOnly === true ? (
+      {/* {remains === 0 && readOnly === true ? (
         <button className="w-full h-[54px] bg-black text-white" disabled>
           Out of Stock
         </button>
       ) : (
+        <Link
+          className="flex justify-center items-center w-full h-[54px] bg-black text-white"
+          to="/Mycart/"
+          onClick={() => {
+            handleAddItem();
+            setIsModalOpen(true);
+          }}
+        >
+          Add to cart
+        </Link>
+      )} */}
+      <button
+        className="flex justify-center items-center w-full h-[54px] bg-black text-white"
+        onClick={(event) => {
+          event.preventDefault();
+          // handleAddItem();
+          setIsModalOpen(true);
+        }}
+      >
+        Add to cart
+      </button>
 
-        <>
-            <button className="btn" onClick={()=>document.getElementById('my_modal_5').showModal()}>open modal</button>
-            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-
-              <div className="flex justify-center items-center  w-full h-screen fixed top-0 left-0 bg-black/50">
-                {/*custom modal  */}
-                <div className="w-[343px] h-[518px] rounded-2xl bg-white p-6 lg:w-[900px] lg:h-[374px]">
-                  <div className="flex justify-between items-center w-[295px] h-10 mb-4 lg:w-[852px]">
-                    <h1 className="text-lg font-semibold lg:text-2xl">
-                      Items added to your cart
-                    </h1>
-                    <div className="modal-action">
-                      <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn">
-                          <svg
-                            width="40"
-                            height="40"
-                            viewBox="0 0 40 40"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M12 12L28 28"
-                              stroke="#222222"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                            />
-                            <path
-                              d="M28 12L12 28"
-                              stroke="#222222"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                            />
-                          </svg>
-                        </button>
-                      </form>
-                    </div>
-
-                  </div>
-                  <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:py-6 lg:gap-x-10">
-                    <img
-                      className="w-40 h-40 mb-4 lg:mb-0"
-                      src="https://fastly.picsum.photos/id/1003/160/160.jpg?hmac=E2JDyHeevPoJ7onoYYBQwmFvDmm3vZLdqJ4Z8L_pUdA"
-                      alt="mock-img"
-                    />
-                    <div className="flex flex-col item-start w-full h-[82px] mb-6 lg:flex-row lg:justify-between lg:w-[652px] lg:h-40 lg:mb-0 ">
-                      <div className="flex flex-col justify-center  ">
-                        <h2 className="text-lg font-bold lg:text-2xl">
-                          Product Name: Rayon
-                        </h2>
-                        <p className=" text-[#222222] font-normal">{quantity}</p>
-                      </div>
-                      <div className="text-lg font-bold flex justify-end lg:flex-col lg:justify-center lg:text-2xl ">
-                        {quantity }
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-4 justify-center items-center lg:flex-row">
-                    <button className="w-full h-14 bg-[#222222]  text-white lg:w-1/2">
-                    <Link
-                      className="flex justify-center items-center w-full h-[54px] bg-black text-white"
-                      to="/Mycart/"
-                      onClick={() => {
-                        handleAddItem();
-                      }}
-                    >
-                      Add to cart
-                    </Link>
-                    </button>
-                    <button className="w-full h-14 bg-white border-[#E1E1E1] border lg:w-1/2">
-                      Continue Shopping
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-
-            </dialog>
-        </>
         
-      )}
-
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
-
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} modalItems={{quantity:quantity, selectColor:selectColor, selectedSize:selectedSize, nameModal:data.name ,imgModal:data.imageUrls[0], priceModal:data.promotionalPrice<data.price? data.promotionalPrice : data.price}}/>}
     </div>
   );
 };
 
 export default ProductDetailRight;
+

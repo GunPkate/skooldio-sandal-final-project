@@ -1,6 +1,6 @@
 import React from "react";
 
-const Modal = () => {
+const Modal = ({modalItems}) => {
   return (
     //back shadow
     <div className="flex justify-center items-center  w-full h-screen fixed top-0 left-0 bg-black/50">
@@ -35,19 +35,19 @@ const Modal = () => {
         </div>
         <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:py-6 lg:gap-x-10">
           <img
-            className="w-40 h-40 mb-4 lg:mb-0"
-            src="https://fastly.picsum.photos/id/1003/160/160.jpg?hmac=E2JDyHeevPoJ7onoYYBQwmFvDmm3vZLdqJ4Z8L_pUdA"
+            className="w-40 h-40 object-cover mb-4 lg:mb-0"
+            src={modalItems.imgModal}
             alt="mock-img"
           />
           <div className="flex flex-col item-start w-full h-[82px] mb-6 lg:flex-row lg:justify-between lg:w-[652px] lg:h-40 lg:mb-0 ">
             <div className="flex flex-col justify-center  ">
               <h2 className="text-lg font-bold lg:text-2xl">
-                Product Name: Rayon
+                {modalItems.nameModal}
               </h2>
-              <p className=" text-[#222222] font-normal">Qty : 2</p>
+              <p className=" text-[#222222] font-normal">Qty: {modalItems.quantity}</p>
             </div>
             <div className="text-lg font-bold flex justify-end lg:flex-col lg:justify-center lg:text-2xl ">
-              THB 2,000
+              {modalItems.priceModal}
             </div>
           </div>
         </div>
@@ -65,3 +65,4 @@ const Modal = () => {
 };
 
 export default Modal;
+
