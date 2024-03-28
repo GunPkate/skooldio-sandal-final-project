@@ -48,7 +48,7 @@ const Dropdown = ({ onQuantityChange, remains, readOnly }) => {
       {isOpen && (
         <ul
           tabIndex={0}
-          className="dropdown-content z-[500] flex flex-col items-center shadow bg-base-100 rounded-none w-full relative"
+          className="dropdown-content z-[500] flex flex-col items-center shadow bg-base-100 rounded-none w-full lg:w-[139px] relative left-0"
         >
           {[...Array(numberDropdown).keys()].map((number) => (
             <li
