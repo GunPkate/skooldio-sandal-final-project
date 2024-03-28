@@ -309,9 +309,9 @@ export default function Mycart() {
                     key={id}
                     className="py-6 mx-6 lg:flex lg:inline-block md:block border-solid border-secondary-300 border-b-[0.5px]"
                   >
-                    <div className="justify-center min-w-[200px]">
+                    <div className="justify-center lg:min-w-[200px]">
                       <img
-                        className="h-[200px] w-full object-cover"
+                        className="h-[200px] sm:h-[300px] lg:h-[200px] w-full object-cover"
                         src={item.image}
                         alt=""
                       />
@@ -335,8 +335,8 @@ export default function Mycart() {
                         </button>
                       </div>
 
-                      <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex w-full justify-between">
-                        <div className="gap-4 grid grid-cols-2 grid-rows-2 xl:grid-cols-3 xl:grid-rows-1 w-[450px]">
+                      <div className="text-[16px] text-gray-700 dark:text-gray-400 lg:flex w-full gap-10">
+                        <div className="gap-4 w-full grid grid-cols-2 grid-rows-2 xl:grid-cols-3 xl:grid-rows-1">
                           <div className="col-span-2 xl:col-span-1">
                             <h1 className="text-gray-700 text-[16px] p-0 m-0">
                               Colors
@@ -454,28 +454,26 @@ export default function Mycart() {
                 ))
               ) : (
                 <>
-                  <div className="flex flex-col justify-center items-center">
-                    <img
-                      className={
-                        "lg:px-[24px] pb-[24px] " +
-                        "object-cover  h-[209px] w-[209px] "
-                      }
-                      src={noItemImg}
-                      alt=""
-                    />
-                    <h1 className="text-2xl font-bold mx-auto">
-                      Your cart is empty
-                    </h1>
-                    <p className="text-lg font-semibold max-w-[480px] text-center">
-                      Looks like you have not added anything to your cart. Go
-                      ahead & explore top categories.
-                    </p>
-                    <Link
-                      to={"/"}
-                      className="button h-[54px] flex justify-center items-center w-[173px] bg-black text-white mt-[40px] mb-[16px]"
-                    >
-                      Continue Shoping
-                    </Link>
+                  <div className="flex  justify-center">
+                    <div>
+                      <img
+                        className={
+                          "lg:px-[24px] pb-[24px] " +
+                          "object-cover  h-[209px] w-[209px] "
+                        }
+                        src={noItemImg}
+                        alt=""
+                      />
+                      <h1 className="text-2xl font-bold mx-auto">
+                        Your cart is empty
+                      </h1>
+                      <button
+                        style={{ width: "100%" }}
+                        className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]"
+                      >
+                        Continue Shoping
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
@@ -484,7 +482,7 @@ export default function Mycart() {
             <CardTemplate
               title={"Summary"}
               width={"min-w-[32.08%]"}
-              height={" h-fit "}
+              height={" max-h-[500px] "}
               mr={""}
               ml={""}
             >
@@ -492,14 +490,14 @@ export default function Mycart() {
                 <table
                   style={{ width: "100%" }}
                   // style={{width:"100%",borderCollapse:"separate" ,borderSpacing: "0 1em" }}
-                  className="font-normal text-gray-700 dark:text-gray-400 block"
+                  className="text-[16px] text-gray-700 dark:text-gray-400 block"
                 >
                   <tbody className="flex flex-col gap-4">
                     {userPurhcase.length > 0 ? (
                       userPurhcase.map((item) => (
                         <tr key={item.id}>
                           <td className="w-full">
-                            <h1 className="p-0 m-0 text-[16px] text-secondary pr-2">
+                            <h1 className="p-0 m-0 text-[16px] text-secondary">
                               {item.name}
                             </h1>
                           </td>
