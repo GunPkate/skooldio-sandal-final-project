@@ -459,7 +459,7 @@ const ProductDetailRight = (data) => {
                         <p className=" text-[#222222] font-normal">{quantity}</p>
                       </div>
                       <div className="text-lg font-bold flex justify-end lg:flex-col lg:justify-center lg:text-2xl ">
-                        {quantity * price}
+                        {quantity }
                       </div>
                     </div>
                   </div>
