@@ -7,6 +7,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import DeleteLogo from "../assets/delete.svg";
 import logo from "../../src/assets/Logo/Storefront.svg";
 import noItem from "../../src/assets/Logo/noItem.svg";
+import { Link } from "react-router-dom";
 
 function numberWithCommas(num) {
   const number = (Math.round(num * 100) / 100).toFixed(2);
@@ -469,9 +470,12 @@ export default function Mycart() {
                       Looks like you have not added anything to your cart. Go
                       ahead & explore top categories.
                     </p>
-                    <button className="button h-[54px] w-[173px] bg-black text-white mt-[40px] mb-[16px]">
+                    <Link
+                      to={"/"}
+                      className="button h-[54px] flex justify-center items-center w-[173px] bg-black text-white mt-[40px] mb-[16px]"
+                    >
                       Continue Shoping
-                    </button>
+                    </Link>
                   </div>
                 </>
               )}
