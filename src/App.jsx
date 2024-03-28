@@ -71,7 +71,7 @@ function App() {
           setCategories(categoriesGroup);
         });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -84,7 +84,7 @@ function App() {
           setCollections(data);
         });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -95,7 +95,6 @@ function App() {
           .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
           .then((res) => {
             let itemCart = res.data;
-            // console.log("Navbar get",itemCart)
             let myCartTemp = [];
             res.data.items.forEach(async (x) => {
               await axios
@@ -123,19 +122,16 @@ function App() {
                     ).sort(),
                   };
 
-                  // console.log(displayBody)
                   myCartTemp.push(displayBody);
 
                   setMyCart(Array.from(new Set(myCartTemp.map((x) => x))));
                   setuserPurhcase(myCartTemp);
                 });
             });
-
-            console.log("Navbar myCartTemp", myCartTemp);
           });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

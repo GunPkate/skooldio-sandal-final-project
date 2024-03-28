@@ -11,7 +11,6 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
 
   const handleAddItem = async () => {
     const id = localStorage.getItem("id");
-    console.log("Add Item ID", id);
 
     let addItem = {
       skuCode: selectedData[0].skuCode,
@@ -22,9 +21,7 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
     let mycartBody = [];
     mycartBody.push(addItem);
 
-    console.log("Add Item", addItem);
     if (mycartBody.length) {
-      console.log(mycartBody);
 
       let statusCode = "";
 
@@ -36,8 +33,6 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
             })
             .then((res) => {
               let data = res.data;
-              console.log("add new res", res);
-              console.log("add new cart data", data);
               statusCode = res.status;
               localStorage.setItem("id", data.id);
 
@@ -46,7 +41,7 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
               }
             });
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       } else {
         try {
@@ -57,9 +52,6 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
             .then((res) => {
               let data = res.data;
               statusCode = res.status;
-              console.log("add old cart statusCode", statusCode);
-              console.log("add old cart data", data);
-              console.log("add old res", res);
 
               if (statusCode == 200 || statusCode == 201) {
                 fetchMycart(id);
@@ -69,7 +61,7 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
               }, 500);
             });
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
     }
@@ -82,7 +74,6 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
           .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
           .then((res) => {
             let itemCart = res.data;
-            console.log("Navbar get", itemCart);
             let myCartTemp = [];
             res.data.items.forEach(async (x) => {
               await axios
@@ -118,7 +109,7 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
           });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

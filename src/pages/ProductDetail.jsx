@@ -24,7 +24,7 @@ export default function ProductDetail() {
         setProducts(data);
         setLoading(false);
       })
-      .catch((err) => console.log("error ", err));
+      .catch((err) => console.error("error ", err));
   }, [`${BASE_URL}products/${permalink}`]);
 
   if (loading && products.length === 0) {

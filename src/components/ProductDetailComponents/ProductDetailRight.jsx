@@ -144,7 +144,6 @@ const ProductDetailRight = (data) => {
 
   const onQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
-    console.log(`Quantity updated to: ${newQuantity}`);
   };
 
   return (

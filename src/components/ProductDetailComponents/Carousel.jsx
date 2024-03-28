@@ -115,7 +115,6 @@ const Carousel = ({
                 : "bg-[#FF000D] w-10 h-6 laptop:w-14 laptop:h-10 lg:w-[91.5px] lg:h-[57px]"
             } text-center text-xs laptop:text-xl desktop:text-2xl text-white flex justify-center items-center `}
           >
-            {console.log("readOnlyCarousel", readOnly)}
             {readOnly ? "Out Of Stock" : "Sale"}
           </div>
         ) : <div

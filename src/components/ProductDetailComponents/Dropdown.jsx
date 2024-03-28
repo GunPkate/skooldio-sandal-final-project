@@ -14,8 +14,6 @@ const Dropdown = ({ onQuantityChange, remains, readOnly }) => {
 
   const numberDropdown = remains < 10 ? remains : 10;
 
-  console.log(numberDropdown, "numberDropdownNNNNN");
-
   return (
     <div className="dropdown dropdown-bottom dropdown-end w-full">
       <div

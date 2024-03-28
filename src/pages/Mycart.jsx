@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import { UserContext } from "../App";
@@ -7,7 +7,6 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import DeleteLogo from "../assets/delete.svg";
 import logo from "../../src/assets/Logo/Storefront.svg";
 import noItem from "../../src/assets/Logo/noItem.svg";
-import { Link } from "react-router-dom";
 
 function numberWithCommas(num) {
   const number = (Math.round(num * 100) / 100).toFixed(2);
@@ -31,8 +30,6 @@ export default function Mycart() {
         await axios
           .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
           .then((res) => {
-            let itemCart = res.data;
-            // console.log("Navbar get",itemCart)
             let myCartTemp = [];
             res.data.items.forEach(async (x) => {
               await axios
@@ -54,13 +51,11 @@ export default function Mycart() {
                     color: Array.from(
                       new Set(dataDetail.variants.map((x) => x.color))
                     ).sort(),
-                    // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
                     size: Array.from(
                       new Set(dataDetail.variants.map((x) => x.size))
                     ).sort(),
                   };
 
-                  // console.log(displayBody)
                   myCartTemp.push(displayBody);
 
                   setMyCart(Array.from(new Set(myCartTemp.map((x) => x))));
@@ -71,13 +66,12 @@ export default function Mycart() {
           });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setLoading(false);
     }
   };
 
   const handleDelete = (e) => {
-    //My cart number
     let contextResult = userPurhcase.filter((x) => x.id !== e.id);
     setuserPurhcase(contextResult);
 
@@ -88,11 +82,8 @@ export default function Mycart() {
     );
   };
 
-  // localStorage.setItem('id',1234)
   const handleUpdateCart = async (item, name, value, itemNo) => {
     //<<<<<<<<<<<<<<<<  Set Condition >>>>>>>>>>>>>>>>>
-    console.log(colorBtn, sizeBtn);
-
     if (name === "size" && itemNo !== colorBtn[0] && colorBtn.length > 0) {
       resetBtn();
     }
@@ -114,7 +105,6 @@ export default function Mycart() {
     }
 
     //<<<<<<<<<<<<<<<<  Set Condition >>>>>>>>>>>>>>>>>
-
     let tempData = userPurhcase;
 
     //Get default colors and size
@@ -122,15 +112,12 @@ export default function Mycart() {
     let defaultVariant = tempData[itemNo].variants.filter(
       (x) => x.skuCode === defaultCode
     );
-    let defaultColor = defaultVariant[0].color;
-    let defaultSize = defaultVariant[0].size;
 
     // Select
     let selectedVariant = tempData[itemNo].variants;
 
     let firstFilter = [];
     let secondFilter = [];
-    console.log(tempData[itemNo].variants);
 
     let validate = null;
 
@@ -160,14 +147,12 @@ export default function Mycart() {
       secondFilter = selectedVariant.filter(
         (x) => x.color == colorBtn[1] && x.size == value
       );
-      console.log("secondFilter", secondFilter);
     }
 
     if (name == "color" && sizeBtn.length !== 0) {
       secondFilter = selectedVariant.filter(
         (x) => x.color == sizeBtn[1] && x.size == value
       );
-      console.log("secondFilter", secondFilter);
     }
 
     if (validate !== null && firstFilter.length !== 1) alert(validate);
@@ -191,7 +176,6 @@ export default function Mycart() {
       await updateMycartApi(qtyData);
       resetBtn();
     }
-    console.log(firstFilter);
 
     function updateMycartApi(bodyData) {
       axios
@@ -202,7 +186,6 @@ export default function Mycart() {
           bodyData
         )
         .then(async (resUpdate) => {
-          console.log(resUpdate);
           await fetchMycart(localStorage.getItem("id"));
           setSelectedNewItem([]);
         });
@@ -287,7 +270,6 @@ export default function Mycart() {
       <Navbar />
 
       <>
-        {/* <button onClick={()=>{console.log(JSON.stringify(selectedDefault))}}>1234</button> */}
         <div className="lg:mx-auto bg-gray-50">
           <div className="min-w=[100vw]">
             <h1
