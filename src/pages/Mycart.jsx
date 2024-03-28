@@ -134,6 +134,9 @@ export default function Mycart() {
 
     let validate = null;
 
+    if(name == "quantity"){
+      resetBtn();
+    }
     //First Select//
     if (name == "quantity" && colorBtn.length == 0 && sizeBtn.length == 0) {
       let qtyData = {
