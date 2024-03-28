@@ -439,11 +439,10 @@ export default function Mycart() {
                           </div>
                           <div
                             className={
-                              "align-baseline " +
-                              "mt-auto text-2xl font-bold  text-gray-900 dark:text-white flex w-[140px]"
+                              "mt-6 w-full text-end items-end text-3xl font-bold  text-gray-900 dark:text-white flex lg:w-fit"
                             }
                           >
-                            <h5 className="ml-auto text-black w-fit">
+                            <h5 className="ml-auto text-secondary truncate">
                               THB {item.price * item.quantity}
                             </h5>
                           </div>
