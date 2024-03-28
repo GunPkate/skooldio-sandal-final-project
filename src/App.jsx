@@ -5,6 +5,7 @@ import Homepage from "./pages/Homepage";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Mycart from "./pages/Mycart";
+import NotFound from "./pages/NotFound";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
     path: "/ProductDetail/:permalink",
     element: <ProductDetail />,
   },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 function App() {
@@ -49,7 +54,7 @@ function App() {
   useEffect(() => {
     getCategories();
     getCollection();
-    let id = localStorage.getItem('id')
+    let id = localStorage.getItem("id");
     fetchMycart(id);
   }, []);
 
@@ -85,44 +90,54 @@ function App() {
 
   const fetchMycart = async (id) => {
     try {
-  
-      if(id !== null || id !== undefined || id !== ""){
-        await axios.get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`).then( res => {
-        let itemCart =  res.data;
-        // console.log("Navbar get",itemCart)
-        let myCartTemp = []
-          res.data.items.forEach(async x=>{
-            await axios.get("https://api.storefront.wdb.skooldio.dev/products/"+x.productPermalink).then(resDetail=>{
-              const dataDetail = resDetail.data
-            
-              let displayBody = {
-                  id: x.id,
-                  name: dataDetail.name,
-                  skuCode: x.skuCode,
-                  quantity: x.quantity,
-                  variants:  dataDetail.variants,
-                  price: dataDetail.price,
-                  image: dataDetail.imageUrls[0],
-                  color: Array.from( new Set(dataDetail.variants.map(x=>x.color)) ).sort(),
-                  // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
-                  size: Array.from( new Set(dataDetail.variants.map(x=>x.size)) ).sort(),
-              }
-              
-              // console.log(displayBody)
-              myCartTemp.push(displayBody)
-              
-              setMyCart(Array.from( new Set(myCartTemp.map(x=>x)) ))
-              setuserPurhcase(myCartTemp)
-            })
-          })
+      if (id !== null || id !== undefined || id !== "") {
+        await axios
+          .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
+          .then((res) => {
+            let itemCart = res.data;
+            // console.log("Navbar get",itemCart)
+            let myCartTemp = [];
+            res.data.items.forEach(async (x) => {
+              await axios
+                .get(
+                  "https://api.storefront.wdb.skooldio.dev/products/" +
+                    x.productPermalink
+                )
+                .then((resDetail) => {
+                  const dataDetail = resDetail.data;
 
-          console.log("Navbar myCartTemp",myCartTemp)
-        })
+                  let displayBody = {
+                    id: x.id,
+                    name: dataDetail.name,
+                    skuCode: x.skuCode,
+                    quantity: x.quantity,
+                    variants: dataDetail.variants,
+                    price: dataDetail.price,
+                    image: dataDetail.imageUrls[0],
+                    color: Array.from(
+                      new Set(dataDetail.variants.map((x) => x.color))
+                    ).sort(),
+                    // colorCode: Array.from( new Set(data.variants.map(x=>x.colorCode)) ).sort(),
+                    size: Array.from(
+                      new Set(dataDetail.variants.map((x) => x.size))
+                    ).sort(),
+                  };
+
+                  // console.log(displayBody)
+                  myCartTemp.push(displayBody);
+
+                  setMyCart(Array.from(new Set(myCartTemp.map((x) => x))));
+                  setuserPurhcase(myCartTemp);
+                });
+            });
+
+            console.log("Navbar myCartTemp", myCartTemp);
+          });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <UserContext.Provider
