@@ -295,7 +295,7 @@ const ProductDetailRight = (data) => {
         className={`flex justify-center items-center w-full h-[54px] ${
           remains === 0 && readOnly === true
             ? "bg-secondary opacity-20 -z-10"
-            : "bg-white"
+            : "bg-black"
         } text-white`}
         disabled={remains === 0 && readOnly === true ? true : false}
         onClick={(event) => {
