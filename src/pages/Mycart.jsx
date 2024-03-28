@@ -18,7 +18,7 @@ export default function Mycart() {
   const { userPurhcase, setuserPurhcase } = useContext(UserContext);
   const [myCart, setMyCart] = useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [selectedNewItem, setSelectedNewItem] = useState([]);
   const [colorBtn, setColorBtn] = useState([]);
@@ -64,12 +64,14 @@ export default function Mycart() {
 
                   setMyCart(Array.from(new Set(myCartTemp.map((x) => x))));
                   setuserPurhcase(myCartTemp);
+                  setLoading(false);
                 });
             });
           });
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -303,179 +305,185 @@ export default function Mycart() {
               ml={" ml-0 "}
               mr={" mr-0"}
             >
-              {userPurhcase.length > 0 ? (
-                userPurhcase.map((item, id) => (
-                  <div
-                    key={id}
-                    className="py-6 mx-6 lg:flex lg:inline-block md:block border-solid border-secondary-300 border-b-[0.5px]"
-                  >
-                    <div className="justify-center lg:min-w-[200px]">
-                      <img
-                        className="h-[200px] sm:h-[300px] lg:h-[200px] w-full object-cover"
-                        src={item.image}
-                        alt=""
-                      />
-                    </div>
+              {!loading ? (
+                userPurhcase.length > 0 ? (
+                  userPurhcase.map((item, id) => (
                     <div
-                      style={{ width: "100%" }}
-                      className={
-                        "mt-6 lg:ml-10 lg:mt-0 flex flex-col justify-between leading-normal mx-auto"
-                      }
+                      key={id}
+                      className="py-6 mx-6 lg:flex lg:inline-block md:block border-solid border-secondary-300 border-b-[0.5px]"
                     >
-                      <div className="flex justify-between">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate pr-10">
-                          {item.name}
-                        </h5>
-                        <button
-                          onClick={(e) => {
-                            handleDelete(item);
-                          }}
-                        >
-                          <img src={DeleteLogo}></img>
-                        </button>
+                      <div className="justify-center lg:min-w-[200px]">
+                        <img
+                          className="h-[200px] sm:h-[300px] lg:h-[200px] w-full object-cover"
+                          src={item.image}
+                          alt=""
+                        />
                       </div>
+                      <div
+                        style={{ width: "100%" }}
+                        className={
+                          "mt-6 lg:ml-10 lg:mt-0 flex flex-col justify-between leading-normal mx-auto"
+                        }
+                      >
+                        <div className="flex justify-between">
+                          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate pr-10">
+                            {item.name}
+                          </h5>
+                          <button
+                            onClick={(e) => {
+                              handleDelete(item);
+                            }}
+                          >
+                            <img src={DeleteLogo}></img>
+                          </button>
+                        </div>
 
-                      <div className="text-[16px] text-gray-700 dark:text-gray-400 lg:flex w-full gap-10">
-                        <div className="gap-4 w-full grid grid-cols-2 grid-rows-2 xl:grid-cols-3 xl:grid-rows-1">
-                          <div className="col-span-2 xl:col-span-1">
-                            <h1 className="text-gray-700 text-[16px] p-0 m-0">
-                              Colors
-                            </h1>
+                        <div className="text-[16px] text-gray-700 dark:text-gray-400 lg:flex w-full gap-10">
+                          <div className="gap-4 w-full grid grid-cols-2 grid-rows-2 xl:grid-cols-3 xl:grid-rows-1">
+                            <div className="col-span-2 xl:col-span-1">
+                              <h1 className="text-gray-700 text-[16px] p-0 m-0">
+                                Colors
+                              </h1>
 
-                            <select
-                              name="colors"
-                              className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
-                              onChange={(e) => {
-                                handleUpdateCart(
-                                  item,
-                                  "color",
-                                  e.target.value,
-                                  id
-                                );
-                              }}
-                            >
-                              <option>
-                                {
-                                  userPurhcase[id].variants.filter(
-                                    (x) => x.skuCode == userPurhcase[id].skuCode
-                                  )[0].color
-                                }
-                              </option>
-                              {/* {Array.from(
+                              <select
+                                name="colors"
+                                className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
+                                onChange={(e) => {
+                                  handleUpdateCart(
+                                    item,
+                                    "color",
+                                    e.target.value,
+                                    id
+                                  );
+                                }}
+                              >
+                                <option>
+                                  {
+                                    userPurhcase[id].variants.filter(
+                                      (x) =>
+                                        x.skuCode == userPurhcase[id].skuCode
+                                    )[0].color
+                                  }
+                                </option>
+                                {/* {Array.from(
                                                     new Set( item.variants.map(x => <option>{x.color}</option>) )
                                                     )
                                                 } */}
-                              {userPurhcase?.filter((x) => x.id == item.id)
-                                .length > 0 ? (
-                                userPurhcase
-                                  ?.filter((x) => x.id == item.id)[0]
-                                  .color.map((y) => <option>{y}</option>)
-                              ) : (
-                                <></>
-                              )}
-                            </select>
-                          </div>
-                          <div>
-                            <h1 className="text-gray-700 text-[16px] p-0 m-0">
-                              Size
-                            </h1>
-                            <select
-                              name="size"
-                              className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
-                              onChange={(e) => {
-                                handleUpdateCart(
-                                  item,
-                                  "size",
-                                  e.target.value,
-                                  id
-                                );
-                              }}
-                            >
-                              <option>
-                                {
-                                  userPurhcase[id].variants.filter(
-                                    (x) => x.skuCode == userPurhcase[id].skuCode
-                                  )[0].size
-                                }
-                              </option>
-                              {/* {Array.from(
+                                {userPurhcase?.filter((x) => x.id == item.id)
+                                  .length > 0 ? (
+                                  userPurhcase
+                                    ?.filter((x) => x.id == item.id)[0]
+                                    .color.map((y) => <option>{y}</option>)
+                                ) : (
+                                  <></>
+                                )}
+                              </select>
+                            </div>
+                            <div>
+                              <h1 className="text-gray-700 text-[16px] p-0 m-0">
+                                Size
+                              </h1>
+                              <select
+                                name="size"
+                                className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
+                                onChange={(e) => {
+                                  handleUpdateCart(
+                                    item,
+                                    "size",
+                                    e.target.value,
+                                    id
+                                  );
+                                }}
+                              >
+                                <option>
+                                  {
+                                    userPurhcase[id].variants.filter(
+                                      (x) =>
+                                        x.skuCode == userPurhcase[id].skuCode
+                                    )[0].size
+                                  }
+                                </option>
+                                {/* {Array.from(
                                                         new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
                                                     )} */}
-                              {userPurhcase?.filter((x) => x.id == item.id)
-                                .length > 0 ? (
-                                userPurhcase
-                                  ?.filter((x) => x.id == item.id)[0]
-                                  .size.map((y) => <option>{y}</option>)
-                              ) : (
-                                <></>
-                              )}
-                            </select>
+                                {userPurhcase?.filter((x) => x.id == item.id)
+                                  .length > 0 ? (
+                                  userPurhcase
+                                    ?.filter((x) => x.id == item.id)[0]
+                                    .size.map((y) => <option>{y}</option>)
+                                ) : (
+                                  <></>
+                                )}
+                              </select>
+                            </div>
+                            <div>
+                              <h1 className="text-gray-700 text-[16px] p-0 m-0">
+                                Qty
+                              </h1>
+                              <select
+                                name="quantity"
+                                className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
+                                onChange={(e) => {
+                                  handleUpdateCart(
+                                    item,
+                                    "quantity",
+                                    e.target.value,
+                                    id
+                                  );
+                                }}
+                              >
+                                <option>{item.quantity}</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                              </select>
+                            </div>
                           </div>
-                          <div>
-                            <h1 className="text-gray-700 text-[16px] p-0 m-0">
-                              Qty
-                            </h1>
-                            <select
-                              name="quantity"
-                              className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
-                              onChange={(e) => {
-                                handleUpdateCart(
-                                  item,
-                                  "quantity",
-                                  e.target.value,
-                                  id
-                                );
-                              }}
-                            >
-                              <option>{item.quantity}</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                            </select>
+                          <div
+                            className={
+                              "mt-6 w-full text-end items-end text-3xl font-bold  text-gray-900 dark:text-white flex lg:w-fit"
+                            }
+                          >
+                            <h5 className="ml-auto text-secondary truncate">
+                              THB {numberWithCommas(item.price * item.quantity)}
+                            </h5>
                           </div>
-                        </div>
-                        <div
-                          className={
-                            "mt-6 w-full text-end items-end text-3xl font-bold  text-gray-900 dark:text-white flex lg:w-fit"
-                          }
-                        >
-                          <h5 className="ml-auto text-secondary truncate">
-                            THB {numberWithCommas(item.price * item.quantity)}
-                          </h5>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <>
-                  <div className="flex  justify-center">
-                    <div>
-                      <img
-                        className={
-                          "lg:px-[24px] pb-[24px] " +
-                          "object-cover  h-[209px] w-[209px] "
-                        }
-                        src={noItemImg}
-                        alt=""
-                      />
-                      <h1 className="text-2xl font-bold mx-auto">
-                        Your cart is empty
-                      </h1>
-                      <button
-                        style={{ width: "100%" }}
-                        className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]"
-                      >
-                        Continue Shoping
-                      </button>
+                  ))
+                ) : (
+                  <>
+                    <div className="flex  justify-center">
+                      <div>
+                        <img
+                          className={
+                            "lg:px-[24px] pb-[24px] " +
+                            "object-cover  h-[209px] w-[209px] "
+                          }
+                          src={noItemImg}
+                          alt=""
+                        />
+                        <h1 className="text-2xl font-bold mx-auto">
+                          Your cart is empty
+                        </h1>
+                        <button
+                          style={{ width: "100%" }}
+                          className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]"
+                        >
+                          Continue Shoping
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </>
+                  </>
+                )
+              ) : (
+                <LoadingSpinner />
               )}
             </CardTemplate>
 
