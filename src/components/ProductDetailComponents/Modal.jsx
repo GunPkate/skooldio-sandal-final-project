@@ -126,7 +126,7 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
     //back shadow
     <div className="flex justify-center items-center  w-full h-screen fixed top-0 left-0 bg-black/50 z-[999]">
       {/*custom modal  */}
-      <div className="w-[343px] h-[518px] rounded-2xl bg-white p-6 lg:w-[900px] lg:h-[374px] gap-6">
+      <div className="h-[518px] rounded-2xl bg-white p-6 lg:w-[900px] lg:h-[374px] gap-6">
         <div className="flex justify-between items-center w-[295px] h-10 lg:w-[852px]">
           <h1 className="text-lg font-semibold lg:text-2xl p-0 m-0">
             Items added to your cart
@@ -160,16 +160,16 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
             src={modalItems.imgModal}
             alt="mock-img"
           />
-          <div className="flex items-start-start w-full lg:h-fit mb-6 lg:flex-row lg:justify-between lg:w-[652px]  lg:mb-0 ">
-            <div className="flex w-full justify-between flex-col lg:justify-center  ">
-              <h2 className="text-lg font-bold lg:text-2xl">
+          <div className="flex items-start-start w-full lg:h-fit mb-6 lg:flex-row lg:justify-between lg:w-[652px] lg:mb-0">
+            <div className="flex w-full justify-between flex-col lg:justify-center truncate">
+              <h2 className="text-lg font-bold lg:text-2xl truncate">
                 {modalItems.nameModal}
               </h2>
               <p className=" text-secondary-700 text-[18px] font-semibold">
                 Qty: {modalItems.quantity}
               </p>
             </div>
-            <div className="text-2xl my-auto lg:my-0 font-bold flex justify-end items-center lg:items-start lg:flex-col lg:justify-start lg:text-2xl ">
+            <div className="text-2xl my-auto lg:my-0 font-bold flex w-full justify-end items-center lg:items-end lg:flex-col lg:justify-start lg:text-2xl truncate">
               THB{" "}
               {numberWithCommas(modalItems.priceModal * modalItems.quantity)}
             </div>
