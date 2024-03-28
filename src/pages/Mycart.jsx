@@ -322,7 +322,7 @@ export default function Mycart() {
                       }
                     >
                       <div className="flex justify-between">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate">
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate pr-10">
                           {item.name}
                         </h5>
                         <button
@@ -496,7 +496,7 @@ export default function Mycart() {
                       userPurhcase.map((item) => (
                         <tr key={item.id}>
                           <td className="w-full">
-                            <h1 className="p-0 m-0 text-[16px] text-secondary">
+                            <h1 className="p-0 m-0 text-[16px] text-secondary pr-2">
                               {item.name}
                             </h1>
                           </td>
