@@ -66,7 +66,7 @@ export default function Mycart(){
     }
 
     // localStorage.setItem('id',1234)
-    const handleUpdateCart = (item, name,value, itemNo) => {
+    const handleUpdateCart = async (item, name,value, itemNo) => {
 
 
         //<<<<<<<<<<<<<<<<  Set Condition >>>>>>>>>>>>>>>>>
@@ -115,11 +115,7 @@ export default function Mycart(){
                 quantity: value,
             }
             //Update Data
-            axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
-                console.log(resUpdate)
-                await fetchMycart(localStorage.getItem('id'))
-                setSelectedNewItem([])
-            });
+            await updateMycartApi(qtyData)
         }
 
         if(name == 'size' && colorBtn.length == 0){
@@ -153,11 +149,7 @@ export default function Mycart(){
                 quantity: item.quantity,
             }
             //Update Data
-            axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
-                console.log(resUpdate)
-                await fetchMycart(localStorage.getItem('id'))
-                setSelectedNewItem([])
-            });
+            await updateMycartApi(qtyData)
             resetBtn()
         }
 
@@ -167,181 +159,18 @@ export default function Mycart(){
                 quantity: item.quantity,
             }
             //Update Data
-            axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
-                console.log(resUpdate)
-                await fetchMycart(localStorage.getItem('id'))
-                setSelectedNewItem([])
-            });
+            await updateMycartApi(qtyData)
             resetBtn()
         }
         console.log(firstFilter)
 
-
-
-    }
-
-    const handleUpdateCart22 = (item, name,value, itemNo) => {
-        let tempData = userPurhcase
-
-        //Get default colors and size
-        let defaultCode = tempData[itemNo].skuCode;
-        let defaultVariant = tempData[itemNo].variants.filter(x=>x.skuCode===defaultCode)
-        let defaultColor = defaultVariant[0].color
-        let defaultSize = defaultVariant[0].size
-
-        // console.log("item",item)
-        // console.log("in cart Variant",defaultVariant)
-        // console.log("in cart color",defaultColor)
-        // console.log("in cart size",defaultSize)
-
-        let firstFilter = [];
-        let SecondFilter = [];
-        let validateMessage = "";
-
-        let SelectNewList = selectedNewItem
-
-
-        //add new data when no previous data || replace new data
-        // if(SelectNewList){
-         let   SelectNewListBody = {
-                skuCode: item.skuCode, //???? here change color and filter 
-                color:  name === 'color'? value : null,
-                size:  name === 'size'? value : null,
-            }
-        let count = 0;
-        console.log("xxxx",selectedNewItem)
-        if(selectedNewItem.length > 0){
-            selectedNewItem.forEach(x=>x.skuCode === item.skuCode ? count+=1 : count += 0) 
-       
-
-
-        let selectTemp = selectedNewItem
-        console.log("1234",JSON.stringify(selectTemp))
-        selectTemp.forEach(x=>{ if(x.skuCode === item.skuCode){
-                if(name == 'color') x.color = value;
-                if(name == 'size') x.size = value;
-            }  
-            console.log("1234",JSON.stringify(selectTemp))
-        })
-        }
-        if(count > 1){
-
-        }else if(count == 0){
-            SelectNewList.push(SelectNewListBody)
-        }
-
-        
-        console.log("check Select",JSON.stringify(SelectNewListBody))
-
-        console.log("check count SelectNewListBody",count)
-
-        setSelectedNewItem(SelectNewList)
-        let newItem = []
-        switch (name){
-            case 'quantity': 
-
-                tempData.forEach(x=>
-                     { if(x.id === item.id) x.quantity = value}
-                )
-
-                SecondFilter = tempData.filter(x => x.id === item.id);
-                let qtyData = {
-                    skuCode: SecondFilter[0].skuCode,
-                    quantity: SecondFilter[0].quantity,
-                }
-                console.log(tempData)
-                axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
-                    console.log(resUpdate)
-                    await fetchMycart(localStorage.getItem('id'))
-                    setSelectedNewItem([])
-                });
-                // console.log(item.price * item.quantity)
-                break;
-            case 'color': 
-                console.log('item here',(item))
-                console.log('colors here',(tempData[itemNo].variants))
-                //GEt new Variant 
-                newItem = selectedNewItem.filter(x=>x.skuCode === item.skuCode && x.id === item.id)
-                console.log(12345,newItem)
-                if(newItem.length > 0 && ( newItem[0].size !== null &&  newItem[0].size !== undefined ) ){
-                    let result = tempData[itemNo].variants.filter(x=>x.color === newItem.color && x.size === newItem.size)
-                    console.log("color 2 select",firstFilter)
-                    if(result.length == 1){
-                        SecondFilter = result
-                        console.log("SecondFilter.skuCode",SecondFilter.skuCode)
-                        console.log("D .skuCode",defaultCode)
-                    }
-                }else{
-
-                
-                firstFilter = tempData[itemNo].variants.filter(x=> x.color ===value )
-                console.log("firstFilter",firstFilter)
-
-                }
-                SecondFilter = firstFilter;
-                if(firstFilter.length !== 1){
-                    SecondFilter = firstFilter.filter(x=>x.size==defaultSize)
-                    validateMessage = "Please Select Size";               
-                    alert(validateMessage)
-                }
-
-
-
-                break;
-            case 'size': 
-
-            console.log('size here',(tempData[itemNo].variants))
-            //GEt new Variant 
-            newItem = selectedNewItem.filter(x=>x.size === item.size && x.id === item.id)
-            console.log(12345,"size",newItem)
-            if(newItem.length > 0 && ( newItem[0].color !== null &&  newItem[0].color !== undefined ) ){
-                let result = tempData[itemNo].variants.filter(x=>x.color === newItem.color && x.size === newItem.size)
-                console.log("size 2 select",result)
-                if(result.length == 1){
-                    SecondFilter = result
-                    console.log("SecondFilter.skuCode",SecondFilter.skuCode)
-                    console.log("D .skuCode",defaultCode)
-                }
-            }else{
-
-                firstFilter = tempData[itemNo].variants.filter(x=> x.size===value )
-
-                console.log("firstFilter",firstFilter)
-
-                SecondFilter = firstFilter;
-                if(firstFilter.length !== 1){
-                    SecondFilter = firstFilter.filter(x=>x.size==defaultCode)
-                    validateMessage = "Please Select Color";
-                    alert(validateMessage)
-                }
-
-            }
-
-
-                break;
-        }
-
-        if(SecondFilter.length == 1 &&name !== 'quantity'){
-            validateMessage = ""
-            let qtyData = {
-                skuCode: SecondFilter[0].skuCode,
-                quantity: item.quantity,
-            }
-            //Update Data
-            console.log("only 1",SecondFilter)
-            axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
+        function updateMycartApi (bodyData){
+            axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,bodyData).then(async resUpdate => {
                 console.log(resUpdate)
                 await fetchMycart(localStorage.getItem('id'))
                 setSelectedNewItem([])
             });
         }
-
-        console.log("SecondFilter xxx",SecondFilter)
-        // axios.patch('https://api.storefront.wdb.skooldio.dev/carts/:id/items/:itemid',qtyData)
-
-        // update UI SetDisplay with SecondFilter
-
-
     }
 
     const marginLgStyle = " lg: p-[24px] "
