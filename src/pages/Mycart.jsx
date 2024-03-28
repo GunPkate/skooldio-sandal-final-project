@@ -279,12 +279,10 @@ export default function Mycart() {
         <>
           {/* <button onClick={()=>{console.log(JSON.stringify(selectedDefault))}}>1234</button> */}
           <div className="lg:mx-auto bg-gray-50">
-            <div className="min-w=[100vw] lg:mx-[max(8.34%,16px)]">
+            <div className="min-w=[100vw]">
               <h1
                 className={
-                  marginLgStyle +
-                  marginStyle +
-                  " font-bold max-w-[1600px] mx-auto text-[32px]"
+                  "font-bold max-w-[1600px] mx-auto text-[32px] px-6 md:px-10"
                 }
               >
                 My Cart{" "}
