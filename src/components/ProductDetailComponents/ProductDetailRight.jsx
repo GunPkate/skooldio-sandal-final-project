@@ -276,7 +276,7 @@ const ProductDetailRight = (data) => {
         <div className="flex flex-col justify-center">
           {data.promotionalPrice < data.price ? (
             <>
-              <div className="flex justify-center items-center text-3xl font-bold mb-2 bg-[#FF000D] text-white w-fit lg:w-[277px] lg:h-[76px] px-[10px] py-2 ">
+              <div className="flex justify-center items-center text-[40px] font-bold mb-2 bg-[#FF000D] text-white w-fit  px-[10px] py-2 ">
                 THB {numberWithCommas(data.promotionalPrice) + ".00"}
               </div>
 
