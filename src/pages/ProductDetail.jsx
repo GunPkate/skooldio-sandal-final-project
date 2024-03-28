@@ -40,7 +40,7 @@ export default function ProductDetail() {
       <Navbar />
       {!loading ? (
         <div className="flex flex-col min-w-[343px] mt-10 mx-4 mb-20 laptop:mt-24 desktop:flex-col lg:mx-auto lg:max-w-[1600px]">
-          <div className="flex flex-col lg:flex-row lg:gap-10 px-2">
+          <div className="flex flex-col lg:flex-row lg:gap-10 md:px-2">
             <Carousel {...products} readOnly={receiveData} />
             <ProductDetailRight
               {...products}
