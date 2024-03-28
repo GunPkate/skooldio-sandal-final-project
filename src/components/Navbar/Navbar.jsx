@@ -7,8 +7,8 @@ import DrawerRootByGender from "../DrawerRootByGender.jsx";
 import DrawerRootByCollections from "../DrawerRootByCollections.jsx";
 import DropdownRootByGender from "../DropdownRootByGender.jsx";
 import DropdownRootByCollections from "../DropdownRootByCollections.jsx";
-import Logo from "../../src/assets/Logo/Storefront.svg";
-import Hamburger from "../../src/assets/hamburger.svg";
+import Logo from "/src/assets/Logo/Storefront.svg";
+import Hamburger from "/src/assets/hamburger.svg";
 
 const logoButton = () => {
   return (
