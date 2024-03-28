@@ -4,8 +4,8 @@ import Navbar from "../components/Navbar/Navbar";
 import { UserContext } from "../App";
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
-import DeleteLogo from "../assets/delete.svg"
-import logo from "../../src/assets/Logo/Storefront.svg"
+import DeleteLogo from "../assets/delete.svg";
+import logo from "../../src/assets/Logo/Storefront.svg";
 
 export default function Mycart() {
   const { userPurhcase, setuserPurhcase } = useContext(UserContext);
@@ -205,7 +205,7 @@ export default function Mycart() {
     <>
       <div
         id={title}
-        className={"itemList bg-white min-h-[80vh] " + width + height + ml + mr}
+        className={"itemList bg-white mb-10 " + width + height + ml + mr}
       >
         <h5
           className={
@@ -224,19 +224,31 @@ export default function Mycart() {
     printdiv(e);
   };
 
-    const printdiv = (elem) => {
-        
-        var invoice = document.getElementById(elem).innerHTML;
-        
-        invoice = invoice.replace(/(<button.*.\"\>)(.*)(<\/button>)/gi,"Thank You For your support")
-        invoice = invoice.replace(/(h1)/gi,"h3")
-        invoice = invoice.replace(/(h5)/gi,'h1 class="center"')
-        //Logo
-        invoice = invoice.replace(/(<div class)/gi,`<img class="center" src=${logo} alt=""/> <div class`)
-        invoice = invoice.replace(/(td style="width: 100%;)/gi,`td style="width: 80%;`)
+  const printdiv = (elem) => {
+    var invoice = document.getElementById(elem).innerHTML;
 
-        var WinPrint = window.open('', '', 'left=0,top=0,toolbar=0,scrollbars=0,status=0');
-        WinPrint.document.write(`
+    invoice = invoice.replace(
+      /(<button.*.\"\>)(.*)(<\/button>)/gi,
+      "Thank You For your support"
+    );
+    invoice = invoice.replace(/(h1)/gi, "h3");
+    invoice = invoice.replace(/(h5)/gi, 'h1 class="center"');
+    //Logo
+    invoice = invoice.replace(
+      /(<div class)/gi,
+      `<img class="center" src=${logo} alt=""/> <div class`
+    );
+    invoice = invoice.replace(
+      /(td style="width: 100%;)/gi,
+      `td style="width: 80%;`
+    );
+
+    var WinPrint = window.open(
+      "",
+      "",
+      "left=0,top=0,toolbar=0,scrollbars=0,status=0"
+    );
+    WinPrint.document.write(`
         <style>
             body {            
                 font-family: "Times New Roman"
@@ -278,10 +290,10 @@ export default function Mycart() {
                 My Cart{" "}
               </h1>
             </div>
-            <div className="section section-mycart lg:flex md:flex:none md:block max-w-[1600px] mx-auto lg:gap-10">
+            <div className="section section-mycart lg:flex md:flex:none md:block max-w-[1600px] mx-auto lg:gap-10 md:px-10">
               <CardTemplate
                 title={"Items"}
-                width={"min-w-[49.16%]"}
+                width={"w-full"}
                 height={"  "}
                 ml={" ml-0 "}
                 mr={" mr-0"}
@@ -318,17 +330,17 @@ export default function Mycart() {
                           </button>
                         </div>
 
-                        <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex  w-ful">
+                        <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex w-full gap-10">
                           {colorBtn[1]} {sizeBtn[1]}
-                          <div className="xlZZ:flex sm:block w-ful">
-                            <div className="lg:mr-[16px]">
-                              <h1 className="text-gray-700 font-normal">
+                          <div className="gap-4 w-full grid grid-cols-2 grid-rows-2 xl:grid-cols-3 xl:grid-rows-1">
+                            <div className="col-span-2 xl:col-span-1">
+                              <h1 className="text-gray-700 font-normal p-0 m-0">
                                 Colors
                               </h1>
 
                               <select
                                 name="colors"
-                                className="lg:w-[7.24vw] w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
+                                className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
                                 onChange={(e) => {
                                   handleUpdateCart(
                                     item,
@@ -360,84 +372,79 @@ export default function Mycart() {
                                 )}
                               </select>
                             </div>
-                            <div className="flex justify-between w-full">
-                              <div className="mr-[16px]">
-                                <h1 className="text-gray-700 font-normal">
-                                  Size
-                                </h1>
-                                <select
-                                  name="size"
-                                  className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px] border-gray-300 rounded-none border-[1px] text-black"
-                                  onChange={(e) => {
-                                    handleUpdateCart(
-                                      item,
-                                      "size",
-                                      e.target.value,
-                                      id
-                                    );
-                                  }}
-                                >
-                                  <option>
-                                    {
-                                      userPurhcase[id].variants.filter(
-                                        (x) =>
-                                          x.skuCode == userPurhcase[id].skuCode
-                                      )[0].size
-                                    }
-                                  </option>
-                                  {/* {Array.from(
+                            <div>
+                              <h1 className="text-gray-700 font-normal p-0 m-0">
+                                Size
+                              </h1>
+                              <select
+                                name="size"
+                                className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
+                                onChange={(e) => {
+                                  handleUpdateCart(
+                                    item,
+                                    "size",
+                                    e.target.value,
+                                    id
+                                  );
+                                }}
+                              >
+                                <option>
+                                  {
+                                    userPurhcase[id].variants.filter(
+                                      (x) =>
+                                        x.skuCode == userPurhcase[id].skuCode
+                                    )[0].size
+                                  }
+                                </option>
+                                {/* {Array.from(
                                                         new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
                                                     )} */}
-                                  {userPurhcase?.filter((x) => x.id == item.id)
-                                    .length > 0 ? (
-                                    userPurhcase
-                                      ?.filter((x) => x.id == item.id)[0]
-                                      .size.map((y) => <option>{y}</option>)
-                                  ) : (
-                                    <></>
-                                  )}
-                                </select>
-                              </div>
-
-                              <div>
-                                <h1 className="text-gray-700 font-normal">
-                                  Qty
-                                </h1>
-                                <select
-                                  name="quantity"
-                                  className="lg:w-[7.24vw] md:sm:w-[43vw] sm:w-[41vw] w-[36vw] h-[54px] border-gray-300 rounded-none border-[1px] text-black"
-                                  onChange={(e) => {
-                                    handleUpdateCart(
-                                      item,
-                                      "quantity",
-                                      e.target.value,
-                                      id
-                                    );
-                                  }}
-                                >
-                                  <option>{item.quantity}</option>
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                  <option>6</option>
-                                  <option>7</option>
-                                  <option>8</option>
-                                </select>
-                              </div>
+                                {userPurhcase?.filter((x) => x.id == item.id)
+                                  .length > 0 ? (
+                                  userPurhcase
+                                    ?.filter((x) => x.id == item.id)[0]
+                                    .size.map((y) => <option>{y}</option>)
+                                ) : (
+                                  <></>
+                                )}
+                              </select>
+                            </div>
+                            <div>
+                              <h1 className="text-gray-700 font-norma p-0 m-0">
+                                Qty
+                              </h1>
+                              <select
+                                name="quantity"
+                                className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
+                                onChange={(e) => {
+                                  handleUpdateCart(
+                                    item,
+                                    "quantity",
+                                    e.target.value,
+                                    id
+                                  );
+                                }}
+                              >
+                                <option>{item.quantity}</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                              </select>
                             </div>
                           </div>
                           <div
-                            style={{ width: "100%" }}
                             className={
                               "align-baseline " +
-                              "mt-auto text-2xl font-bold  text-gray-900 dark:text-white flex w-ful"
+                              "mt-auto text-2xl font-bold  text-gray-900 dark:text-white flex w-[140px]"
                             }
                           >
-                            <h5 className="ml-auto text-black">
-                              {" "}
-                              {item.price * item.quantity} THB{" "}
+                            <h5 className="ml-auto text-black w-fit">
+                              THB {item.price * item.quantity}
                             </h5>
                           </div>
                         </div>
