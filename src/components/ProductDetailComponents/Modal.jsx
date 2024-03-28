@@ -1,6 +1,128 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { UserContext } from "../../App";
+import { numberWithCommas } from './ProductDetailRight';
 
-const Modal = () => {
+const Modal = ({modalItems,onClose,selectedData}) => {
+  
+  const { permalink } = useParams();
+  const { userPurhcase, setuserPurhcase } = useContext(UserContext);
+  const [myCart, setMyCart] = useState([]);
+
+  const handleAddItem = async () => {
+    const id = localStorage.getItem("id");
+    console.log("Add Item ID", id);
+
+    let addItem = {
+      skuCode: selectedData[0].skuCode,
+      quantity: modalItems.quantity,
+      productPermalink: permalink,
+    };
+
+    let mycartBody = [];
+    mycartBody.push(addItem);
+
+    console.log("Add Item", addItem);
+    if (mycartBody.length) {
+      console.log(mycartBody);
+
+      let statusCode = "";
+
+      if (id === null || id === undefined || id === "") {
+        try {
+          await axios
+            .post("https://api.storefront.wdb.skooldio.dev/carts", {
+              items: mycartBody,
+            })
+            .then((res) => {
+              let data = res.data;
+              console.log("add new res", res);
+              console.log("add new cart data", data);
+              statusCode = res.status;
+              localStorage.setItem("id", data.id);
+
+              if (statusCode == 200 || statusCode == 201) {
+                fetchMycart(data.id);
+              }
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          axios
+            .post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`, {
+              items: mycartBody,
+            })
+            .then((res) => {
+              let data = res.data;
+              statusCode = res.status;
+              console.log("add old cart statusCode", statusCode);
+              console.log("add old cart data", data);
+              console.log("add old res", res);
+
+              if (statusCode == 200 || statusCode == 201) {
+                fetchMycart(id);
+              }
+              setTimeout(() => {
+                window.location.reload();
+              }, 500);
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
+
+  const fetchMycart = async (id) => {
+    try {
+      if (id !== null || id !== undefined || id !== "") {
+        await axios
+          .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
+          .then((res) => {
+            let itemCart = res.data;
+            console.log("Navbar get", itemCart);
+            let myCartTemp = [];
+            res.data.items.forEach(async (x) => {
+              await axios
+                .get(
+                  "https://api.storefront.wdb.skooldio.dev/products/" +
+                    x.productPermalink
+                )
+                .then((resDetail) => {
+                  const dataDetail = resDetail.data;
+
+                  let displayBody = {
+                    id: x.id,
+                    name: dataDetail.name,
+                    skuCode: x.skuCode,
+                    quantity: x.quantity,
+                    variants: dataDetail.variants,
+                    price: dataDetail.price,
+                    image: dataDetail.imageUrls[0],
+                    color: Array.from(
+                      new Set(dataDetail.variants.map((x) => x.color))
+                    ).sort(),
+                    size: Array.from(
+                      new Set(dataDetail.variants.map((x) => x.size))
+                    ).sort(),
+                  };
+
+                  myCartTemp.push(displayBody);
+
+                  setMyCart(Array.from(new Set(myCartTemp.map((x) => x))));
+                  setuserPurhcase(myCartTemp);
+                });
+            });
+          });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     //back shadow
     <div className="flex justify-center items-center  w-full h-screen fixed top-0 left-0 bg-black/50">
@@ -10,7 +132,7 @@ const Modal = () => {
           <h1 className="text-lg font-semibold lg:text-2xl">
             Items added to your cart
           </h1>
-          <button>
+          <button onClick={onClose}>
             <svg
               width="40"
               height="40"
@@ -35,26 +157,28 @@ const Modal = () => {
         </div>
         <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:py-6 lg:gap-x-10">
           <img
-            className="w-40 h-40 mb-4 lg:mb-0"
-            src="https://fastly.picsum.photos/id/1003/160/160.jpg?hmac=E2JDyHeevPoJ7onoYYBQwmFvDmm3vZLdqJ4Z8L_pUdA"
+            className="w-40 h-40 object-cover mb-4 lg:mb-0"
+            src={modalItems.imgModal}
             alt="mock-img"
           />
           <div className="flex flex-col item-start w-full h-[82px] mb-6 lg:flex-row lg:justify-between lg:w-[652px] lg:h-40 lg:mb-0 ">
             <div className="flex flex-col justify-center  ">
               <h2 className="text-lg font-bold lg:text-2xl">
-                Product Name: Rayon
+                {modalItems.nameModal}
               </h2>
-              <p className=" text-[#222222] font-normal">Qty : 2</p>
+              <p className=" text-[#222222] font-normal">Qty: {modalItems.quantity}</p>
             </div>
             <div className="text-lg font-bold flex justify-end lg:flex-col lg:justify-center lg:text-2xl ">
-              THB 2,000
+              {numberWithCommas(modalItems.priceModal * modalItems.quantity)}
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-4 justify-center items-center lg:flex-row">
-          <button className="w-full h-14 bg-[#222222]  text-white lg:w-1/2">
+          <Link to="/Mycart/">
+          <button onClick={()=>{handleAddItem()}} className="w-full h-14 bg-[#222222]  text-white lg:w-1/2">
             View Cart
           </button>
+          </Link>
           <button className="w-full h-14 bg-white border-[#E1E1E1] border lg:w-1/2">
             Continue Shopping
           </button>
@@ -65,3 +189,4 @@ const Modal = () => {
 };
 
 export default Modal;
+

@@ -3,8 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
 import axios from "axios";
 import Dropdown from "./Dropdown";
+import Modal from "./Modal";
 import starFill from "/src/assets/star-fill.svg";
 import starGrey from "/src/assets/star-grey.svg";
+
+// price with commas from k'Ter (product cart)
+export function numberWithCommas(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -12,9 +18,7 @@ const ProductDetailRight = (data) => {
   const [quantity, setQuantity] = useState(1);
   const [remains, setRemains] = useState(0);
   const [readOnly, setReadOnly] = useState(false);
-  const { permalink } = useParams();
-  const { userPurhcase, setuserPurhcase } = useContext(UserContext);
-  const [myCart, setMyCart] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   let description = [];
   if (data) {
@@ -40,6 +44,7 @@ const ProductDetailRight = (data) => {
       setReadOnly(false);
     }
   }, []);
+  
 
   // Function to calculate the sum of "remains" values
   function sumRemains(variants) {
@@ -49,6 +54,7 @@ const ProductDetailRight = (data) => {
     }
     return sum;
   }
+  
 
   // function to handle size selection
   const handleSizeSelection = (size) => {
@@ -85,10 +91,7 @@ const ProductDetailRight = (data) => {
     setRemains(remains);
   };
 
-  // price with commas from k'Ter (product cart)
-  function numberWithCommas(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+  
 
   //rating section from k'Ter (product cart)
   const createStars = (rating) => {
@@ -116,119 +119,6 @@ const ProductDetailRight = (data) => {
 
   const uniqueDataColor = uniqueByKey(data.variants, "color");
   const uniqueDataSize = uniqueByKey(data.variants, "size");
-
-  const fetchMycart = async (id) => {
-    try {
-      if (id !== null || id !== undefined || id !== "") {
-        await axios
-          .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
-          .then((res) => {
-            let itemCart = res.data;
-            console.log("Navbar get", itemCart);
-            let myCartTemp = [];
-            res.data.items.forEach(async (x) => {
-              await axios
-                .get(
-                  "https://api.storefront.wdb.skooldio.dev/products/" +
-                    x.productPermalink
-                )
-                .then((resDetail) => {
-                  const dataDetail = resDetail.data;
-
-                  let displayBody = {
-                    id: x.id,
-                    name: dataDetail.name,
-                    skuCode: x.skuCode,
-                    quantity: x.quantity,
-                    variants: dataDetail.variants,
-                    price: dataDetail.price,
-                    image: dataDetail.imageUrls[0],
-                    color: Array.from(
-                      new Set(dataDetail.variants.map((x) => x.color))
-                    ).sort(),
-                    size: Array.from(
-                      new Set(dataDetail.variants.map((x) => x.size))
-                    ).sort(),
-                  };
-
-                  myCartTemp.push(displayBody);
-
-                  setMyCart(Array.from(new Set(myCartTemp.map((x) => x))));
-                  setuserPurhcase(myCartTemp);
-                });
-            });
-          });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleAddItem = async () => {
-    const id = localStorage.getItem("id");
-    console.log("Add Item ID", id);
-
-    let addItem = {
-      skuCode: uniqueDataSize[0].skuCode,
-      quantity: quantity,
-      productPermalink: permalink,
-    };
-
-    let mycartBody = [];
-    mycartBody.push(addItem);
-
-    console.log("Add Item", addItem);
-    if (mycartBody.length) {
-      console.log(mycartBody);
-
-      let statusCode = "";
-
-      if (id === null || id === undefined || id === "") {
-        try {
-          await axios
-            .post("https://api.storefront.wdb.skooldio.dev/carts", {
-              items: mycartBody,
-            })
-            .then((res) => {
-              let data = res.data;
-              console.log("add new res", res);
-              console.log("add new cart data", data);
-              statusCode = res.status;
-              localStorage.setItem("id", data.id);
-
-              if (statusCode == 200 || statusCode == 201) {
-                fetchMycart(data.id);
-              }
-            });
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        try {
-          axios
-            .post(`https://api.storefront.wdb.skooldio.dev/carts/${id}/items`, {
-              items: mycartBody,
-            })
-            .then((res) => {
-              let data = res.data;
-              statusCode = res.status;
-              console.log("add old cart statusCode", statusCode);
-              console.log("add old cart data", data);
-              console.log("add old res", res);
-
-              if (statusCode == 200 || statusCode == 201) {
-                fetchMycart(id);
-              }
-              setTimeout(() => {
-                window.location.reload();
-              }, 500);
-            });
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    }
-  };
 
   const variants = data.variants;
   const getRemains = (selectedSize, selectColor) => {
@@ -401,7 +291,7 @@ const ProductDetailRight = (data) => {
       </div>
 
       {/* Add to cart button */}
-      {remains === 0 && readOnly === true ? (
+      {/* {remains === 0 && readOnly === true ? (
         <button className="w-full h-[54px] bg-black text-white" disabled>
           Out of Stock
         </button>
@@ -411,13 +301,27 @@ const ProductDetailRight = (data) => {
           to="/Mycart/"
           onClick={() => {
             handleAddItem();
+            setIsModalOpen(true);
           }}
         >
           Add to cart
         </Link>
-      )}
+      )} */}
+      <button
+        className="flex justify-center items-center w-full h-[54px] bg-black text-white"
+        onClick={(event) => {
+          event.preventDefault();
+          setIsModalOpen(true);
+        }}
+      >
+        Add to cart
+      </button>
+
+        
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} selectedData={uniqueDataSize}   modalItems={{quantity:quantity, selectColor:selectColor, selectedSize:selectedSize, nameModal:data.name ,imgModal:data.imageUrls[0], priceModal:data.promotionalPrice<data.price? data.promotionalPrice : data.price}}/>}
     </div>
   );
 };
 
-export default ProductDetailRight;
+export default  ProductDetailRight;
+
