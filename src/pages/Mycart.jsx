@@ -6,7 +6,7 @@ import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
 import DeleteLogo from "../assets/delete.svg";
 import logo from "../../src/assets/Logo/Storefront.svg";
-import noItem from "../../src/assets/Logo/noItem.svg"
+import noItem from "../../src/assets/Logo/noItem.svg";
 
 function numberWithCommas(num) {
   const number = (Math.round(num * 100) / 100).toFixed(2);
@@ -282,360 +282,354 @@ export default function Mycart() {
     <>
       <Navbar />
 
-        <>
-          {/* <button onClick={()=>{console.log(JSON.stringify(selectedDefault))}}>1234</button> */}
-          <div className="lg:mx-auto bg-gray-50">
-            <div className="min-w=[100vw]">
-              <h1
-                className={
-                  "font-bold max-w-[1600px] mx-auto text-[32px] px-6 md:px-10"
-                }
-              >
-                My Cart{" "}
-              </h1>
-            </div>
-            <div className="section section-mycart lg:flex md:flex:none md:block max-w-[1600px] mx-auto lg:gap-10 md:px-10">
-              <CardTemplate
-                title={"Items"}
-                width={"w-full"}
-                height={"  "}
-                ml={" ml-0 "}
-                mr={" mr-0"}
-              >
-                {userPurhcase.length > 0 ? (
-                  userPurhcase.map((item, id) => (
+      <>
+        {/* <button onClick={()=>{console.log(JSON.stringify(selectedDefault))}}>1234</button> */}
+        <div className="lg:mx-auto bg-gray-50">
+          <div className="min-w=[100vw]">
+            <h1
+              className={
+                "font-bold max-w-[1600px] mx-auto text-[32px] px-6 md:px-10"
+              }
+            >
+              My Cart{" "}
+            </h1>
+          </div>
+          <div className="section section-mycart lg:flex md:flex:none md:block max-w-[1600px] mx-auto lg:gap-10 md:px-10">
+            <CardTemplate
+              title={"Items"}
+              width={"w-full"}
+              height={"  "}
+              ml={" ml-0 "}
+              mr={" mr-0"}
+            >
+              {userPurhcase.length > 0 ? (
+                userPurhcase.map((item, id) => (
+                  <div
+                    key={id}
+                    className="py-6 mx-6 lg:flex lg:inline-block md:block border-solid border-secondary-300 border-b-[0.5px]"
+                  >
+                    <div className="justify-center min-w-[200px]">
+                      <img
+                        className="h-[200px] w-full object-cover"
+                        src={item.image}
+                        alt=""
+                      />
+                    </div>
                     <div
-                      key={id}
-                      className="py-6 mx-6 lg:flex lg:inline-block md:block border-solid border-secondary-300 border-b-[0.5px]"
+                      style={{ width: "100%" }}
+                      className={
+                        "mt-6 lg:ml-10 lg:mt-0 flex flex-col justify-between leading-normal mx-auto"
+                      }
                     >
-                      <div className="justify-center min-w-[200px]">
-                        <img
-                          className="h-[200px] w-full object-cover"
-                          src={item.image}
-                          alt=""
-                        />
+                      <div className="flex justify-between">
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate">
+                          {item.name}
+                        </h5>
+                        <button
+                          onClick={(e) => {
+                            handleDelete(item);
+                          }}
+                        >
+                          <img src={DeleteLogo}></img>
+                        </button>
                       </div>
-                      <div
-                        style={{ width: "100%" }}
-                        className={
-                          "mt-6 lg:ml-10 lg:mt-0 flex flex-col justify-between leading-normal mx-auto"
-                        }
-                      >
-                        <div className="flex justify-between">
-                          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                            {item.name}
-                          </h5>
-                          <button
-                            onClick={(e) => {
-                              handleDelete(item);
-                            }}
-                          >
-                            <img src={DeleteLogo}></img>
-                          </button>
-                        </div>
 
-                        <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex w-full gap-10">
-                          <div className="gap-4 w-full grid grid-cols-2 grid-rows-2 xl:grid-cols-3 xl:grid-rows-1">
-                            <div className="col-span-2 xl:col-span-1">
-                              <h1 className="text-gray-700 font-normal p-0 m-0">
-                                Colors
-                              </h1>
+                      <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex w-full gap-10">
+                        <div className="gap-4 grid grid-cols-2 grid-rows-2 xl:grid-cols-3 xl:grid-rows-1 w-[450px]">
+                          <div className="col-span-2 xl:col-span-1">
+                            <h1 className="text-gray-700 text-[16px] p-0 m-0">
+                              Colors
+                            </h1>
 
-                              <select
-                                name="colors"
-                                className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
-                                onChange={(e) => {
-                                  handleUpdateCart(
-                                    item,
-                                    "color",
-                                    e.target.value,
-                                    id
-                                  );
-                                }}
-                              >
-                                <option>
-                                  {
-                                    userPurhcase[id].variants.filter(
-                                      (x) =>
-                                        x.skuCode == userPurhcase[id].skuCode
-                                    )[0].color
-                                  }
-                                </option>
-                                {/* {Array.from(
+                            <select
+                              name="colors"
+                              className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
+                              onChange={(e) => {
+                                handleUpdateCart(
+                                  item,
+                                  "color",
+                                  e.target.value,
+                                  id
+                                );
+                              }}
+                            >
+                              <option>
+                                {
+                                  userPurhcase[id].variants.filter(
+                                    (x) => x.skuCode == userPurhcase[id].skuCode
+                                  )[0].color
+                                }
+                              </option>
+                              {/* {Array.from(
                                                     new Set( item.variants.map(x => <option>{x.color}</option>) )
                                                     )
                                                 } */}
-                                {userPurhcase?.filter((x) => x.id == item.id)
-                                  .length > 0 ? (
-                                  userPurhcase
-                                    ?.filter((x) => x.id == item.id)[0]
-                                    .color.map((y) => <option>{y}</option>)
-                                ) : (
-                                  <></>
-                                )}
-                              </select>
-                            </div>
-                            <div>
-                              <h1 className="text-gray-700 font-normal p-0 m-0">
-                                Size
-                              </h1>
-                              <select
-                                name="size"
-                                className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
-                                onChange={(e) => {
-                                  handleUpdateCart(
-                                    item,
-                                    "size",
-                                    e.target.value,
-                                    id
-                                  );
-                                }}
-                              >
-                                <option>
-                                  {
-                                    userPurhcase[id].variants.filter(
-                                      (x) =>
-                                        x.skuCode == userPurhcase[id].skuCode
-                                    )[0].size
-                                  }
-                                </option>
-                                {/* {Array.from(
+                              {userPurhcase?.filter((x) => x.id == item.id)
+                                .length > 0 ? (
+                                userPurhcase
+                                  ?.filter((x) => x.id == item.id)[0]
+                                  .color.map((y) => <option>{y}</option>)
+                              ) : (
+                                <></>
+                              )}
+                            </select>
+                          </div>
+                          <div>
+                            <h1 className="text-gray-700 text-[16px] p-0 m-0">
+                              Size
+                            </h1>
+                            <select
+                              name="size"
+                              className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
+                              onChange={(e) => {
+                                handleUpdateCart(
+                                  item,
+                                  "size",
+                                  e.target.value,
+                                  id
+                                );
+                              }}
+                            >
+                              <option>
+                                {
+                                  userPurhcase[id].variants.filter(
+                                    (x) => x.skuCode == userPurhcase[id].skuCode
+                                  )[0].size
+                                }
+                              </option>
+                              {/* {Array.from(
                                                         new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
                                                     )} */}
-                                {userPurhcase?.filter((x) => x.id == item.id)
-                                  .length > 0 ? (
-                                  userPurhcase
-                                    ?.filter((x) => x.id == item.id)[0]
-                                    .size.map((y) => <option>{y}</option>)
-                                ) : (
-                                  <></>
-                                )}
-                              </select>
-                            </div>
-                            <div>
-                              <h1 className="text-gray-700 font-norma p-0 m-0">
-                                Qty
-                              </h1>
-                              <select
-                                name="quantity"
-                                className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
-                                onChange={(e) => {
-                                  handleUpdateCart(
-                                    item,
-                                    "quantity",
-                                    e.target.value,
-                                    id
-                                  );
-                                }}
-                              >
-                                <option>{item.quantity}</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                              </select>
-                            </div>
+                              {userPurhcase?.filter((x) => x.id == item.id)
+                                .length > 0 ? (
+                                userPurhcase
+                                  ?.filter((x) => x.id == item.id)[0]
+                                  .size.map((y) => <option>{y}</option>)
+                              ) : (
+                                <></>
+                              )}
+                            </select>
                           </div>
-                          <div
-                            className={
-                              "mt-6 w-full text-end items-end text-3xl font-bold  text-gray-900 dark:text-white flex lg:w-fit"
-                            }
-                          >
-                            <h5 className="ml-auto text-secondary truncate">
-                              THB {numberWithCommas(item.price * item.quantity)}
-                            </h5>
+                          <div>
+                            <h1 className="text-gray-700 text-[16px] p-0 m-0">
+                              Qty
+                            </h1>
+                            <select
+                              name="quantity"
+                              className="w-full h-[54px] border-gray-300 rounded-none border-[1px] text-black"
+                              onChange={(e) => {
+                                handleUpdateCart(
+                                  item,
+                                  "quantity",
+                                  e.target.value,
+                                  id
+                                );
+                              }}
+                            >
+                              <option>{item.quantity}</option>
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                              <option>6</option>
+                              <option>7</option>
+                              <option>8</option>
+                            </select>
                           </div>
+                        </div>
+                        <div
+                          className={
+                            "mt-6 w-full text-end items-end text-3xl font-bold  text-gray-900 dark:text-white flex lg:w-fit"
+                          }
+                        >
+                          <h5 className="ml-auto text-secondary truncate">
+                            THB {numberWithCommas(item.price * item.quantity)}
+                          </h5>
                         </div>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <>
-                    <div className="flex  justify-center">
-                      <div>
-                        <img
-                          className={
-                            "lg:px-[24px] pb-[24px] " +
-                            "object-cover  h-[209px] w-[209px] "
-                          }
-                          src={noItemImg}
-                          alt=""
-                        />
-                        <h1 className="text-2xl font-bold mx-auto">
-                          Your cart is empty
-                        </h1>
-                        <button
-                          style={{ width: "100%" }}
-                          className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]"
-                        >
-                          Continue Shoping
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </CardTemplate>
-
-              <CardTemplate
-                title={"Summary"}
-                width={"min-w-[32.08%]"}
-                height={" max-h-[500px] "}
-                mr={""}
-                ml={""}
-              >
-                <div className="mx-[24px] flex flex-col items-center ">
-                  <table
-                    style={{ width: "100%" }}
-                    // style={{width:"100%",borderCollapse:"separate" ,borderSpacing: "0 1em" }}
-                    className="font-normal text-gray-700 dark:text-gray-400 block"
-                  >
-                    <tbody className="flex flex-col gap-4">
-                      {userPurhcase.length > 0 ? (
-                        userPurhcase.map((item) => (
-                          <tr key={item.id}>
-                            <td className="w-full">
-                              <h1 className="p-0 m-0 text-[16px] text-secondary">
-                                {item.name}
-                              </h1>
-                            </td>
-                            <td>
-                              <h1 className="p-0 m-0 text-[16px] text-secondary">
-                                {numberWithCommas(item.quantity * item.price)}
-                              </h1>
-                              {/* <h1>{totalPrice !== null ? totalPrice :item.quantity * item.price}</h1> */}
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td style={{ width: "100%" }}>
-                            <h1>No Item</h1>
-                          </td>
-                        </tr>
-                      )}
-
-                      <div className="divider p-0 m-0"></div>
-
-                      <tr>
-                        <td className="w-full">
-                          <h1 className="p-0 m-0 text-[16px] text-secondary">
-                            Subtotal
-                          </h1>
-                        </td>
-                        <td>
-                          <h1 className="p-0 m-0 text-[16px] text-secondary">
-                            {userPurhcase.length > 1
-                              ? numberWithCommas(
-                                  userPurhcase.reduce(
-                                    (accumulator, currentValue) =>
-                                      accumulator +
-                                      currentValue.price *
-                                        currentValue.quantity,
-                                    0
-                                  )
-                                )
-                              : userPurhcase.length === 1
-                              ? numberWithCommas(
-                                  userPurhcase[0].price *
-                                    userPurhcase[0].quantity
-                                )
-                              : 0}
-                          </h1>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td className="w-full">
-                          <h1 className="p-0 m-0 text-[16px] text-secondary">
-                            Shipping fee
-                          </h1>
-                        </td>
-                        <td>
-                          <h1 className="p-0 m-0 text-[16px] text-secondary">
-                            Free
-                          </h1>
-                        </td>
-                      </tr>
-
-                      <div className="divider p-0 m-0"></div>
-
-                      <tr className="text-[18px] font-semibold">
-                        <td className="w-full">
-                          <h1 className="p-0 m-0 text-[16px] text-secondary">
-                            Total
-                          </h1>
-                        </td>
-                        <td>
-                          <h1 className="p-0 m-0 text-[16px] text-secondary">
-                            {userPurhcase.length > 1
-                              ? numberWithCommas(
-                                  userPurhcase.reduce(
-                                    (accumulator, currentValue) =>
-                                      accumulator +
-                                      currentValue.price *
-                                        currentValue.quantity,
-                                    0
-                                  )
-                                )
-                              : userPurhcase.length === 1
-                              ? numberWithCommas(
-                                  userPurhcase[0].price *
-                                    userPurhcase[0].quantity
-                                )
-                              : 0}
-                          </h1>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  {userPurhcase.length == 0 ? (
-                    <>
-                      <button
-                        disabled={userPurhcase.length == 0}
-                        style={{ width: "100%" }}
-                        className="button h-[54px] bg-[#E1E1E1] text-[#9F9F9F] mt-[40px] mb-[16px]"
-                        onClick={(e) => {
-                          printInvoice("Summary");
-                        }}
-                      >
-                        Check Out
-                      </button>
-                      <button
-                        disabled={userPurhcase.length == 0}
-                        style={{ width: "100%", border: "1pt solid #9F9F9F" }}
-                        className="button h-[54px] text-[#9F9F9F]"
-                      >
-                        Continue Shoping
-                      </button>
-                    </>
-                  ) : (
-                    <>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <div className="flex  justify-center">
+                    <div>
+                      <img
+                        className={
+                          "lg:px-[24px] pb-[24px] " +
+                          "object-cover  h-[209px] w-[209px] "
+                        }
+                        src={noItemImg}
+                        alt=""
+                      />
+                      <h1 className="text-2xl font-bold mx-auto">
+                        Your cart is empty
+                      </h1>
                       <button
                         style={{ width: "100%" }}
                         className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]"
-                        onClick={(e) => {
-                          printInvoice("Summary");
-                        }}
-                      >
-                        Check Out
-                      </button>
-                      <button
-                        style={{ width: "100%", border: "1pt solid black" }}
-                        className="button h-[54px]"
                       >
                         Continue Shoping
                       </button>
-                    </>
-                  )}
-                </div>
-              </CardTemplate>
-            </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </CardTemplate>
+
+            <CardTemplate
+              title={"Summary"}
+              width={"min-w-[32.08%]"}
+              height={" max-h-[500px] "}
+              mr={""}
+              ml={""}
+            >
+              <div className="mx-[24px] flex flex-col items-center ">
+                <table
+                  style={{ width: "100%" }}
+                  // style={{width:"100%",borderCollapse:"separate" ,borderSpacing: "0 1em" }}
+                  className="font-normal text-gray-700 dark:text-gray-400 block"
+                >
+                  <tbody className="flex flex-col gap-4">
+                    {userPurhcase.length > 0 ? (
+                      userPurhcase.map((item) => (
+                        <tr key={item.id}>
+                          <td className="w-full">
+                            <h1 className="p-0 m-0 text-[16px] text-secondary">
+                              {item.name}
+                            </h1>
+                          </td>
+                          <td>
+                            <h1 className="p-0 m-0 text-[16px] text-secondary">
+                              {numberWithCommas(item.quantity * item.price)}
+                            </h1>
+                            {/* <h1>{totalPrice !== null ? totalPrice :item.quantity * item.price}</h1> */}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td style={{ width: "100%" }}>
+                          <h1>No Item</h1>
+                        </td>
+                      </tr>
+                    )}
+
+                    <div className="divider p-0 m-0"></div>
+
+                    <tr>
+                      <td className="w-full">
+                        <h1 className="p-0 m-0 text-[16px] text-secondary">
+                          Subtotal
+                        </h1>
+                      </td>
+                      <td>
+                        <h1 className="p-0 m-0 text-[16px] text-secondary">
+                          {userPurhcase.length > 1
+                            ? numberWithCommas(
+                                userPurhcase.reduce(
+                                  (accumulator, currentValue) =>
+                                    accumulator +
+                                    currentValue.price * currentValue.quantity,
+                                  0
+                                )
+                              )
+                            : userPurhcase.length === 1
+                            ? numberWithCommas(
+                                userPurhcase[0].price * userPurhcase[0].quantity
+                              )
+                            : 0}
+                        </h1>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="w-full">
+                        <h1 className="p-0 m-0 text-[16px] text-secondary">
+                          Shipping fee
+                        </h1>
+                      </td>
+                      <td>
+                        <h1 className="p-0 m-0 text-[16px] text-secondary">
+                          Free
+                        </h1>
+                      </td>
+                    </tr>
+
+                    <div className="divider p-0 m-0"></div>
+
+                    <tr className="text-[18px] font-semibold">
+                      <td className="w-full">
+                        <h1 className="p-0 m-0 text-[16px] text-secondary">
+                          Total
+                        </h1>
+                      </td>
+                      <td>
+                        <h1 className="p-0 m-0 text-[16px] text-secondary">
+                          {userPurhcase.length > 1
+                            ? numberWithCommas(
+                                userPurhcase.reduce(
+                                  (accumulator, currentValue) =>
+                                    accumulator +
+                                    currentValue.price * currentValue.quantity,
+                                  0
+                                )
+                              )
+                            : userPurhcase.length === 1
+                            ? numberWithCommas(
+                                userPurhcase[0].price * userPurhcase[0].quantity
+                              )
+                            : 0}
+                        </h1>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                {userPurhcase.length == 0 ? (
+                  <>
+                    <button
+                      disabled={userPurhcase.length == 0}
+                      style={{ width: "100%" }}
+                      className="button h-[54px] bg-[#E1E1E1] text-[#9F9F9F] mt-[40px] mb-[16px]"
+                      onClick={(e) => {
+                        printInvoice("Summary");
+                      }}
+                    >
+                      Check Out
+                    </button>
+                    <button
+                      disabled={userPurhcase.length == 0}
+                      style={{ width: "100%", border: "1pt solid #9F9F9F" }}
+                      className="button h-[54px] text-[#9F9F9F]"
+                    >
+                      Continue Shoping
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      style={{ width: "100%" }}
+                      className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]"
+                      onClick={(e) => {
+                        printInvoice("Summary");
+                      }}
+                    >
+                      Check Out
+                    </button>
+                    <button
+                      style={{ width: "100%", border: "1pt solid black" }}
+                      className="button h-[54px]"
+                    >
+                      Continue Shoping
+                    </button>
+                  </>
+                )}
+              </div>
+            </CardTemplate>
           </div>
-        </>
+        </div>
+      </>
       <Footer />
     </>
   );
