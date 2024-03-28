@@ -5,8 +5,8 @@ import axios from "axios";
 import Dropdown from "./Dropdown";
 
 const ProductDetailRight = (data) => {
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectColor, setSelectColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectColor, setSelectColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [remains, setRemains] = useState(0);
   const [readOnly, setReadOnly] = useState(false);
@@ -394,7 +394,7 @@ const ProductDetailRight = (data) => {
       </div>
 
       {/* Add to cart button */}
-      {remains === 0 ? 
+      {remains  === 0 && (readOnly === true ) ? 
         <button className="w-full h-[54px] bg-black text-white" disabled>
 
               Out of Stock
