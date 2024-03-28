@@ -101,7 +101,7 @@ function Homepage() {
                 collection invites you to indulge in the allure of winter
                 fashion.
               </p>
-              <Link to="/Products/Spring%202024/spring-2024"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
+              <Link to="/Products/Spring%202024/spring-2024"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded relative h-12 w-40 overflow-hidden shadow-2xl transition-all before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-slate-400 hover:before:-translate-x-40">
                 View more
               </button>
               </Link>
@@ -124,7 +124,7 @@ function Homepage() {
                 the perfect fusion of style and comfort, our curated selection
                 of sneakers is a celebration of urban chic.
               </p>
-              <Link to="/Products/Spring%202024/spring-2024"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded">
+              <Link to="/Products/Spring%202024/spring-2024"><button className="bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded relative h-12 w-40 overflow-hidden shadow-2xl transition-all before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-slate-400 hover:before:-translate-x-40">
                 View more
               </button>
               </Link>
