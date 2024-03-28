@@ -176,7 +176,7 @@ const ProductDetailRight = (data) => {
             </>
           ) : (
             <div className="text-3xl font-bold mb-7">
-              {" " + " THB " + numberWithCommas(data.price) + ".00"}
+              {" " + " THB " + numberWithCommas(data.price)}
             </div>
           )}
         </div>
@@ -268,7 +268,11 @@ const ProductDetailRight = (data) => {
                         remains === 0 && readOnly === true
                           ? "bg-secondary opacity-20 text-secondary-500"
                           : "bg-white"
-                      } ${selectedSize === value.size && readOnly === false ? "bg-yellow-300" : ""} `}
+                      } ${
+                        selectedSize === value.size && readOnly === false
+                          ? "bg-yellow-300"
+                          : ""
+                      } `}
                       onClick={() =>
                         selectColor != ""
                           ? handleSizeSelection(value.size)
@@ -288,7 +292,11 @@ const ProductDetailRight = (data) => {
           <span className="text-red-500 font-semibold text-xl">{`(In stock : ${remains})`}</span>
         </div>
         {/* dropdown to select Qty */}
-        <Dropdown onQuantityChange={onQuantityChange} remains={remains} readOnly={readOnly} />
+        <Dropdown
+          onQuantityChange={onQuantityChange}
+          remains={remains}
+          readOnly={readOnly}
+        />
       </div>
 
       <button
