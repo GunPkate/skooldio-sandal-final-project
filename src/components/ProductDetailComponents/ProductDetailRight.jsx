@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
 import axios from "axios";
 import Dropdown from "./Dropdown";
+import starFill from "/src/assets/star-fill.svg";
+import starGrey from "/src/assets/star-grey.svg";
 
 const ProductDetailRight = (data) => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -93,10 +95,10 @@ const ProductDetailRight = (data) => {
     const amount = Math.floor(rating);
     if (amount) {
       const fill = [...Array(amount)].map(() => (
-        <img src="/src/assets/star-fill.svg" key={Math.random()} />
+        <img src={starFill} key={Math.random()} />
       ));
       const unstar = [...Array(5 - amount)].map(() => (
-        <img src="/src/assets/star-grey.svg" key={Math.random()} />
+        <img src={starGrey} key={Math.random()} />
       ));
       return [...fill, ...unstar];
     } else {
