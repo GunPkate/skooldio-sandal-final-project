@@ -258,8 +258,6 @@ const ProductDetailRight = (data) => {
     if (isNaN(a.size) && isNaN(b.size)) {
       return sizeOrder[a.size] - sizeOrder[b.size];
     }
-
-    
   });
 
   return (
