@@ -122,7 +122,7 @@ const ProductDetailRight = (data) => {
           .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
           .then((res) => {
             let itemCart = res.data;
-            console.log("Navbar get",itemCart)
+            console.log("Navbar get", itemCart);
             let myCartTemp = [];
             res.data.items.forEach(async (x) => {
               await axios
@@ -217,7 +217,9 @@ const ProductDetailRight = (data) => {
               if (statusCode == 200 || statusCode == 201) {
                 fetchMycart(id);
               }
-              setTimeout(()=>{window.location.reload()},500)
+              setTimeout(() => {
+                window.location.reload();
+              }, 500);
             });
         } catch (error) {
           console.log(error);
@@ -240,7 +242,6 @@ const ProductDetailRight = (data) => {
     return variant ? variant.remains : 0;
   };
 
-
   const sizeOrder = { S: 1, M: 2, L: 3, XL: 4 };
   uniqueDataSize.sort((a, b) => {
     // for number case
@@ -260,7 +261,7 @@ const ProductDetailRight = (data) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 mt-10 mx-auto relative flex-1 min-w-[343px] lg:mt-0  ">
+    <div className="flex flex-col lg:gap-0  gap-4 mt-10 mx-auto relative flex-1 min-w-[343px] lg:mt-0  ">
       {/* upper infomation */}
       <div>
         <div className="text-lg font-semibold mb-1 desktop:text-2xl desktop:bold">
@@ -275,7 +276,7 @@ const ProductDetailRight = (data) => {
         <div className="flex flex-col justify-center">
           {data.promotionalPrice < data.price ? (
             <>
-              <div className="flex justify-center items-center text-3xl font-bold mb-2 bg-[#FF000D] text-white w-fit px-[10px] py-2 ">
+              <div className="flex justify-center items-center text-3xl font-bold mb-2 bg-[#FF000D] text-white w-fit lg:w-[277px] lg:h-[76px] px-[10px] py-2 ">
                 THB {numberWithCommas(data.promotionalPrice) + ".00"}
               </div>
 
@@ -304,8 +305,8 @@ const ProductDetailRight = (data) => {
       {/* lower information from color below*/}
       <div className="mb-6 mt-14">
         <div className="laptop:w-72 desktop:w-80">
-          <div className="font-normal text-base mb-2">Color</div>
-          <div className="flex justify-start gap-6 mb-6">
+          <div className="font-normal text-secondary-700 mb-2">Color</div>
+          <div className="w-full flex ">
             {/* Color options */}
 
             {uniqueDataColor.length === 1 ? (
@@ -315,7 +316,13 @@ const ProductDetailRight = (data) => {
                     <div
                       //comment: เมื่อคลิกอยากขึ้น border ให้ user รู้ว่าเลือกแล้ว
                       className="w-14 h-14 "
-                      style={{ background: value.colorCode }}
+                      style={{
+                        background: value.colorCode,
+                        border:
+                          selectColor === value.color
+                            ? "4px solid lightgrey"
+                            : null,
+                      }}
                       onClick={() => {
                         handleColorSelection(value.color);
                       }}
@@ -326,7 +333,7 @@ const ProductDetailRight = (data) => {
                 ))}
               </>
             ) : (
-              <div className="flex justify-evenly gap-6 mb-6">
+              <div className="w-full flex justify-evenly gap-6 mb-6">
                 {" "}
                 {uniqueDataColor.map((value, index) => (
                   <div key={index}>
@@ -357,16 +364,16 @@ const ProductDetailRight = (data) => {
 
         {uniqueDataSize[0].size?.length > 0 && (
           <>
-            <div className="font-normal text-base mb-4">Size</div>
-            <div className="flex gap-2 mb-6">
-              <div className="flex justify-evenly gap-6 mb-6">
+            <div className="font-normal text-secondary-700 mb-4">Size</div>
+            <div className="flex gap-2 mb-6 lg:mb-0">
+              <div className="flex  flex-wrap gap-6 mb-6">
                 {" "}
                 {uniqueDataSize.map((value, index) => (
                   <div key={index}>
                     <button
                       key={value.size}
                       disabled={selectColor === "" ? true : false}
-                      className={`w-16 h-14 border border-gray-300 desktop:w-36  ${
+                      className={`w-16 h-14 laptop:w-[149.6px] laptop:h-[54px] border border-gray-300  ${
                         selectedSize === value.size ? "bg-yellow-300" : ""
                       }`}
                       onClick={() =>
@@ -383,7 +390,7 @@ const ProductDetailRight = (data) => {
             </div>
           </>
         )}
-        <div className="font-normal text-base mb-4">
+        <div className="font-normal text-secondary-700 text-base mb-4">
           Qty.{" "}
           <span className="text-red-500 font-semibold text-xl">{`(In stock : ${remains})`}</span>
         </div>
@@ -392,25 +399,21 @@ const ProductDetailRight = (data) => {
       </div>
 
       {/* Add to cart button */}
-      {remains  === 0 && (readOnly === true ) ? 
+      {remains === 0 && readOnly === true ? (
         <button className="w-full h-[54px] bg-black text-white" disabled>
-
-              Out of Stock
-
+          Out of Stock
         </button>
-      :
-      <Link
-        to="/Mycart/"
-        onClick={() => {
-          handleAddItem();
-        }}
-      >
-        <button className="w-full h-[54px] bg-black text-white">
+      ) : (
+        <Link
+          className="flex justify-center items-center w-full h-[54px] bg-black text-white"
+          to="/Mycart/"
+          onClick={() => {
+            handleAddItem();
+          }}
+        >
           Add to cart
-        </button>
-      </Link>
-      }
-
+        </Link>
+      )}
     </div>
   );
 };

@@ -37,9 +37,9 @@ const PeopleAlsoLike = (data) => {
 
   return (
     <>
-      <div className="flex flex-col px-2 font-bold mx-auto mt-10">
+      <div className="flex flex-col items-center lg:items-start font-bold mt-[80px] lg:mt-[180px] lg:mt-45 min-w-[351px]">
         <p className="text-[32px] font-bold mb-16">People also like these</p>
-        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 xl:grid-cols-4 md:gap-x-10 md:gap-y-[60px]">
+        <div className="grid grid-cols-1 lg:mb-[130px] gap-y-10 lg:grid-cols-2 xl:grid-cols-4 md:gap-x-10 md:gap-y-[60px]">
           {items}
         </div>
       </div>

@@ -54,12 +54,11 @@ const Carousel = ({
         {/* Left arrow */}
         <button
           onClick={prevImage}
-          className="absolute left-[16px] top-1/2 transform -translate-y-1/2  w-8 h-8"
+          className="absolute left-[7px] lg:left-[16px] top-1/2 transform -translate-y-1/2  w-8 h-8"
         >
           {/*left arrow SVG */}
           <svg
-            width="41"
-            height="41"
+            className="w-[30.8px] h-[30.8px] lg:w-[70px] lg:h-[70px]"
             viewBox="0 0 31 31"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -82,12 +81,11 @@ const Carousel = ({
         {/* Right arrow */}
         <button
           onClick={nextImage}
-          className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-8 h-8"
+          className="absolute right-[7px] lg:right-[50px] top-1/2 transform -translate-y-1/2 w-8 h-8"
         >
           {/*right arrow SVG */}
           <svg
-            width="41"
-            height="41"
+            className="w-[30.8px] h-[30.8px] lg:w-[70px] lg:h-[70px]"
             viewBox="0 0 31 31"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -111,10 +109,10 @@ const Carousel = ({
         {/* promotional price */}
         {promotionalPrice < price ? (
           <div
-            className={`absolute right-0 top-8  ${
+            className={`absolute right-0 top-[14px] lg:top-8  ${
               readOnly
                 ? "bg-black w-[85px] h-[25px] laptop:w-44 laptop:h-10 desktop:w-48 desktop:h-14"
-                : "bg-[#FF000D] w-10 h-6 laptop:w-14 laptop:h-10 desktop:w-[91.5px] desktop:h-[57px]"
+                : "bg-[#FF000D] w-10 h-6 laptop:w-14 laptop:h-10 lg:w-[91.5px] lg:h-[57px]"
             } text-center text-xs laptop:text-xl desktop:text-2xl text-white flex justify-center items-center `}
           >
             {readOnly ? "Out Of Stock" : "Sale"}
