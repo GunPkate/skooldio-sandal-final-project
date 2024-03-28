@@ -48,7 +48,6 @@ const ProductDetailRight = (data) => {
     return sum;
   }
 
-
   // function to handle size selection
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
@@ -229,12 +228,10 @@ const ProductDetailRight = (data) => {
     }
   };
 
-
-
   const variants = data.variants;
   const getRemains = (selectedSize, selectColor) => {
     const hasSize = uniqueDataSize[0].size?.length > 0;
-  
+
     const variant = variants.find((v) => {
       if (hasSize) {
         return v.size === selectedSize && v.color === selectColor;
@@ -323,8 +320,8 @@ const ProductDetailRight = (data) => {
                         background: value.colorCode,
                         border:
                           selectColor === value.color
-                            ? "4px solid lightgrey"
-                            : null,
+                            ? "3px solid #C1CD00"
+                            : "0.5px solid lightgrey",
                       }}
                       onClick={() => {
                         handleColorSelection(value.color);
@@ -346,8 +343,8 @@ const ProductDetailRight = (data) => {
                         background: value.colorCode,
                         border:
                           selectColor === value.color
-                            ? "4px solid lightgrey"
-                            : null,
+                            ? "3px solid #C1CD00"
+                            : "0.5px solid lightgrey",
                       }}
                       onClick={() => {
                         setRemains(0);
