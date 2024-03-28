@@ -3,6 +3,7 @@ import ProductCard from "../components/ProductCard";
 import { Drawer } from "vaul";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Footer from "../components/Footer";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -229,6 +230,7 @@ export default function Products() {
       ) : (
         <LoadingSpinner />
       )}
+      <Footer />
     </>
   );
 }
