@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import starFill from "../../src/assets/star-fill.svg";
+import starGrey from "../../src/assets/star-grey.svg";
 
 function numberWithCommas(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -8,10 +10,10 @@ const createStars = (rating) => {
   const amount = Math.floor(rating);
   if (amount) {
     const fill = [...Array(amount)].map(() => (
-      <img src="../../src/assets/star-fill.svg" key={Math.random()} />
+      <img src={starFill} key={Math.random()} />
     ));
     const unstar = [...Array(5 - amount)].map(() => (
-      <img src="../../src/assets/star-grey.svg" key={Math.random()} />
+      <img src={starGrey} key={Math.random()} />
     ));
     return [...fill, ...unstar];
   } else {
