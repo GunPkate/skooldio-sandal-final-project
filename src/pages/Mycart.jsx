@@ -7,6 +7,11 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import DeleteLogo from "../assets/delete.svg";
 import logo from "../../src/assets/Logo/Storefront.svg";
 
+function numberWithCommas(num) {
+  const number = (Math.round(num * 100) / 100).toFixed(2);
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export default function Mycart() {
   const { userPurhcase, setuserPurhcase } = useContext(UserContext);
   const [myCart, setMyCart] = useState([]);
@@ -441,7 +446,7 @@ export default function Mycart() {
                             }
                           >
                             <h5 className="ml-auto text-secondary truncate">
-                              THB {item.price * item.quantity}
+                              THB {numberWithCommas(item.price * item.quantity)}
                             </h5>
                           </div>
                         </div>
@@ -499,7 +504,7 @@ export default function Mycart() {
                             </td>
                             <td>
                               <h1 className="p-0 m-0 text-[16px] text-secondary">
-                                {item.quantity * item.price}
+                                {numberWithCommas(item.quantity * item.price)}
                               </h1>
                               {/* <h1>{totalPrice !== null ? totalPrice :item.quantity * item.price}</h1> */}
                             </td>
@@ -524,14 +529,20 @@ export default function Mycart() {
                         <td>
                           <h1 className="p-0 m-0 text-[16px] text-secondary">
                             {userPurhcase.length > 1
-                              ? userPurhcase.reduce(
-                                  (accumulator, currentValue) =>
-                                    accumulator +
-                                    currentValue.price * currentValue.quantity,
-                                  0
+                              ? numberWithCommas(
+                                  userPurhcase.reduce(
+                                    (accumulator, currentValue) =>
+                                      accumulator +
+                                      currentValue.price *
+                                        currentValue.quantity,
+                                    0
+                                  )
                                 )
                               : userPurhcase.length === 1
-                              ? userPurhcase[0].price * userPurhcase[0].quantity
+                              ? numberWithCommas(
+                                  userPurhcase[0].price *
+                                    userPurhcase[0].quantity
+                                )
                               : 0}
                           </h1>
                         </td>
@@ -561,14 +572,20 @@ export default function Mycart() {
                         <td>
                           <h1 className="p-0 m-0 text-[16px] text-secondary">
                             {userPurhcase.length > 1
-                              ? userPurhcase.reduce(
-                                  (accumulator, currentValue) =>
-                                    accumulator +
-                                    currentValue.price * currentValue.quantity,
-                                  0
+                              ? numberWithCommas(
+                                  userPurhcase.reduce(
+                                    (accumulator, currentValue) =>
+                                      accumulator +
+                                      currentValue.price *
+                                        currentValue.quantity,
+                                    0
+                                  )
                                 )
                               : userPurhcase.length === 1
-                              ? userPurhcase[0].price * userPurhcase[0].quantity
+                              ? numberWithCommas(
+                                  userPurhcase[0].price *
+                                    userPurhcase[0].quantity
+                                )
                               : 0}
                           </h1>
                         </td>
