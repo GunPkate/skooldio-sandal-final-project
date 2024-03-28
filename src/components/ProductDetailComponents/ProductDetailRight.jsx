@@ -42,7 +42,6 @@ const ProductDetailRight = (data) => {
       setReadOnly(false);
     }
   }, []);
-  
 
   // Function to calculate the sum of "remains" values
   function sumRemains(variants) {
@@ -52,7 +51,6 @@ const ProductDetailRight = (data) => {
     }
     return sum;
   }
-  
 
   // function to handle size selection
   const handleSizeSelection = (size) => {
@@ -88,8 +86,6 @@ const ProductDetailRight = (data) => {
 
     setRemains(remains);
   };
-
-  
 
   //rating section from k'Ter (product cart)
   const createStars = (rating) => {
@@ -262,10 +258,16 @@ const ProductDetailRight = (data) => {
                   <div key={index}>
                     <button
                       key={value.size}
-                      disabled={selectColor === "" ? true : false}
-                      className={`w-16 h-14 laptop:w-[149.6px] laptop:h-[54px] border border-gray-300  ${
-                        selectedSize === value.size ? "bg-yellow-300" : ""
-                      }`}
+                      disabled={
+                        selectColor === "" && remains === 0 && readOnly === true
+                          ? true
+                          : false
+                      }
+                      className={`w-16 h-14 laptop:w-[149.6px] laptop:h-[54px] border border-gray-300 ${
+                        remains === 0 && readOnly === true
+                          ? "bg-secondary opacity-20 text-secondary-500"
+                          : "bg-white"
+                      } ${selectedSize === value.size && readOnly === false ? "bg-yellow-300" : ""} `}
                       onClick={() =>
                         selectColor != ""
                           ? handleSizeSelection(value.size)
@@ -285,28 +287,15 @@ const ProductDetailRight = (data) => {
           <span className="text-red-500 font-semibold text-xl">{`(In stock : ${remains})`}</span>
         </div>
         {/* dropdown to select Qty */}
-        <Dropdown onQuantityChange={onQuantityChange} remains={remains}/>
+        <Dropdown onQuantityChange={onQuantityChange} remains={remains} readOnly={readOnly} />
       </div>
 
-      {/* Add to cart button */}
-      {/* {remains === 0 && readOnly === true ? (
-        <button className="w-full h-[54px] bg-black text-white" disabled>
-          Out of Stock
-        </button>
-      ) : (
-        <Link
-          className="flex justify-center items-center w-full h-[54px] bg-black text-white"
-          to="/Mycart/"
-          onClick={() => {
-            handleAddItem();
-            setIsModalOpen(true);
-          }}
-        >
-          Add to cart
-        </Link>
-      )} */}
       <button
-        className={`flex justify-center items-center w-full h-[54px] ${remains === 0 && readOnly === true ? "bg-secondary opacity-50" : "bg-black"} text-white`}
+        className={`flex justify-center items-center w-full h-[54px] ${
+          remains === 0 && readOnly === true
+            ? "bg-secondary opacity-20 -z-10"
+            : "bg-white"
+        } text-white`}
         disabled={remains === 0 && readOnly === true ? true : false}
         onClick={(event) => {
           event.preventDefault();
@@ -316,11 +305,25 @@ const ProductDetailRight = (data) => {
         Add to cart
       </button>
 
-        
-      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} selectedData={uniqueDataSize}   modalItems={{quantity:quantity, selectColor:selectColor, selectedSize:selectedSize, nameModal:data.name ,imgModal:data.imageUrls[0], priceModal:data.promotionalPrice<data.price? data.promotionalPrice : data.price}}/>}
+      {isModalOpen && (
+        <Modal
+          onClose={() => setIsModalOpen(false)}
+          selectedData={uniqueDataSize}
+          modalItems={{
+            quantity: quantity,
+            selectColor: selectColor,
+            selectedSize: selectedSize,
+            nameModal: data.name,
+            imgModal: data.imageUrls[0],
+            priceModal:
+              data.promotionalPrice < data.price
+                ? data.promotionalPrice
+                : data.price,
+          }}
+        />
+      )}
     </div>
   );
 };
 
-export default  ProductDetailRight;
-
+export default ProductDetailRight;

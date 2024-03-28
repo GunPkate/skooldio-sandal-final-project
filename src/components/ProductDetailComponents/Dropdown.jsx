@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Dropdown = ({onQuantityChange,remains}) => {
+const Dropdown = ({ onQuantityChange, remains, readOnly }) => {
   const [quantity, setQuantity] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,16 +12,20 @@ const Dropdown = ({onQuantityChange,remains}) => {
     onQuantityChange(value); // Call function with the new quantity value
   };
 
-  const numberDropdown = remains<10?remains:10;
+  const numberDropdown = remains < 10 ? remains : 10;
 
-  console.log(numberDropdown,"numberDropdownNNNNN");
+  console.log(numberDropdown, "numberDropdownNNNNN");
 
   return (
     <div className="dropdown dropdown-bottom dropdown-end">
       <div
         tabIndex={0}
         role="button"
-        className="btn flex justify-between px-2.5 rounded-none w-[343px] h-[54px] lg:w-[139px] lg:h-[54px] bg-white border-secondary-300"
+        className={`btn flex justify-between px-2.5 rounded-none w-[343px] h-[54px] lg:w-[139px] lg:h-[54px]${
+          remains === 0 && readOnly === true
+            ? "bg-secondary opacity-20 -z-10"
+            : "bg-white"
+        } border-secondary-300`}
         onClick={toggleDropdown}
       >
         {quantity}
@@ -56,8 +60,7 @@ const Dropdown = ({onQuantityChange,remains}) => {
               }`} // border between 1-9
               onClick={() => selectItem(number + 1)}
             >
-              {numberDropdown===0?"out of stock":number + 1}
-              
+              {numberDropdown === 0 ? "out of stock" : number + 1}
             </li>
           ))}
         </ul>
