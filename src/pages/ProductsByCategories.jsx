@@ -3,6 +3,10 @@ import ProductCard from "../components/ProductCard";
 import { Drawer } from "vaul";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Filter from "../../src/assets/Filter.svg";
+import radioSelect from "../../src/assets/radioSelected.svg";
+import radioUnselect from "../../src/assets/radioUnselected.svg";
+import chevron from "../../src/assets/chevron.svg";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -69,7 +73,7 @@ export default function Products() {
                   </h1>
                   <Drawer.Root>
                     <Drawer.Trigger className="lg:hidden flex items-center justify-end w-full">
-                      Sort By <img src="../../src/assets/Filter.svg" />
+                      Sort By <img src={Filter} />
                     </Drawer.Trigger>
                     <Drawer.Portal>
                       <Drawer.Overlay className="fixed inset-0 bg-black/40" />
@@ -100,9 +104,9 @@ export default function Products() {
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterOptions === "Price - Low to high" ? (
-                                  <img src="../../src/assets/radioSelected.svg" />
+                                  <img src={radioSelect} />
                                 ) : (
-                                  <img src="../../src/assets/radioUnselected.svg" />
+                                  <img src={radioUnselect} />
                                 )}
                                 Price - Low to high
                               </a>
@@ -115,9 +119,9 @@ export default function Products() {
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterOptions === "Price - High to low" ? (
-                                  <img src="../../src/assets/radioSelected.svg" />
+                                  <img src={radioSelect} />
                                 ) : (
-                                  <img src="../../src/assets/radioUnselected.svg" />
+                                  <img src={radioUnselect} />
                                 )}
                                 Price - High to low
                               </a>
@@ -128,9 +132,9 @@ export default function Products() {
                             >
                               <a className="p-0 active:!bg-white active:!text-primary-700">
                                 {filterOptions === "Rating" ? (
-                                  <img src="../../src/assets/radioSelected.svg" />
+                                  <img src={radioSelect} />
                                 ) : (
-                                  <img src="../../src/assets/radioUnselected.svg" />
+                                  <img src={radioUnselect} />
                                 )}
                                 Rating
                               </a>
@@ -156,7 +160,7 @@ export default function Products() {
                     >
                       Sort By
                       <img
-                        src="../../src/assets/chevron.svg"
+                        src={chevron}
                         className={
                           filterOpen
                             ? "rotate-180 transition ease-in-out"
@@ -173,9 +177,9 @@ export default function Products() {
                       >
                         <a className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100">
                           {filterSelect === "Price - Low to high" ? (
-                            <img src="../../src/assets/radioSelected.svg" />
+                            <img src={radioSelect} />
                           ) : (
-                            <img src="../../src/assets/radioUnselected.svg" />
+                            <img src={radioUnselect} />
                           )}
                           Price - Low to high
                         </a>
@@ -188,9 +192,9 @@ export default function Products() {
                       >
                         <a className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100">
                           {filterSelect === "Price - High to low" ? (
-                            <img src="../../src/assets/radioSelected.svg" />
+                            <img src={radioSelect} />
                           ) : (
-                            <img src="../../src/assets/radioUnselected.svg" />
+                            <img src={radioUnselect} />
                           )}
                           Price - High to low
                         </a>
@@ -201,9 +205,9 @@ export default function Products() {
                       >
                         <a className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-secondary-100 hover:text-primary-700 active:text-primary active:bg-base-100">
                           {filterSelect === "Rating" ? (
-                            <img src="../../src/assets/radioSelected.svg" />
+                            <img src={radioSelect} />
                           ) : (
-                            <img src="../../src/assets/radioUnselected.svg" />
+                            <img src={radioUnselect} />
                           )}
                           Rating
                         </a>
