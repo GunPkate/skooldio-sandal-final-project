@@ -221,6 +221,7 @@ const ProductDetailRight = (data) => {
               if (statusCode == 200 || statusCode == 201) {
                 fetchMycart(id);
               }
+              setTimeout(()=>{window.location.reload()},500)
             });
         } catch (error) {
           console.log(error);
