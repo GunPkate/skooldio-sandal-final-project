@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const Carousel = ({ imageUrls, variants, readOnly: initialReadOnly, promotionalPrice, price }) => {
+const Carousel = ({
+  imageUrls,
+  variants,
+  readOnly: initialReadOnly,
+  promotionalPrice,
+  price,
+}) => {
   const [readOnly, setReadOnly] = useState(initialReadOnly);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedImage, setSelectedImage] = useState(imageUrls[0]);
@@ -10,7 +16,7 @@ const Carousel = ({ imageUrls, variants, readOnly: initialReadOnly, promotionalP
     setReadOnly(sum === 0 || initialReadOnly);
   }, [variants, initialReadOnly]);
 
-  // calculate the sum of "remains" 
+  // calculate the sum of "remains"
   function sumRemains(variants) {
     return variants.reduce((sum, variant) => sum + variant.remains, 0);
   }
@@ -22,7 +28,8 @@ const Carousel = ({ imageUrls, variants, readOnly: initialReadOnly, promotionalP
   };
 
   const prevImage = () => {
-    const newIndex = (currentImageIndex - 1 + imageUrls.length) % imageUrls.length;
+    const newIndex =
+      (currentImageIndex - 1 + imageUrls.length) % imageUrls.length;
     setCurrentImageIndex(newIndex);
     setSelectedImage(imageUrls[newIndex]);
   };
@@ -33,15 +40,17 @@ const Carousel = ({ imageUrls, variants, readOnly: initialReadOnly, promotionalP
   };
 
   return (
-    <div className=" flex flex-col justify-center items-center gap-2 min-w-[343px]">
+    <div className=" flex flex-col justify-start items-center gap-2 min-w-[343px]">
       <div className=" relative w-[343px] h-[343px] laptop:w-[514.5px] laptop:h-[514.5px] desktop:w-[780px] desktop:h-[780px] desktop:mb-4">
         {/* main image */}
         <img
           src={selectedImage}
           alt="Product"
-          className={`w-full h-full object-cover ${readOnly ? "brightness-50" : ""}`}
+          className={`w-full h-full object-cover ${
+            readOnly ? "brightness-50" : ""
+          }`}
         />
-        
+
         {/* Left arrow */}
         <button
           onClick={prevImage}
@@ -103,7 +112,9 @@ const Carousel = ({ imageUrls, variants, readOnly: initialReadOnly, promotionalP
         {promotionalPrice < price ? (
           <div
             className={`absolute right-0 top-8  ${
-              readOnly ? "bg-black w-[85px] h-[25px] laptop:w-44 laptop:h-10 desktop:w-48 desktop:h-14" : "bg-[#FF000D] w-10 h-6 laptop:w-14 laptop:h-10 desktop:w-[91.5px] desktop:h-[57px]"
+              readOnly
+                ? "bg-black w-[85px] h-[25px] laptop:w-44 laptop:h-10 desktop:w-48 desktop:h-14"
+                : "bg-[#FF000D] w-10 h-6 laptop:w-14 laptop:h-10 desktop:w-[91.5px] desktop:h-[57px]"
             } text-center text-xs laptop:text-xl desktop:text-2xl text-white flex justify-center items-center `}
           >
             {readOnly ? "Out Of Stock" : "Sale"}
@@ -119,8 +130,8 @@ const Carousel = ({ imageUrls, variants, readOnly: initialReadOnly, promotionalP
             alt={`Thumbnail ${index}`}
             onClick={() => selectImage(index)}
             className={`w-[62px] h-[62px] laptop:w-24 laptop:h-24 desktop:w-[149px] desktop:h-[149px] object-cover ${
-                readOnly ? "brightness-50" : ""
-              } ${index === currentImageIndex ? "border-2 border-black" : ""}`}
+              readOnly ? "brightness-50" : ""
+            } ${index === currentImageIndex ? "border-2 border-black" : ""}`}
           />
         ))}
       </div>
