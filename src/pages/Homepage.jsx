@@ -4,6 +4,9 @@ import Navbar from "../components/Navbar/Navbar";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
 import LoadingSpinner from "../components/LoadingSpinner";
+import HeroPicture from "../assets/img1.jpg";
+import CozyBreeze from "../assets/img2.jpg";
+import FlexiMove from "../assets/img3.jpg";
 function Homepage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,7 +56,7 @@ function Homepage() {
       <div className="mb-16">
         <img
           className="h-[420px] w-full object-cover"
-          src="./src/assets/img1.jpg"
+          src={HeroPicture}
           alt="wallpaper"
         />
       </div>
@@ -85,7 +88,7 @@ function Homepage() {
         <div className="flex flex-col overflow-hidden relative">
           <img
             className="w-full h-full object-cover"
-            src="./src/assets/img2.jpg"
+            src={CozyBreeze}
             alt=""
           />
           <div className="flex flex-1 flex-col justify-between p-6 absolute bottom-0" style={{ background: "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))" }}>
@@ -109,7 +112,7 @@ function Homepage() {
         <div className="flex flex-col overflow-hidden relative">
           <img
             className="w-full h-full object-cover"
-            src="./src/assets/img3.jpg"
+            src={FlexiMove}
             alt=""
           />
           <div className="flex flex-1 flex-col justify-between p-6 absolute bottom-0" style={{ background: "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8))" }}>
