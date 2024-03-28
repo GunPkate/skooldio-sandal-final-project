@@ -2,12 +2,13 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import { useContext, useState } from "react";
 
-
 import { Drawer } from "vaul";
 import DrawerRootByGender from "../DrawerRootByGender.jsx";
 import DrawerRootByCollections from "../DrawerRootByCollections.jsx";
 import DropdownRootByGender from "../DropdownRootByGender.jsx";
 import DropdownRootByCollections from "../DropdownRootByCollections.jsx";
+import Logo from "../../src/assets/Logo/Storefront.svg";
+import Hamburger from "../../src/assets/hamburger.svg";
 
 const logoButton = () => {
   return (
@@ -15,7 +16,7 @@ const logoButton = () => {
       className="btn btn-ghost rounded-btn font-light text-md mr-10"
       to={"/"}
     >
-      <img src="../../src/assets/Logo/Storefront.svg" />
+      <img src={Logo} />
     </Link>
   );
 };
@@ -47,7 +48,7 @@ export default function Navbar() {
           onOpenChange={setOpenDrawer}
         >
           <Drawer.Trigger asChild className="lg:hidden">
-            <img src="../../src/assets/hamburger.svg" />
+            <img src={Hamburger} />
           </Drawer.Trigger>
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 bg-black/40" />
