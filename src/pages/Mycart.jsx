@@ -109,6 +109,19 @@ export default function Mycart(){
         let validate = null
 
         //First Select//
+        if(name == 'quantity' && colorBtn.length == 0 && sizeBtn.length == 0){
+            let qtyData = {
+                skuCode: item.skuCode,
+                quantity: value,
+            }
+            //Update Data
+            axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
+                console.log(resUpdate)
+                await fetchMycart(localStorage.getItem('id'))
+                setSelectedNewItem([])
+            });
+        }
+
         if(name == 'size' && colorBtn.length == 0){
             firstFilter = selectedVariant.filter(x=>x.size == value)
             validate = "Please Select Color"
@@ -145,6 +158,7 @@ export default function Mycart(){
                 await fetchMycart(localStorage.getItem('id'))
                 setSelectedNewItem([])
             });
+            resetBtn()
         }
 
         if(secondFilter.length == 1 && name !== 'quantity'){
@@ -158,6 +172,7 @@ export default function Mycart(){
                 await fetchMycart(localStorage.getItem('id'))
                 setSelectedNewItem([])
             });
+            resetBtn()
         }
         console.log(firstFilter)
 
