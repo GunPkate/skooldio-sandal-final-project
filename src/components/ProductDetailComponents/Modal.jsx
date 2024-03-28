@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
+import { numberWithCommas } from './ProductDetailRight';
 
-const Modal = ({modalItems,selectedData}) => {
+const Modal = ({modalItems,onClose,selectedData}) => {
   
   const { permalink } = useParams();
   const { userPurhcase, setuserPurhcase } = useContext(UserContext);
