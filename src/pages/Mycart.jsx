@@ -13,6 +13,8 @@ export default function Mycart(){
     const [loading, setLoading] = useState(false);
 
     const [selectedNewItem,setSelectedNewItem] = useState([])
+    const [colorBtn,setColorBtn] = useState([])
+    const [sizeBtn,setSizeBtn] = useState([])
 
     const fetchMycart = async (id) => {
         try {
@@ -65,9 +67,106 @@ export default function Mycart(){
 
     // localStorage.setItem('id',1234)
     const handleUpdateCart = (item, name,value, itemNo) => {
-        let tempData = userPurhcase
-        console.log("sss",itemNo)
 
+
+        //<<<<<<<<<<<<<<<<  Set Condition >>>>>>>>>>>>>>>>>
+        console.log(colorBtn,sizeBtn)
+
+        if(name==='size' && itemNo !== colorBtn[0]  && colorBtn.length > 0){
+            resetBtn();
+        }
+
+        if(name==='color' && itemNo !== sizeBtn[0]  && colorBtn.length > 0){
+            resetBtn();
+        }
+
+            if(name == 'color'){setColorBtn([itemNo,value])}
+            if(name == 'size'){setSizeBtn([itemNo,value])}
+
+        function resetBtn(){
+            setColorBtn([]);
+            setSizeBtn([]);
+        }
+
+        //<<<<<<<<<<<<<<<<  Set Condition >>>>>>>>>>>>>>>>>
+
+
+        let tempData = userPurhcase
+
+        //Get default colors and size
+        let defaultCode = tempData[itemNo].skuCode;
+        let defaultVariant = tempData[itemNo].variants.filter(x=>x.skuCode===defaultCode)
+        let defaultColor = defaultVariant[0].color
+        let defaultSize = defaultVariant[0].size
+
+        // Select
+        let selectedVariant = tempData[itemNo].variants
+
+        let firstFilter = []
+        let secondFilter = []
+        console.log(tempData[itemNo].variants)
+
+        let validate = null
+
+        //First Select//
+        if(name == 'size' && colorBtn.length == 0){
+            firstFilter = selectedVariant.filter(x=>x.size == value)
+            validate = "Please Select Color"
+        }
+
+        if(name == 'color' && sizeBtn.length == 0){
+            firstFilter = selectedVariant.filter(x=>x.color == value)
+            validate = "Please Select Size"
+        }
+        //First Select//
+
+        //seconde//
+        if( name=='size' && colorBtn.length !== 0){
+            secondFilter = selectedVariant.filter(x=>x.color == colorBtn[1] &&  x.size == value)
+            console.log("secondFilter",secondFilter)
+        }
+
+        if( name=='color' && sizeBtn.length !== 0){
+            secondFilter = selectedVariant.filter(x=>x.color == sizeBtn[1] &&  x.size == value)
+            console.log("secondFilter",secondFilter)
+        }
+
+
+        if(validate !== null && firstFilter.length !==1 ) alert(validate)
+
+        if(firstFilter.length == 1 && name !== 'quantity'){
+            let qtyData = {
+                skuCode: firstFilter[0].skuCode,
+                quantity: item.quantity,
+            }
+            //Update Data
+            axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
+                console.log(resUpdate)
+                await fetchMycart(localStorage.getItem('id'))
+                setSelectedNewItem([])
+            });
+        }
+
+        if(secondFilter.length == 1 && name !== 'quantity'){
+            let qtyData = {
+                skuCode: secondFilter[0].skuCode,
+                quantity: item.quantity,
+            }
+            //Update Data
+            axios.patch(`https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem('id')}/items/${item.id}`,qtyData).then(async resUpdate => {
+                console.log(resUpdate)
+                await fetchMycart(localStorage.getItem('id'))
+                setSelectedNewItem([])
+            });
+        }
+        console.log(firstFilter)
+
+
+
+    }
+
+    const handleUpdateCart22 = (item, name,value, itemNo) => {
+        let tempData = userPurhcase
 
         //Get default colors and size
         let defaultCode = tempData[itemNo].skuCode;
@@ -308,7 +407,7 @@ export default function Mycart(){
                                 </div>
 
                                 <div className="font-normal text-gray-700 dark:text-gray-400 lg:flex  w-ful">
-                                   
+                                   {colorBtn[1]} {sizeBtn[1]}
                                     <div className="lg:flex sm:block w-ful">
                                         <div className="lg:mr-[16px]">
                                             <h1 className="text-gray-700 font-normal">Colors</h1>
