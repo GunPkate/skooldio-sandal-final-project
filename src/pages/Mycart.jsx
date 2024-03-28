@@ -453,26 +453,25 @@ export default function Mycart() {
                 ))
               ) : (
                 <>
-                  <div className="flex  justify-center">
-                    <div>
-                      <img
-                        className={
-                          "lg:px-[24px] pb-[24px] " +
-                          "object-cover  h-[209px] w-[209px] "
-                        }
-                        src={noItemImg}
-                        alt=""
-                      />
-                      <h1 className="text-2xl font-bold mx-auto">
-                        Your cart is empty
-                      </h1>
-                      <button
-                        style={{ width: "100%" }}
-                        className="button h-[54px] bg-black text-white mt-[40px] mb-[16px]"
-                      >
-                        Continue Shoping
-                      </button>
-                    </div>
+                  <div className="flex flex-col justify-center items-center">
+                    <img
+                      className={
+                        "lg:px-[24px] pb-[24px] " +
+                        "object-cover  h-[209px] w-[209px] "
+                      }
+                      src={noItemImg}
+                      alt=""
+                    />
+                    <h1 className="text-2xl font-bold mx-auto">
+                      Your cart is empty
+                    </h1>
+                    <p className="text-lg font-semibold max-w-[480px] text-center">
+                      Looks like you have not added anything to your cart. Go
+                      ahead & explore top categories.
+                    </p>
+                    <button className="button h-[54px] w-[173px] bg-black text-white mt-[40px] mb-[16px]">
+                      Continue Shoping
+                    </button>
                   </div>
                 </>
               )}
