@@ -358,14 +358,7 @@ export default function Mycart() {
                                   );
                                 }}
                               >
-                                <option>
-                                  {
-                                    userPurhcase[id].variants.filter(
-                                      (x) =>
-                                        x.skuCode == userPurhcase[id].skuCode
-                                    )[0].color
-                                  }
-                                </option>
+                
                                 {/* {Array.from(
                                                     new Set( item.variants.map(x => <option>{x.color}</option>) )
                                                     )
@@ -396,14 +389,7 @@ export default function Mycart() {
                                   );
                                 }}
                               >
-                                <option>
-                                  {
-                                    userPurhcase[id].variants.filter(
-                                      (x) =>
-                                        x.skuCode == userPurhcase[id].skuCode
-                                    )[0].size
-                                  }
-                                </option>
+  
                                 {/* {Array.from(
                                                         new Set(item.variants.map(x=>{ return <option>{x.size}</option> }) ) 
                                                     )} */}
@@ -433,7 +419,6 @@ export default function Mycart() {
                                   );
                                 }}
                               >
-                                <option>{item.quantity}</option>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
