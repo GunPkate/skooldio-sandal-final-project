@@ -123,7 +123,7 @@ const ProductDetailRight = (data) => {
           .get(`https://api.storefront.wdb.skooldio.dev/carts/${id}`)
           .then((res) => {
             let itemCart = res.data;
-            // console.log("Navbar get",itemCart)
+            console.log("Navbar get",itemCart)
             let myCartTemp = [];
             res.data.items.forEach(async (x) => {
               await axios
@@ -396,6 +396,13 @@ const ProductDetailRight = (data) => {
       </div>
 
       {/* Add to cart button */}
+      {remains === 0 ? 
+        <button className="w-full h-[54px] bg-black text-white" disabled>
+
+              Out of Stock
+
+        </button>
+      :
       <Link
         to="/Mycart/"
         onClick={() => {
@@ -406,6 +413,8 @@ const ProductDetailRight = (data) => {
           Add to cart
         </button>
       </Link>
+      }
+
     </div>
   );
 };
