@@ -2,10 +2,9 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
-import { numberWithCommas } from './ProductDetailRight';
+import { numberWithCommas } from "./ProductDetailRight";
 
-const Modal = ({modalItems,onClose,selectedData}) => {
-  
+const Modal = ({ modalItems, onClose, selectedData }) => {
   const { permalink } = useParams();
   const { userPurhcase, setuserPurhcase } = useContext(UserContext);
   const [myCart, setMyCart] = useState([]);
@@ -125,11 +124,11 @@ const Modal = ({modalItems,onClose,selectedData}) => {
 
   return (
     //back shadow
-    <div className="flex justify-center items-center  w-full h-screen fixed top-0 left-0 bg-black/50">
+    <div className="flex justify-center items-center  w-full h-screen fixed top-0 left-0 bg-black/50 z-[999]">
       {/*custom modal  */}
-      <div className="w-[343px] h-[518px] rounded-2xl bg-white p-6 lg:w-[900px] lg:h-[374px]">
-        <div className="flex justify-between items-center w-[295px] h-10 mb-4 lg:w-[852px]">
-          <h1 className="text-lg font-semibold lg:text-2xl">
+      <div className="w-[343px] h-[518px] rounded-2xl bg-white p-6 lg:w-[900px] lg:h-[374px] gap-6">
+        <div className="flex justify-between items-center w-[295px] h-10 lg:w-[852px]">
+          <h1 className="text-lg font-semibold lg:text-2xl p-0 m-0">
             Items added to your cart
           </h1>
           <button onClick={onClose}>
@@ -161,27 +160,40 @@ const Modal = ({modalItems,onClose,selectedData}) => {
             src={modalItems.imgModal}
             alt="mock-img"
           />
-          <div className="flex flex-col item-start w-full h-[82px] mb-6 lg:flex-row lg:justify-between lg:w-[652px] lg:h-40 lg:mb-0 ">
-            <div className="flex flex-col justify-center  ">
+          <div className="flex items-start-start w-full lg:h-fit mb-6 lg:flex-row lg:justify-between lg:w-[652px]  lg:mb-0 ">
+            <div className="flex w-full justify-between flex-col lg:justify-center  ">
               <h2 className="text-lg font-bold lg:text-2xl">
                 {modalItems.nameModal}
               </h2>
-              <p className=" text-[#222222] font-normal">Qty: {modalItems.quantity}</p>
+              <p className=" text-secondary-700 text-[18px] font-semibold">
+                Qty: {modalItems.quantity}
+              </p>
             </div>
-            <div className="text-lg font-bold flex justify-end lg:flex-col lg:justify-center lg:text-2xl ">
+            <div className="text-2xl my-auto lg:my-0 font-bold flex justify-end items-center lg:items-start lg:flex-col lg:justify-start lg:text-2xl ">
+              THB{" "}
               {numberWithCommas(modalItems.priceModal * modalItems.quantity)}
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-4 justify-center items-center lg:flex-row">
-          <Link to="/Mycart/">
-          <button onClick={()=>{handleAddItem()}} className="w-full h-14 bg-[#222222]  text-white lg:w-1/2">
+          <Link
+            to="/Mycart/"
+            onClick={() => {
+              handleAddItem();
+            }}
+            className="w-full h-14 bg-[#222222]  text-white lg:w-1/2 flex justify-center items-center"
+          >
             View Cart
-          </button>
-          </Link>
-          <button className="w-full h-14 bg-white border-[#E1E1E1] border lg:w-1/2">
+          </Link>{" "}
+          <Link
+            to="/"
+            onClick={() => {
+              handleAddItem();
+            }}
+            className="w-full h-14 bg-white text-secondary lg:w-1/2 flex justify-center items-center border-solid border-secondary-300 border-[0.5px]"
+          >
             Continue Shopping
-          </button>
+          </Link>
         </div>
       </div>
     </div>
@@ -189,4 +201,3 @@ const Modal = ({modalItems,onClose,selectedData}) => {
 };
 
 export default Modal;
-

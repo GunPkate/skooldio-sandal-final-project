@@ -6,7 +6,8 @@ import Dropdown from "./Dropdown";
 import Modal from "./Modal";
 
 // price with commas from k'Ter (product cart)
-export function numberWithCommas(number) {
+export function numberWithCommas(num) {
+  const number = (Math.round(num * 100) / 100).toFixed(2);
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
