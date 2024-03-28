@@ -5,6 +5,7 @@ import { UserContext } from "../App"
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
 import DeleteLogo from "../assets/delete.svg"
+import logo from "../../src/assets/Logo/Storefront.svg"
 
 export default function Mycart(){
     const {userPurhcase,setuserPurhcase} = useContext(UserContext)
@@ -187,13 +188,14 @@ export default function Mycart(){
     }
 
     const printdiv = (elem) => {
+        
         var invoice = document.getElementById(elem).innerHTML;
         
         invoice = invoice.replace(/(<button.*.\"\>)(.*)(<\/button>)/gi,"Thank You For your support")
         invoice = invoice.replace(/(h1)/gi,"h3")
         invoice = invoice.replace(/(h5)/gi,'h1 class="center"')
         //Logo
-        invoice = invoice.replace(/(<div class)/gi,'<img class="center" src="https://picsum.photos/100/100" alt=""/> <div class')
+        invoice = invoice.replace(/(<div class)/gi,`<img class="center" src=${logo} alt=""/> <div class`)
         invoice = invoice.replace(/(td style="width: 100%;)/gi,`td style="width: 80%;`)
 
         var WinPrint = window.open('', '', 'left=0,top=0,toolbar=0,scrollbars=0,status=0');
