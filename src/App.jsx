@@ -17,6 +17,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Homepage />,
+    errorElement: <NotFound />,
   },
   {
     path: "/Products",
@@ -35,10 +36,6 @@ const router = createBrowserRouter([
   {
     path: "/ProductDetail/:permalink",
     element: <ProductDetail />,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
   },
 ]);
 
