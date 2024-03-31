@@ -1,7 +1,11 @@
-# WDB sandal group final project
+# WDB ecommerce
 
-This is our final project
-
+Tech Stack
+- React
+- Tailwind
+- Daisy UI
+  
+https://github.com/DepartureLV/skooldio-sandal-final-project/tree/productsRouting
 At the end we should:
 - [ ] mock the design from Figma.
 - [ ] every function should work fine.
