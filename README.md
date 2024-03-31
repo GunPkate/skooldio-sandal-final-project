@@ -19,6 +19,7 @@
 | DepartureLV | UX UI Design<br/> User Interaction Design<br/> Responsive Control<br/> Deploy Vercel  | Product Catalog   |
 | Pasika-swn | Carousel<br/> Modal<br/> implement html & css   | Product Details   |
 | bboworn |  implement html & css <br/>  Unit Testing  | Home page   |
+| | ![image](https://github.com/GunPkate/skooldio-sandal-final-project/assets/77183620/6bda00c2-faf9-4328-89cc-cd8e0bcdebd6) | |
 | | ![image](https://github.com/GunPkate/skooldio-sandal-final-project/assets/77183620/f893699e-699c-43d1-90a9-c19c18eef535) | |
 
 
