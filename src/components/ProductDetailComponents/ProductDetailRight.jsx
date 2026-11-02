@@ -202,6 +202,7 @@ const ProductDetailRight = (data) => {
                 {uniqueDataColor.map((value, index) => (
                   <div key={index}>
                     <div
+                      id={`color-${value.color}`}
                       //comment: เมื่อคลิกอยากขึ้น border ให้ user รู้ว่าเลือกแล้ว
                       className="w-14 h-14 "
                       style={{
@@ -226,6 +227,7 @@ const ProductDetailRight = (data) => {
                 {uniqueDataColor.map((value, index) => (
                   <div key={index}>
                     <div
+                      id={`color-${value.color}`}
                       className="w-14 h-14 "
                       style={{
                         background: value.colorCode,

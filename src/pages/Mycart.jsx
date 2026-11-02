@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import { UserContext } from "../App";
@@ -7,6 +7,13 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import DeleteLogo from "../assets/delete.svg";
 import logo from "../../src/assets/Logo/Storefront.svg";
 import noItem from "../../src/assets/Logo/noItem.svg";
+import { trackEcommerce } from "../utils/track";
+
+// The item's chosen color and size come from its variant, not the option lists
+function cartItemForGa(item) {
+  const variant = item.variants?.find((v) => v.skuCode === item.skuCode);
+  return { ...item, color: variant?.color, size: variant?.size };
+}
 
 function numberWithCommas(num) {
   const number = (Math.round(num * 100) / 100).toFixed(2);
@@ -23,6 +30,14 @@ export default function Mycart() {
   const [selectedNewItem, setSelectedNewItem] = useState([]);
   const [colorBtn, setColorBtn] = useState([]);
   const [sizeBtn, setSizeBtn] = useState([]);
+
+  // view_cart once, after the cart has finished loading
+  const viewCartSent = useRef(false);
+  useEffect(() => {
+    if (loading || viewCartSent.current) return;
+    viewCartSent.current = true;
+    trackEcommerce("view_cart", (userPurhcase || []).map(cartItemForGa));
+  }, [loading]);
 
   const fetchMycart = async (id) => {
     try {
@@ -74,6 +89,7 @@ export default function Mycart() {
   const handleDelete = (e) => {
     let contextResult = userPurhcase.filter((x) => x.id !== e.id);
     setuserPurhcase(contextResult);
+    trackEcommerce("remove_from_cart", [cartItemForGa(e)]);
 
     axios.delete(
       `https://api.storefront.wdb.skooldio.dev/carts/${localStorage.getItem(

@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
 import { numberWithCommas } from "./ProductDetailRight";
+import { trackEcommerce } from "../../utils/track";
 
 const Modal = ({ modalItems, onClose, selectedData }) => {
   const { permalink } = useParams();
@@ -21,6 +22,18 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
     let mycartBody = [];
     mycartBody.push(addItem);
 
+    const trackAdd = () =>
+      trackEcommerce("add_to_cart", [
+        {
+          skuCode: addItem.skuCode,
+          name: modalItems.nameModal,
+          price: modalItems.priceModal,
+          quantity: modalItems.quantity,
+          color: modalItems.selectColor,
+          size: modalItems.selectedSize,
+        },
+      ]);
+
     if (mycartBody.length) {
 
       let statusCode = "";
@@ -37,6 +50,7 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
               localStorage.setItem("id", data.id);
 
               if (statusCode == 200 || statusCode == 201) {
+                trackAdd();
                 fetchMycart(data.id);
               }
             });
@@ -54,6 +68,7 @@ const Modal = ({ modalItems, onClose, selectedData }) => {
               statusCode = res.status;
 
               if (statusCode == 200 || statusCode == 201) {
+                trackAdd();
                 fetchMycart(id);
               }
               setTimeout(() => {

@@ -1,0 +1,86 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-10-30 00:00:00",
+  "containerVersion": {
+        "path": "accounts/6401130520/containers/284338658/versions/0",
+        "accountId": "6401130520",
+        "containerId": "284338658",
+        "containerVersionId": "0",
+    "container": {
+      "path": "accounts/6401130520/containers/284338658",
+      "accountId": "6401130520",
+      "containerId": "284338658",
+      "name": "Sandal test",
+      "publicId": "GTM-KDSWD9CW",
+      "usageContext": ["WEB"]
+    },
+    "tag": [
+      {
+        "accountId": "6401130520",
+        "containerId": "284338658",
+        "tagId": "1",
+        "name": "Google tag - GA4",
+        "type": "googtag",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "tagId", "value": "{{GA4 Measurement ID}}" }
+        ],
+        "firingTriggerId": ["2147479573"],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": { "type": "MAP" },
+        "consentSettings": { "consentStatus": "NOT_SET" }
+      },
+      {
+        "accountId": "6401130520",
+        "containerId": "284338658",
+        "tagId": "2",
+        "name": "GA4 - Ecommerce events",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "eventName", "value": "{{Event}}" },
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{GA4 Measurement ID}}" },
+          { "type": "BOOLEAN", "key": "sendEcommerceData", "value": "true" },
+          { "type": "TEMPLATE", "key": "getEcommerceDataFrom", "value": "dataLayer" }
+        ],
+        "firingTriggerId": ["3"],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": { "type": "MAP" },
+        "consentSettings": { "consentStatus": "NOT_SET" }
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "6401130520",
+        "containerId": "284338658",
+        "triggerId": "3",
+        "name": "CE - Ecommerce events",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "^(view_item|add_to_cart|remove_from_cart|view_cart)$" }
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "6401130520",
+        "containerId": "284338658",
+        "variableId": "4",
+        "name": "GA4 Measurement ID",
+        "type": "c",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "value", "value": "G-XXXXXXXXXX" }
+        ]
+      }
+    ],
+    "builtInVariable": [
+      { "accountId": "6401130520", "containerId": "284338658", "type": "EVENT", "name": "Event" },
+      { "accountId": "6401130520", "containerId": "284338658", "type": "PAGE_URL", "name": "Page URL" },
+      { "accountId": "6401130520", "containerId": "284338658", "type": "PAGE_PATH", "name": "Page Path" }
+    ]
+  }
+}

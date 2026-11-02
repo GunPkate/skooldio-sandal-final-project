@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PeopleAlsoLike from "../components/ProductDetailComponents/PeopleAlsoLike";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { trackEcommerce } from "../utils/track";
 
 // import Modal from "../components/ProductDetailComponents/Modal/Modal";
 
@@ -23,6 +24,16 @@ export default function ProductDetail() {
         let data = await res.json();
         setProducts(data);
         setLoading(false);
+        trackEcommerce("view_item", [
+          {
+            skuCode: data.skuCode || permalink,
+            name: data.name,
+            price:
+              data.promotionalPrice < data.price
+                ? data.promotionalPrice
+                : data.price,
+          },
+        ]);
       })
       .catch((err) => console.error("error ", err));
   }, [`${BASE_URL}products/${permalink}`]);
